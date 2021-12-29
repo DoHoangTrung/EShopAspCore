@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EshopAspCore.Data.Configurations;
+using EshopAspCore.Data.Extensions;
 
 namespace EshopAspCore.Data.EF
 {
@@ -18,6 +19,7 @@ namespace EshopAspCore.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configure using fluent api
             modelBuilder.ApplyConfiguration(new CartConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
@@ -33,6 +35,9 @@ namespace EshopAspCore.Data.EF
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+
+            //Data seeding
+            modelBuilder.Seed();
 
             //base.OnModelCreating(modelBuilder);
         }
