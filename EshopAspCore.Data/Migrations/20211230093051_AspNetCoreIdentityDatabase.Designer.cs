@@ -4,14 +4,16 @@ using EshopAspCore.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211230093051_AspNetCoreIdentityDatabase")]
+    partial class AspNetCoreIdentityDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,16 +75,6 @@ namespace EshopAspCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "f26ce4de-373c-4161-b8ed-ddc4aaac2b7f",
-                            Description = "Administrator role",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("EshopAspCore.Data.Entities.AppUser", b =>
@@ -149,27 +141,6 @@ namespace EshopAspCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec338ac7-1d83-4563-9fef-a82935ce0929",
-                            Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "some-admin-email@nonce.fake",
-                            EmailConfirmed = true,
-                            FirstName = "Trung",
-                            LastName = "Do",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "some-admin-email@nonce.fake",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHaI9ng4smurLOxRDEpn0s3UxZEcTbfkI8ibRidTv3wjwCPUm6XFvDiUDLslsELLAQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("EshopAspCore.Data.Entities.Cart", b =>
@@ -416,7 +387,7 @@ namespace EshopAspCore.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 30, 19, 34, 18, 323, DateTimeKind.Local).AddTicks(4184));
+                        .HasDefaultValue(new DateTime(2021, 12, 30, 16, 30, 50, 613, DateTimeKind.Local).AddTicks(704));
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -505,7 +476,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 12, 30, 19, 34, 18, 339, DateTimeKind.Local).AddTicks(4493),
+                            DateCreated = new DateTime(2021, 12, 30, 16, 30, 50, 627, DateTimeKind.Local).AddTicks(6018),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -765,13 +736,6 @@ namespace EshopAspCore.Data.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.ToTable("AppUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            RoleId = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

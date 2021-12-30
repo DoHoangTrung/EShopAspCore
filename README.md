@@ -26,3 +26,5 @@ migration database:
 	+add-migration initial
 	+update-database
 - create seeding data
+-add class + config: IdentityUserClaim, IdentityUserRole, IdentityUserLogin, IdentityRoleClaim, IdentityUserToken
+-seeding data: 
