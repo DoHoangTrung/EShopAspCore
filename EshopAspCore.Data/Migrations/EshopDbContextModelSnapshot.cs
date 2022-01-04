@@ -19,7 +19,7 @@ namespace EshopAspCore.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.AppConfig", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.AppConfig", b =>
                 {
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(450)");
@@ -50,7 +50,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.AppRole", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,14 +78,14 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "f26ce4de-373c-4161-b8ed-ddc4aaac2b7f",
+                            ConcurrencyStamp = "121b7849-c026-4e7c-b487-e45c1cf7af4c",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.AppUser", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -155,7 +155,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec338ac7-1d83-4563-9fef-a82935ce0929",
+                            ConcurrencyStamp = "fba200ea-351c-4ce6-a85d-bf5712ffe1a6",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -164,7 +164,7 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHaI9ng4smurLOxRDEpn0s3UxZEcTbfkI8ibRidTv3wjwCPUm6XFvDiUDLslsELLAQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOr1P5BLrbsAzJFVfypWnjjtNhfCM2uCANlKqr2ZjckMzXEbDZUia2YYIh98h25rwA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -172,7 +172,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Cart", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,7 +205,7 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Category", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -247,7 +247,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.CategoryTranslation", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.CategoryTranslation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -334,7 +334,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Contact", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Contact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -370,7 +370,7 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Language", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Language", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(5)
@@ -404,7 +404,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Order", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -414,9 +414,7 @@ namespace EshopAspCore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("OrderDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 30, 19, 34, 18, 323, DateTimeKind.Local).AddTicks(4184));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ShipAddress")
                         .IsRequired()
@@ -452,7 +450,7 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.OrderDetail", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.OrderDetail", b =>
                 {
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -471,7 +469,7 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Product", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -505,7 +503,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 12, 30, 19, 34, 18, 339, DateTimeKind.Local).AddTicks(4493),
+                            DateCreated = new DateTime(2022, 1, 3, 19, 44, 7, 529, DateTimeKind.Local).AddTicks(6747),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -513,7 +511,47 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.ProductInCategory", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImage");
+                });
+
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductInCategory", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -535,7 +573,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.ProductTranslation", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductTranslation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -607,7 +645,7 @@ namespace EshopAspCore.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Promotion", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Promotion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -649,7 +687,7 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("Promotions");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Transaction", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -794,15 +832,15 @@ namespace EshopAspCore.Data.Migrations
                     b.ToTable("AppUserToken");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Cart", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Cart", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.Product", "Product")
+                    b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("Carts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EshopAspCore.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("EshopAspCore.Data.Entity.AppUser", "AppUser")
                         .WithMany("Carts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -813,15 +851,15 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.CategoryTranslation", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.CategoryTranslation", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.Category", "Category")
+                    b.HasOne("EshopAspCore.Data.Entity.Category", "Category")
                         .WithMany("CategoryTranslations")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EshopAspCore.Data.Entities.Language", "Language")
+                    b.HasOne("EshopAspCore.Data.Entity.Language", "Language")
                         .WithMany("CategoryTranslations")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -832,9 +870,9 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Order", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Order", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("EshopAspCore.Data.Entity.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -843,15 +881,15 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.OrderDetail", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.OrderDetail", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.Order", "Order")
+                    b.HasOne("EshopAspCore.Data.Entity.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EshopAspCore.Data.Entities.Product", "Product")
+                    b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -862,15 +900,26 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.ProductInCategory", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductImage", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.Category", "Category")
+                    b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductInCategory", b =>
+                {
+                    b.HasOne("EshopAspCore.Data.Entity.Category", "Category")
                         .WithMany("ProductInCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EshopAspCore.Data.Entities.Product", "Product")
+                    b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("ProductInCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -881,15 +930,15 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.ProductTranslation", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.ProductTranslation", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.Language", "Language")
+                    b.HasOne("EshopAspCore.Data.Entity.Language", "Language")
                         .WithMany("ProductTranslations")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EshopAspCore.Data.Entities.Product", "Product")
+                    b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("ProductTranslations")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -900,9 +949,9 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Transaction", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Transaction", b =>
                 {
-                    b.HasOne("EshopAspCore.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("EshopAspCore.Data.Entity.AppUser", "AppUser")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -911,7 +960,7 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.AppUser", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.AppUser", b =>
                 {
                     b.Navigation("Carts");
 
@@ -920,30 +969,32 @@ namespace EshopAspCore.Data.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Category", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Category", b =>
                 {
                     b.Navigation("CategoryTranslations");
 
                     b.Navigation("ProductInCategories");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Language", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Language", b =>
                 {
                     b.Navigation("CategoryTranslations");
 
                     b.Navigation("ProductTranslations");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Order", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("EshopAspCore.Data.Entities.Product", b =>
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Product", b =>
                 {
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("ProductImages");
 
                     b.Navigation("ProductInCategories");
 

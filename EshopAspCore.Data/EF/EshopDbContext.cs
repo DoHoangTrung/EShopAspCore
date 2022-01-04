@@ -1,5 +1,4 @@
-﻿using EshopAspCore.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,6 +9,7 @@ using EshopAspCore.Data.Configurations;
 using EshopAspCore.Data.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using EshopAspCore.Data.Entity;
 
 namespace EshopAspCore.Data.EF
 {
@@ -38,6 +38,8 @@ namespace EshopAspCore.Data.EF
 
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x=>new {x.UserId, x.RoleId });
@@ -55,7 +57,6 @@ namespace EshopAspCore.Data.EF
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<AppConfig> AppConfigs { get; set; }
-
 
         public DbSet<Cart> Carts { get; set; }
 
@@ -75,5 +76,6 @@ namespace EshopAspCore.Data.EF
         public DbSet<Promotion> Promotions { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }

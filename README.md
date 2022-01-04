@@ -28,3 +28,13 @@ migration database:
 - create seeding data
 -add class + config: IdentityUserClaim, IdentityUserRole, IdentityUserLogin, IdentityRoleClaim, IdentityUserToken
 -seeding data: 
+-tạo tầng application:
+	+SOLID: D(dependencies inject)
+	+tạo 2 interface product: admin (manage) vs web(public)
+	+moi C, U, R, D co mot DTO
+	
+	
+-create api 
+add connection string to appsetting.developement.json
+
+config DI (dependence inject dot net core)
