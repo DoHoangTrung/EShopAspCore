@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EshopAspCore.Application\EshopAspCore.Application.csproj" />
+    <ProjectReference Include="..\EshopAspCore.Data\EshopAspCore.Data.csproj" />
+    <ProjectReference Include="..\EshopAspCore.Utilities\EshopAspCore.Utilities.csproj" />
+    <ProjectReference Include="..\EshopAspCore.ViewModels\EshopAspCore.ViewModels.csproj" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+
+  </ItemGroup>
+
+</Project>

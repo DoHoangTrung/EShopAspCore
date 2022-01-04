@@ -1,4 +1,4 @@
-﻿using EshopAspCore.Data.Entities;
+﻿using EshopAspCore.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -19,7 +19,7 @@ namespace EshopAspCore.Data.Configurations
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x => x.OrderDate).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.OrderDate);
 
             builder.Property(x => x.ShipEmail).IsRequired().IsUnicode(false).HasMaxLength(50);
 

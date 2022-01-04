@@ -1,4 +1,4 @@
-﻿using EshopAspCore.Data.Entities;
+﻿using EshopAspCore.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

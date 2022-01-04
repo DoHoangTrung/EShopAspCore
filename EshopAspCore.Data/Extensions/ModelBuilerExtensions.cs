@@ -1,4 +1,4 @@
-﻿using EshopAspCore.Data.Entities;
+﻿using EshopAspCore.Data.Entity;
 using EshopAspCore.Data.Enum;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

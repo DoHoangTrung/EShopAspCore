@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EshopAspCore.Utilities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,7 +20,7 @@ namespace EshopAspCore.Data.EF
             .AddJsonFile("appsettings.json")
             .Build();
 
-            var connectionString = Configuration.GetConnectionString("EshopAspCoreDatabase");
+            var connectionString = Configuration.GetConnectionString(SystemConstants.MainConnectionString);
 
             var optionsBuilder = new DbContextOptionsBuilder<EshopDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
