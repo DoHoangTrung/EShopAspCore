@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ViewModels.Catalog.Products;
+﻿using EshopAspCore.Data.Entity;
+using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage ;
 using EshopAspCore.ViewModels.Catalog.Products.Public;
 using EshopAspCore.ViewModels.Common;
@@ -22,7 +23,9 @@ namespace EshopAspCore.Application.Catalog.Products
 
         Task<int> Delete(int productId);
 
-        Task<PageResult<ProductViewModel>> GetAllPaging(GetPublicProductPagingRequest request);
+        Task<ProductViewModel> GetById(int productId, string languageId);
+
+        Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImages(int productId, List<IFormFile> files); 
         Task<int> RemoveImages(int productId); 

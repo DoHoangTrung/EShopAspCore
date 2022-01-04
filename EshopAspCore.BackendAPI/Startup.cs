@@ -1,4 +1,5 @@
 using EshopAspCore.Application.Catalog.Products;
+using EshopAspCore.Application.Common;
 using EshopAspCore.Data.EF;
 using EshopAspCore.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,10 @@ namespace EshopAspCore.BackendAPI
 
             //Declare DI
             services.AddTransient<IPublicProductService, PublicProductService>();
+
+            services.AddTransient<IManageProductService, ManageProductService>();
+
+            services.AddTransient<IStorageService, FileStorageService>();
 
             services.AddControllersWithViews();
 
