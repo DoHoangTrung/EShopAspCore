@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopeMvcCore.Web", "EshopeMvcCore.Web\EshopeMvcCore.Web.csproj", "{7E95A30B-26EB-474A-94D5-6E5621B1123D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D63DFF3C-767E-4EC6-B385-6A9B52C5AE67}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{D63DFF3C-767E-4EC6-B385-6A9B52C5AE67}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -19,6 +19,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopAspCore.ViewModels", "EshopAspCore.ViewModels\EshopAspCore.ViewModels.csproj", "{092A540F-8A3B-4020-B1E2-DD2B5B4FCF34}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopAspCore.BackendAPI", "EshopAspCore.BackendAPI\EshopAspCore.BackendAPI.csproj", "{4BE0116F-4CAA-4879-BE77-3E5A0E1AC7A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructure", "1.Infrastructure", "{ABEB3593-3909-481F-B645-464E1F3804AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{983AD9E5-5C51-492B-BDAE-399582F9A4F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Hosts", "3.Hosts", "{9FB790F8-35A1-43F8-9508-4F20055F6E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E95A30B-26EB-474A-94D5-6E5621B1123D} = {9FB790F8-35A1-43F8-9508-4F20055F6E80}
+		{28710CEA-C7BF-4AEA-9937-E2D06059062A} = {983AD9E5-5C51-492B-BDAE-399582F9A4F6}
+		{F0BEE9F3-4D20-4EFF-B962-C0FAF0F0E404} = {983AD9E5-5C51-492B-BDAE-399582F9A4F6}
+		{8F2F2841-F1AC-43AC-B8F7-E757C5F947A5} = {ABEB3593-3909-481F-B645-464E1F3804AF}
+		{092A540F-8A3B-4020-B1E2-DD2B5B4FCF34} = {ABEB3593-3909-481F-B645-464E1F3804AF}
+		{4BE0116F-4CAA-4879-BE77-3E5A0E1AC7A7} = {9FB790F8-35A1-43F8-9508-4F20055F6E80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA833F80-BA60-4A34-87C0-7A3DD1E90935}

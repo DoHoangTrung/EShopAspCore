@@ -38,3 +38,12 @@ migration database:
 add connection string to appsetting.developement.json
 
 config DI (dependence inject dot net core)
+
+-add swagger
+.net5 to now : project api auto intergrate swagger
+
+-add solution file : (logical file, it's not show in location folder)
+-fromform vs frombody : when use swagger 
+fromquery : path?p=1
+if path/{id} : dont need from query(it will add a text value when
+use swagger)
