@@ -9,7 +9,6 @@ namespace EshopAspCore.Data.Entity
     public class ProductImage
     {
         public int Id { get; set; }
-
         public int ProductId { get; set; }
         public string ImagePath { get; set; }
         public string Caption { get; set; }

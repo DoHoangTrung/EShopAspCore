@@ -1,6 +1,7 @@
-﻿using EshopAspCore.ViewModels.Catalog.Products;
-using EshopAspCore.ViewModels.Catalog.Products.Manage ;
-using EshopAspCore.ViewModels.Catalog.Products.Public;
+﻿using EshopAspCore.Data.Entity;
+using EshopAspCore.ViewModels.Catalog.ProductImages;
+using EshopAspCore.ViewModels.Catalog.Products;
+using EshopAspCore.ViewModels.Catalog.Products.Manage;
 using EshopAspCore.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -24,10 +25,12 @@ namespace EshopAspCore.Application.Catalog.Products
 
         Task<PageResult<ProductViewModel>> GetAllPaging(GetPublicProductPagingRequest request);
 
-        Task<int> AddImages(int productId, List<IFormFile> files); 
-        Task<int> RemoveImages(int productId); 
-        Task<int> UpdateImages(int productId, List<IFormFile> files, bool isDefautl);
+        Task<int> AddImage(int productId, ProductImageCreateRequest request);
+        Task<int> RemoveImage(int imageId);
+        Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
 
-        Task<List<ProductImageViewModel>> getListImage(int productId);
+        Task<List<ProductImageViewModel>> GetListImages(int productId);
+
+        Task<ProductImageViewModel> GetProductImageById(int imageId);
     }
 }
