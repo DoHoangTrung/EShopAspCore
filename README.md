@@ -47,3 +47,5 @@ config DI (dependence inject dot net core)
 fromquery : path?p=1
 if path/{id} : dont need from query(it will add a text value when
 use swagger)
+-bug: if we dont create user-content folder in wwwroot
+productimage cant save

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EshopAspCore.Data.Entity
+namespace EshopAspCore.ViewModels.Catalog.ProductImages
 {
-    public class ProductImage
+    public class ProductImageViewModel
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
@@ -16,7 +17,5 @@ namespace EshopAspCore.Data.Entity
         public DateTime DateCreated { get; set; }
         public int SortOrder { get; set; }
         public long FileSize { get; set; }
-
-        public Product Product { get; set; }
     }
 }
