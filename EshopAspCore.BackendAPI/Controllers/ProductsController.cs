@@ -35,7 +35,7 @@ namespace EshopAspCore.BackendAPI.Controllers
         [HttpGet("{productId}/{languageId}")]
         public async Task<IActionResult> GetById(int productId, string languageId)
         {
-            var product = await _manageProductService.GetById(productId, languageId);
+            var product = await _manageProductService.get(productId, languageId);
             if (product == null)
                 return BadRequest("Cannot find product");
 

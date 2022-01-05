@@ -5,6 +5,7 @@ using EshopAspCore.Utilities.Exceptions;
 using EshopAspCore.ViewModels.Catalog.ProductImages;
 using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;
+using EshopAspCore.ViewModels.Catalog.Products.Public;
 using EshopAspCore.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -161,27 +162,11 @@ namespace EshopAspCore.Application.Catalog.Products
             //4.select and projection
             var pageResult = new PageResult<ProductViewModel>()
             {
-                Id = product.Id,
-                LanguageId = productTranslation != null ? productTranslation.LanguageId : null,
-                DateCreated = product.DateCreated,
-                Description = productTranslation != null ? productTranslation.Description : null,
-                Details = productTranslation != null ? productTranslation.Details : null,
-                Name = productTranslation != null ? productTranslation.Name : null,
-                OriginalPrice = product.OriginalPrice,
-                Price = product.Price,
-                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
-                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
-                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
-                Stock = product.Stock,
-                ViewCount = product.ViewCount
+                TotalRecord = totalRow,
+                Items = data
             };
 
             return pageResult;
-        }
-
-        public Task<PageResult<ProductViewModel>> GetAllPaging(GetPublicProductPagingRequest request)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<ProductImageViewModel>> GetListImages(int productId)

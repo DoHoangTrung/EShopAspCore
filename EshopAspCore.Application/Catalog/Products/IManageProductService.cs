@@ -2,6 +2,7 @@
 using EshopAspCore.ViewModels.Catalog.ProductImages;
 using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;
+using EshopAspCore.ViewModels.Catalog.Products.Public;
 using EshopAspCore.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace EshopAspCore.Application.Catalog.Products
 
         Task<int> Delete(int productId);
 
-        Task<PageResult<ProductViewModel>> GetAllPaging(GetPublicProductPagingRequest request);
+        Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
         Task<int> RemoveImage(int imageId);
