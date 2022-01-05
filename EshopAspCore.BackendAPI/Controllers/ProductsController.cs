@@ -35,7 +35,7 @@ namespace EshopAspCore.BackendAPI.Controllers
         [HttpGet("{productId}/{languageId}")]
         public async Task<IActionResult> GetById(int productId, string languageId)
         {
-            var product = await _manageProductService.get(productId, languageId);
+            var product = await _manageProductService.GetById(productId, languageId);
             if (product == null)
                 return BadRequest("Cannot find product");
 
@@ -65,7 +65,7 @@ namespace EshopAspCore.BackendAPI.Controllers
                 return BadRequest(ModelState);
 
             var affortedProduct = await _manageProductService.Update(request);
-            if (affortedProduct == null)
+            if (affortedProduct == 0)
                 return BadRequest();
 
             return Ok();
@@ -113,7 +113,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //GET: /product/1/images/1
         [HttpGet("{productId}/images/{imageId}")]
-        public async Task<IActionResult> GetImageById(int productId, int imageId)
+        public async Task<IActionResult> GetImageById(int imageId)
         {
             var image = await _manageProductService.GetProductImageById(imageId);
             if (image == null)
