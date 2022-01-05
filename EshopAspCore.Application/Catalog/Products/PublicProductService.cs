@@ -19,25 +19,20 @@ namespace EshopAspCore.Application.Catalog.Products
             _context = context;
         }
 
-        public async Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll(string languageID)
         {
-            try
-            {
-                var test = _context.Products.ToList();
-            }
-            catch(Exception ex)
-            {
-                var msg = ex.Message;
-            }
-
-
 
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
                         select new { p, pt, pic };
-            
+
+            if (!string.IsNullOrEmpty(languageID))
+            {
+                query = query.Where(x => x.pt.LanguageId == languageID);
+            }
+
             var data = await query.Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
