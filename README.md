@@ -62,3 +62,6 @@ UserService: authenticate use all async method
                 .AddEntityFrameworkStores<EshopDbContext>()
                 .AddDefaultTokenProviders();
 --add authorization header bearer in swagger UI
+	add app.authentication() 
+	
+- fluent validation .net core
