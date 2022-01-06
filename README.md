@@ -49,3 +49,10 @@ if path/{id} : dont need from query(it will add a text value when
 use swagger)
 -bug: if we dont create user-content folder in wwwroot
 productimage cant save
+
+--feature/login
+create system/users folder
+register request has fields that app user need
+define constructor for userservice 
+UserService: authenticate use all async method
+	should rename it to au...async

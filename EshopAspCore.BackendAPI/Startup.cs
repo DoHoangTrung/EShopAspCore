@@ -1,10 +1,13 @@
 using EshopAspCore.Application.Catalog.Products;
 using EshopAspCore.Application.Common;
+using EshopAspCore.Application.System.Users;
 using EshopAspCore.Data.EF;
+using EshopAspCore.Data.Entity;
 using EshopAspCore.Utilities.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,12 +35,19 @@ namespace EshopAspCore.BackendAPI
             services.AddDbContext<EshopDbContext>(
                  options => options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<EshopDbContext>()
+                .AddDefaultTokenProviders();
             //Declare DI
             services.AddTransient<IPublicProductService, PublicProductService>();
-
             services.AddTransient<IManageProductService, ManageProductService>();
-
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IStorageService, FileStorageService>();
+
+            
 
             services.AddControllersWithViews();
 
