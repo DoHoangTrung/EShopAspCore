@@ -28,7 +28,7 @@ namespace EshopAspCore.BackendAPI.Controllers
                 return BadRequest(ModelState);
 
             var resultToken = await _userService.AuthenticateAsync(request);
-            if (string.IsNullOrEmpty(resultToken) == null)
+            if (string.IsNullOrEmpty(resultToken))
                 return BadRequest("Login failed! Please check your username or password");
 
             return Ok(new { token = resultToken });

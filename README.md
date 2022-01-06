@@ -56,3 +56,9 @@ register request has fields that app user need
 define constructor for userservice 
 UserService: authenticate use all async method
 	should rename it to au...async
+	use iconfiguration: (add attribute tokens in app.json)
+	
+	services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<EshopDbContext>()
+                .AddDefaultTokenProviders();
+--add authorization header bearer in swagger UI
