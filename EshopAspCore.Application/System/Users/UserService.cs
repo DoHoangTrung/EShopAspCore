@@ -36,7 +36,7 @@ namespace EshopAspCore.Application.System.Users
                 return null;
 
             //login by user name and password
-            var result = await _signInManager.PasswordSignInAsync(user, request.PassWord, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
                 return null;
 

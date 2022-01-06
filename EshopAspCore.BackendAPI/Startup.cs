@@ -4,6 +4,9 @@ using EshopAspCore.Application.System.Users;
 using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.Utilities.Constants;
+using EshopAspCore.ViewModels.System.Users;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,9 +53,12 @@ namespace EshopAspCore.BackendAPI
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IStorageService, FileStorageService>();
 
+            //fluent validator
+            services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+            services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
-
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); //register all validator file in same url with login request validator
 
             services.AddSwaggerGen(c =>
             {
