@@ -65,17 +65,3 @@ UserService: authenticate use all async method
 	add app.authentication() 
 	
 - fluent validation .net core
-- call api from call admin app
-	service.addhttpclient()
-	if you want to use validation -> config fluent validation 
-	
--cookie authentication without identity
-
-services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option=>
-                {
-                    option.LoginPath = "/User/login";
-                    option.AccessDeniedPath = "/User/Forbidden";
-                });
-				
-app.UseAuthentication(); befor routing() and authorization()
