@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ViewModels.System.Users;
+﻿using EshopAspCore.ViewModels.Common;
+using EshopAspCore.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace EshopAspCore.Application.System.Users
     {
         Task<string> AuthenticateAsync(LoginRequest request);
         Task<bool> Register(RegisterRequest request);
+        Task<PageResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request);
     }
 }

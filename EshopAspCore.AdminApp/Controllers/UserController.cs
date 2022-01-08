@@ -2,6 +2,7 @@
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Logging;
@@ -27,10 +28,25 @@ namespace EshopAspCore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string keywords, int pageIndex =1, int pageSize=10)
         {
-            var name = User.Identity.Name;
-            return View();
+            //get list users
+            //1.get key word, page idnex, page size
+            //2.get token
+            string token = HttpContext.Session.GetString("Token");
+            //3.create getUserRequest
+            var request = new GetUserPagingRequest()
+            {
+                BearerToken = token,
+                Keywords = keywords,
+                PageIndex = pageIndex,
+                PageSize = pageIndex,
+            };
+            //4.call service
+            var pageResult = await _userApiClient.GetUsersPaging(request);
+
+            return View(pageResult);
         }
 
         [HttpGet]
@@ -59,6 +75,8 @@ namespace EshopAspCore.AdminApp.Controllers
                 IsPersistent = false,
             };
 
+            HttpContext.Session.SetString("Token", token);
+
             //login 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
@@ -75,12 +93,17 @@ namespace EshopAspCore.AdminApp.Controllers
             await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Login","User");
+            HttpContext.Session.Remove("Token");
+
+            return RedirectToAction("Login", "User");
         }
 
         [HttpPost]
-        public IActionResult Register()
+        public IActionResult Register(RegisterRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             return View();
         }
 

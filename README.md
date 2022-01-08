@@ -79,3 +79,6 @@ services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 });
 				
 app.UseAuthentication(); befor routing() and authorization()
+
+--get list user 
+create userviewModel: entity appuser mustnt has email

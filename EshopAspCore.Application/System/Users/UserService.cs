@@ -1,6 +1,8 @@
 ﻿using EshopAspCore.Data.Entity;
+using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,7 +19,7 @@ namespace EshopAspCore.Application.System.Users
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        //private readonly RoleManager<AppRole> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
 
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager
@@ -63,6 +65,42 @@ namespace EshopAspCore.Application.System.Users
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public async Task<PageResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request)
+        {
+            var query = _userManager.Users;
+
+            //filter
+            if (!string.IsNullOrEmpty(request.Keywords))
+            {
+                query = query.Where(u => u.UserName.Contains(request.Keywords)
+                    || u.PhoneNumber.Contains(request.Keywords));
+            }
+
+            //2.paging
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new UserViewModel()
+                {
+                    Id = x.Id,
+                    Dob = x.Dob,
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    UserName = x.UserName,
+                }).ToListAsync();
+
+            //4.select and projection
+            var pageResult = new PageResult<UserViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data
+            };
+
+            return pageResult;
+        }
+
         public async Task<bool> Register(RegisterRequest request)
         {
             var user = new AppUser()
@@ -71,7 +109,7 @@ namespace EshopAspCore.Application.System.Users
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
-                UserName= request.UserName,
+                UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber
             };
 
@@ -80,6 +118,7 @@ namespace EshopAspCore.Application.System.Users
                 return true;
 
             return false;
+
         }
     }
 }
