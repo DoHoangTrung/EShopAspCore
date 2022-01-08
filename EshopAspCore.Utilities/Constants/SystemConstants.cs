@@ -9,5 +9,7 @@ namespace EshopAspCore.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConnectionString = "EshopAspCoreDatabase";
+
+        public const string BaseApiUrlString = "BaseApiUrl";
     }
 }

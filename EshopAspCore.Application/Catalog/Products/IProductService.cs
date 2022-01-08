@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.Application.Catalog.Products
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
 
@@ -33,5 +33,7 @@ namespace EshopAspCore.Application.Catalog.Products
         Task<List<ProductImageViewModel>> GetListImages(int productId);
 
         Task<ProductImageViewModel> GetProductImageById(int imageId);
+        Task<PageResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+
     }
 }
