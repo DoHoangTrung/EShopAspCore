@@ -2,6 +2,7 @@
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +29,9 @@ namespace EshopAspCore.AdminApp.Controllers
             _configuration = configuration;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Index(string keywords, int pageIndex =1, int pageSize=10)
+        public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
         {
             //get list users
             //1.get key word, page idnex, page size
@@ -98,13 +100,23 @@ namespace EshopAspCore.AdminApp.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return View(request);
 
-            return View();
+            var isSuccessful = await _userApiClient.Register(request);
+            if (isSuccessful)
+                return RedirectToAction(nameof(Index));
+
+            return View(request);
         }
 
         private ClaimsPrincipal ValidateToken(string jwtToken)
