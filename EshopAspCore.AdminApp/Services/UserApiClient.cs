@@ -52,5 +52,17 @@ namespace EshopAspCore.AdminApp.Services
 
             return users;
         }
+
+        public async Task<bool> Register(RegisterRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
+            var response = await client.PostAsync("/api/users", httpContent);
+            
+            return response.IsSuccessStatusCode;
+        }
     }
 }

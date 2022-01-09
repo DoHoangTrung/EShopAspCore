@@ -12,5 +12,7 @@ namespace EshopAspCore.AdminApp.Services
         Task<string> Authenticate(LoginRequest request);
 
         Task<PageResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
+
+        Task<bool> Register(RegisterRequest request);
     }
 }
