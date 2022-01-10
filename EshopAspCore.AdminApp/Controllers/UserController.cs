@@ -18,9 +18,11 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.AdminApp.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
+
         private readonly IConfiguration _configuration;
 
         public UserController(IUserApiClient userApiClient, IConfiguration configuration)
@@ -29,7 +31,7 @@ namespace EshopAspCore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
         {
@@ -43,14 +45,15 @@ namespace EshopAspCore.AdminApp.Controllers
                 BearerToken = token,
                 Keywords = keywords,
                 PageIndex = pageIndex,
-                PageSize = pageIndex,
+                PageSize = pageSize,
             };
             //4.call service
-            var pageResult = await _userApiClient.GetUsersPaging(request);
-
+            var result = await _userApiClient.GetUsersPaging(request);
+            var pageResult = result.ResultObject;
             return View(pageResult);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Login()
         {
@@ -61,20 +64,28 @@ namespace EshopAspCore.AdminApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var token = await _userApiClient.Authenticate(request);
+            var apiResult = await _userApiClient.Authenticate(request);
+            if (!apiResult.IsSuccessed)
+            {
+                ModelState.AddModelError("", apiResult.Message);
+                return View();
+            }
 
-            var userPrincipals = ValidateToken(token);
+            var token = apiResult.ResultObject;
+
+            var userPrincipals = ValidateToken(apiResult.ResultObject);
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
-                IsPersistent = false,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1), //if authenticate is not using for about 5m, it removed
+                IsPersistent = true,
             };
 
             HttpContext.Session.SetString("Token", token);
@@ -100,22 +111,25 @@ namespace EshopAspCore.AdminApp.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             if (!ModelState.IsValid)
-                return View(request);
+                return View();
 
-            var isSuccessful = await _userApiClient.Register(request);
-            if (isSuccessful)
+            var result = await _userApiClient.Register(request);
+            if (result.IsSuccessed)
                 return RedirectToAction(nameof(Index));
 
+            ModelState.AddModelError("", result.Message);
             return View(request);
         }
 
@@ -134,6 +148,60 @@ namespace EshopAspCore.AdminApp.Controllers
             ClaimsPrincipal claimsPrincipal = handler.ValidateToken(jwtToken, validations, out tokenSecure);
 
             return claimsPrincipal;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var result = await _userApiClient.GetById(id);
+            if(!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            var user = result.ResultObject;
+
+            var updateRequest = new UserUpdateRequest()
+            {
+                Id = id,
+                Dob = user.Dob,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            return View(updateRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.Update(request.Id,request);
+            if (result.IsSuccessed)
+                return RedirectToAction(nameof(Index));
+
+            ModelState.AddModelError("", result.Message);
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details (Guid id)
+        {
+            var result = await _userApiClient.GetById(id);
+            if (!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            var user = result.ResultObject;
+
+            return View(user);
         }
     }
 }

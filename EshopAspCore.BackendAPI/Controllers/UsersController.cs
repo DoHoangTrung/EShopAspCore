@@ -12,6 +12,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -20,6 +21,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             _userService = userService;
         }
 
+        //POST: api/users/authenticate
         [HttpPost("authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
@@ -27,15 +29,16 @@ namespace EshopAspCore.BackendAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var resultToken = await _userService.AuthenticateAsync(request);
-            if (string.IsNullOrEmpty(resultToken))
+            var response = await _userService.AuthenticateAsync(request);
+            if (string.IsNullOrEmpty(response.ResultObject))
             {
-                return BadRequest("Login failed! Please check your username or password");
+                return BadRequest(response);
             }
             
-            return Ok(resultToken);
+            return Ok(response);
         }
 
+        //POST:api/users
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -43,23 +46,50 @@ namespace EshopAspCore.BackendAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var isSuccessful = await _userService.Register(request);
-            if (!isSuccessful)
-                return BadRequest("Login failed! Please check your username or password");
+            var response = await _userService.Register(request);
+            if (!response.IsSuccessed)
+                return BadRequest(response);
 
-            return Ok();
+            return Ok(response);
         }
 
-        //GET: users/paging?pageIndex=1&pageSize=10&keywords=abc
+        //PUT: api/users/id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id,[FromBody] UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _userService.Update(id, request);
+            if (response.IsSuccessed)
+                return Ok(response);
+
+            return BadRequest(response);
+        }
+
+        //GET: api/users/paging?pageIndex=1&pageSize=10&keywords=abc
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var users = await _userService.GetUserPaging(request);
+            var respose = await _userService.GetUserPaging(request);
 
-            return Ok(users);
+            return Ok(respose);
+        }
+
+        //GET: api/users/id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var apiResult =await _userService.GetById(id);
+            if (apiResult.IsSuccessed)
+            {
+                return Ok(apiResult);
+            }
+
+            return BadRequest(apiResult);
         }
     }
 }

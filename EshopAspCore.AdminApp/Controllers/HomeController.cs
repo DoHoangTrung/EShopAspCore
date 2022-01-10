@@ -22,6 +22,7 @@ namespace EshopAspCore.AdminApp.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

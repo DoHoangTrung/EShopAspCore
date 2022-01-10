@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.ViewModels.Common
 {
-    public class PageResult<T> : PageResultBase
+    public class ApiResult <T>
     {
-        public List<T> Items { get; set; }
+        public bool IsSuccessed { get; set; }
+
+        public string Message { get; set; }
+
+        public T ResultObject { get; set; }
     }
 }
