@@ -30,17 +30,17 @@ namespace EshopAspCore.Application.System.Users
             _config = config;
         }
 
-        public async Task<string> AuthenticateAsync(LoginRequest request)
+        public async Task<ApiResult<string>> AuthenticateAsync(LoginRequest request)
         {
             //search user name
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null)
-                return null;
+                return new ApiErrorResult<string>("UserName or password is incorrect.");
 
             //login by user name and password
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
-                return null;
+                return new ApiErrorResult<string>("Login failed.");
 
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -62,10 +62,33 @@ namespace EshopAspCore.Application.System.Users
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: credential);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return new ApiSuccessResult<string>(tokenString);
         }
 
-        public async Task<PageResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request)
+        public async Task<ApiResult<UserViewModel>> GetById(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return new ApiErrorResult<UserViewModel>("User doesn't exist.");
+
+
+            var userViewModel = new UserViewModel()
+            {
+                Id = user.Id,
+                Dob = user.Dob,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            return new ApiSuccessResult<UserViewModel>(userViewModel);
+        }
+
+        public async Task<ApiResult<PageResult<UserViewModel>>> GetUserPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
 
@@ -89,6 +112,7 @@ namespace EshopAspCore.Application.System.Users
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     UserName = x.UserName,
+                    PhoneNumber = x.PhoneNumber ,
                 }).ToListAsync();
 
             //4.select and projection
@@ -98,11 +122,21 @@ namespace EshopAspCore.Application.System.Users
                 Items = data
             };
 
-            return pageResult;
+            return new ApiSuccessResult<PageResult<UserViewModel>>(pageResult);
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
+            //check dupplicate user name and email
+            var userByName = await _userManager.FindByNameAsync(request.UserName);
+            var userByEmail = await _userManager.FindByEmailAsync(request.Email);
+
+            if (userByName != null)
+                return new ApiErrorResult<bool>("Username already exists.");
+
+            if (userByEmail!= null)
+                return new ApiErrorResult<bool>("Email already exists.");
+
             var user = new AppUser()
             {
                 Dob = request.Dob,
@@ -115,10 +149,34 @@ namespace EshopAspCore.Application.System.Users
 
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
-                return true;
+                return new ApiSuccessResult<bool>(true);
 
-            return false;
+            return new ApiErrorResult<bool>();
+        }
 
+        public async Task<ApiResult<bool>> Update(Guid id,UserUpdateRequest request)
+        {
+            //check email exist?
+            var userByEmail = await _userManager.FindByEmailAsync(request.Email);
+
+            if (await _userManager.Users.AnyAsync(x=>x.Email == request.Email && x.Id != id))
+                return new ApiErrorResult<bool>("Email already exists.");
+
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+                return new ApiErrorResult<bool>("Cant find user with id " + id.ToString());
+
+            user.Dob = request.Dob;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+                return new ApiSuccessResult<bool>(true);
+
+            return new ApiErrorResult<bool>("Update failed.");
         }
     }
 }

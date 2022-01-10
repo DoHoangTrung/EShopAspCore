@@ -14,7 +14,7 @@
                 <a asp-controller="User" asp-action="Register" class="btn btn-success">Create New</a>
             </p>
         </div>
-        <div class="card-body">     
+        <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
@@ -62,14 +62,16 @@
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+
+            @await Component.InvokeAsync("PriorityList", new { maxPriority = 4, isDone = true })
         </div>
     </div>
 </div>

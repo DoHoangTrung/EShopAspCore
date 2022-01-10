@@ -10,8 +10,15 @@ namespace EshopAspCore.Application.System.Users
 {
     public interface IUserService
     {
-        Task<string> AuthenticateAsync(LoginRequest request);
-        Task<bool> Register(RegisterRequest request);
-        Task<PageResult<UserViewModel>> GetUserPaging(GetUserPagingRequest request);
+        Task<ApiResult<string>> AuthenticateAsync(LoginRequest request);
+
+        Task<ApiResult<bool>> Register(RegisterRequest request);
+
+        Task<ApiResult<PageResult<UserViewModel>>> GetUserPaging( GetUserPagingRequest request);
+
+        Task<ApiResult<bool>> Update(Guid id,UserUpdateRequest request);
+
+        Task<ApiResult<UserViewModel>> GetById(Guid id);
+
     }
 }
