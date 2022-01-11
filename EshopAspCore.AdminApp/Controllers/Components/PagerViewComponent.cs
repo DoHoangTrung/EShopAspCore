@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EshopAspCore.ViewModels.Common;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,9 @@ namespace EshopAspCore.AdminApp.Controllers.Components
 {
     public class PagerViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync()
+        public Task<IViewComponentResult> InvokeAsync(PageResultBase result)
         {
-
-
-            return View();
+            return Task.FromResult((IViewComponentResult)View("Default", result));
         }
     }
 }

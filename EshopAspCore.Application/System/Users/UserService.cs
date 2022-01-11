@@ -118,6 +118,8 @@ namespace EshopAspCore.Application.System.Users
             //4.select and projection
             var pageResult = new PageResult<UserViewModel>()
             {
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 TotalRecord = totalRow,
                 Items = data
             };

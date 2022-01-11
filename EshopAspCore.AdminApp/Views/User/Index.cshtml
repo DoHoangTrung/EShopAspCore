@@ -1,5 +1,11 @@
 ﻿@using EshopAspCore.ViewModels.Common;
+@using EshopAspCore.AdminApp.Controllers.Components;
 @model PageResult<EshopAspCore.ViewModels.System.Users.UserViewModel>
+
+@{
+    ViewData["Title"] = "List user";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">List users</h1>
@@ -71,7 +77,7 @@
                 </tbody>
             </table>
 
-            @await Component.InvokeAsync("PriorityList", new { maxPriority = 4, isDone = true })
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>
