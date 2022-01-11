@@ -130,5 +130,28 @@ namespace EshopAspCore.AdminApp.Services
 
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(responseData);
         }
+
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var bearToken = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearToken);
+
+            var response = await client.DeleteAsync($"/api/users/{id}");
+
+            var content = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(content);
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(content);
+            }
+        }
+
     }
 }

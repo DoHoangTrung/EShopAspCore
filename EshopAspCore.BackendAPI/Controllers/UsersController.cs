@@ -91,5 +91,17 @@ namespace EshopAspCore.BackendAPI.Controllers
 
             return BadRequest(apiResult);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var apiResult = await _userService.Delete(id);
+            if (apiResult.IsSuccessed)
+            {
+                return Ok(apiResult);
+            }
+
+            return BadRequest(apiResult);
+        }
     }
 }
