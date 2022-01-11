@@ -128,7 +128,10 @@ namespace EshopAspCore.AdminApp.Controllers
 
             var result = await _userApiClient.Register(request);
             if (result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Register successed.";
                 return RedirectToAction(nameof(Index));
+            }
 
             ModelState.AddModelError("", result.Message);
             return View(request);
@@ -184,8 +187,10 @@ namespace EshopAspCore.AdminApp.Controllers
 
             var result = await _userApiClient.Update(request.Id,request);
             if (result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Edit successed.";
                 return RedirectToAction(nameof(Index));
-
+            }
             ModelState.AddModelError("", result.Message);
             return View(request);
         }
@@ -237,6 +242,7 @@ namespace EshopAspCore.AdminApp.Controllers
             var result = await _userApiClient.Delete(request.Id);
             if (result.IsSuccessed)
             {
+                TempData["SuccessMsg"] = "Delete successed.";
                 return RedirectToAction("Index", "User");
             }
 

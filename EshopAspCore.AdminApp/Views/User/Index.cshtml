@@ -7,6 +7,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts{ 
+    <script>
+        setTimeout(function () {
+            $('#successMsg').fadeOut('slow');
+        },1000)
+    </script>
+}
+
 <div class="container-fluid px-4">
     <h1 class="mt-4">List users</h1>
     <ol class="breadcrumb mb-4">
@@ -25,7 +33,7 @@
                     <form asp-action="Index" asp-controller="User" method="get">
                         <div class="row">
                             <div class="col-md-8">
-                                <input type="text" name="keywords" class="form-control" value="@ViewBag.keywords"/>
+                                <input type="text" name="keywords" class="form-control" value="@ViewBag.keywords" />
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary">Search</button>
@@ -36,6 +44,12 @@
                     </form>
                 </div>
             </div>
+            @if (TempData["SuccessMsg"] != null)
+            {
+                <div id="successMsg" class="alert alert-success" role="alert">
+                    @TempData["SuccessMsg"]
+                </div>
+            }
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered">
