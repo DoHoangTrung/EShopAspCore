@@ -160,7 +160,9 @@ namespace EshopAspCore.Application.Catalog.Products
             var pagedResult = new PageResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
-                Items = data
+                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
             };
             return pagedResult;
         }
@@ -358,7 +360,9 @@ namespace EshopAspCore.Application.Catalog.Products
             var pageResult = new PageResult<ProductViewModel>()
             {
                 TotalRecord = totalRow,
-                Items = data
+                Items = data,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
             };
 
             return pageResult;

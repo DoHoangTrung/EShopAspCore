@@ -33,7 +33,7 @@ namespace EshopAspCore.AdminApp.Controllers
 
         
         [HttpGet]
-        public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 1)
         {
             //get list users
             //1.get key word, page idnex, page size
@@ -84,7 +84,7 @@ namespace EshopAspCore.AdminApp.Controllers
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1), //if authenticate is not using for about 5m, it removed
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(5), //if authenticate is not using for about 5m, it removed
                 IsPersistent = true,
             };
 

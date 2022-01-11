@@ -86,3 +86,5 @@ create userviewModel: entity appuser mustnt has email
 -25: recompile razor page runtime
 
 -28: override on action execute (base controller)
+
+-30: pagination view component .net core
