@@ -33,8 +33,9 @@ namespace EshopAspCore.AdminApp.Controllers
 
         
         [HttpGet]
-        public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
         {
+            ViewBag.keywords = keywords;
             //get list users
             //1.get key word, page idnex, page size
             //2.get token
@@ -79,7 +80,7 @@ namespace EshopAspCore.AdminApp.Controllers
             }
 
             var token = apiResult.ResultObject;
-
+            
             var userPrincipals = ValidateToken(apiResult.ResultObject);
 
             var authProperties = new AuthenticationProperties
@@ -202,6 +203,45 @@ namespace EshopAspCore.AdminApp.Controllers
             var user = result.ResultObject;
 
             return View(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _userApiClient.GetById(id);
+            if (!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            var user = result.ResultObject;
+
+            var userDeleteRequest = new UserDeleteRequest()
+            {
+                Id = user.Id,
+                Dob = user.Dob,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName,
+            };
+
+            return View(userDeleteRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserDeleteRequest request)
+        {
+            var result = await _userApiClient.Delete(request.Id);
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("Index", "User");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            return View();
         }
     }
 }

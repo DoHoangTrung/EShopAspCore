@@ -16,68 +16,80 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <p>
-                <a asp-controller="User" asp-action="Register" class="btn btn-success">Create New</a>
-            </p>
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].Id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].FirstName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].LastName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].Dob)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].UserName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Items[0].Email)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Items)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dob)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p><a asp-controller="User" asp-action="Register" class="btn btn-success">Create New</a></p>
+                </div>
+                <div class="col-md-6 col-sm-12">
 
-            @await Component.InvokeAsync("Pager", Model)
+                    <form asp-action="Index" asp-controller="User" method="get">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" name="keywords" class="form-control" value="@ViewBag.keywords"/>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="button" class="btn btn-dark" onclick="window.location.href='/user/Index'">Reset</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[0].FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[0].LastName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[0].Dob)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[0].UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[0].Email)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dob)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @await Component.InvokeAsync("Pager", Model)
+            </div>
         </div>
     </div>
 </div>

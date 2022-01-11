@@ -20,5 +20,6 @@ namespace EshopAspCore.Application.System.Users
 
         Task<ApiResult<UserViewModel>> GetById(Guid id);
 
+        Task<ApiResult<bool>> Delete(Guid id);
     }
 }
