@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.Application.System.Users;
+using EshopAspCore.ViewModels.System.Roles;
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -102,6 +103,20 @@ namespace EshopAspCore.BackendAPI.Controllers
             }
 
             return BadRequest(apiResult);
+        }
+
+        //PUT: api/users/{id}/roles
+        [HttpPut("{id}/roles")]
+        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _userService.RoleAssign(id, request);
+            if (response.IsSuccessed)
+                return Ok(response);
+
+            return BadRequest(response);
         }
     }
 }

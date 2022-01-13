@@ -132,24 +132,32 @@ namespace EshopAspCore.Data.Extensions
             var ADMIN_ID = new Guid("DB9ED923-492B-467A-97E4-EE81C9DE0A64");
             var ROLE_ID = new Guid("2A905B66-98FB-4E82-9D98-5CF68EBB16EA");
 
-            modelBuiler.Entity<AppRole>().HasData(new AppRole
-            {
-                Id = ADMIN_ID,
-                Name = "admin",
-                NormalizedName = "admin",
-                Description="Administrator role"
-            });
+            modelBuiler.Entity<AppRole>().HasData(
+                new AppRole()
+                {
+                    Id = ADMIN_ID,
+                    Name = "admin",
+                    NormalizedName = "admin",
+                    Description="Administrator role"
+                },
+                new AppRole() 
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "user",
+                    NormalizedName = "user",
+                    Description = "user role"
+                });
 
             var hasher = new PasswordHasher<AppUser>();
             modelBuiler.Entity<AppUser>().HasData(new AppUser
             {
                 Id = ROLE_ID,
-                UserName = "admin",
+                UserName = "trung123",
                 NormalizedUserName = "admin",
                 Email = "some-admin-email@nonce.fake",
                 NormalizedEmail = "some-admin-email@nonce.fake",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "1234qwer!"),
+                PasswordHash = hasher.HashPassword(null, "Trung123$"),
                 SecurityStamp = string.Empty,
                 FirstName = "Trung",
                 LastName = "Do",
@@ -161,6 +169,8 @@ namespace EshopAspCore.Data.Extensions
                 RoleId = ROLE_ID,
                 UserId = ADMIN_ID
             });
+
+
         }
     }
 }

@@ -4,14 +4,16 @@ using EshopAspCore.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220111132936_newAppUserData")]
+    partial class newAppUserData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,18 +80,10 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "77df1f14-07a1-45a3-80ff-e11a1a47ed33",
+                            ConcurrencyStamp = "e87f7b7b-9daf-4907-84a6-59340be7aa16",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("15479c4a-d0f2-418e-8662-cb79a3dd49f4"),
-                            ConcurrencyStamp = "846a4df3-8664-45f4-b295-d17d7916a43a",
-                            Description = "user role",
-                            Name = "user",
-                            NormalizedName = "user"
                         });
                 });
 
@@ -163,7 +157,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d7c25c8-9dbf-44c9-8c44-b8eff60a7950",
+                            ConcurrencyStamp = "f1298688-bb9e-4e73-81d7-274b3df9ec22",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -172,7 +166,7 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAWnMthFrCxe02VHm7EngRRO4XFpP9xwg4nBAWCtL6Qz7TOwlTs0lZWZ2ej+3uW6Kw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPrOGZRNXKek1NOwfZaEjbikKYZF376C5hqIsbJ9sW8ZrliceEykK7rZBncr+BObPw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -511,7 +505,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 1, 13, 16, 15, 28, 962, DateTimeKind.Local).AddTicks(5109),
+                            DateCreated = new DateTime(2022, 1, 11, 20, 29, 35, 243, DateTimeKind.Local).AddTicks(2346),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,

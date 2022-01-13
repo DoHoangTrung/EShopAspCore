@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.AdminApp.Services;
+using EshopAspCore.ViewModels.System.Roles;
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,13 +26,15 @@ namespace EshopAspCore.AdminApp.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public UserController(IUserApiClient userApiClient, IConfiguration configuration)
+        private readonly IRoleApiClient _roleApiClient;
+
+        public UserController(IUserApiClient userApiClient, IConfiguration configuration, IRoleApiClient roleApiClient)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
+            _roleApiClient = roleApiClient;
         }
 
-        
         [HttpGet]
         public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
         {
@@ -50,6 +53,8 @@ namespace EshopAspCore.AdminApp.Controllers
             };
             //4.call service
             var result = await _userApiClient.GetUsersPaging(request);
+            if (result == null)
+                return RedirectToAction("Login", "User");
             var pageResult = result.ResultObject;
             return View(pageResult);
         }
@@ -248,6 +253,74 @@ namespace EshopAspCore.AdminApp.Controllers
 
             ModelState.AddModelError("", result.Message);
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RoleAssign(Guid id)
+        {
+
+            var roleAssignRequest = await GetUserRolesAndOtherRoles(id);
+            if (roleAssignRequest == null)
+                return View();
+
+            return View(roleAssignRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userApiClient.RoleAssign(request.UserId, request);
+            if (result.IsSuccessed)
+            {
+                TempData["SuccessMsg"] = "Assign user role successed.";
+                return RedirectToAction(nameof(Index));
+            }
+            
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetUserRolesAndOtherRoles(request.UserId);
+            
+            return View(roleAssignRequest);
+        }
+
+        private async Task<RoleAssignRequest> GetUserRolesAndOtherRoles (Guid id)
+        {
+            //get all roles include: 
+            // roles of users
+            // the rest part of roles which dont belong that user
+            var userApiresult = await _userApiClient.GetById(id);
+            if (!userApiresult.IsSuccessed)
+            {
+                ModelState.AddModelError("", userApiresult.Message);
+                return null;
+            }
+
+            var roleApiResult = await _roleApiClient.GetAll();
+            if (roleApiResult.IsSuccessed == false)
+            {
+                ModelState.AddModelError("", roleApiResult.Message);
+                return null;
+            }
+
+            var user = userApiresult.ResultObject;
+            var roles = roleApiResult.ResultObject;
+
+            var roleAssignRequest = new RoleAssignRequest();
+            roleAssignRequest.UserId = user.Id;
+
+            foreach (var role in roles)
+            {
+                roleAssignRequest.Roles.Add(new SelectedItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = user.Roles.Contains(role.Name),
+                });
+            }
+
+            return roleAssignRequest;
         }
     }
 }
