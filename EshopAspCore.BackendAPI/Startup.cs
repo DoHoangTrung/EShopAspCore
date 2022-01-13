@@ -1,5 +1,6 @@
 using EshopAspCore.Application.Catalog.Products;
 using EshopAspCore.Application.Common;
+using EshopAspCore.Application.System.Roles;
 using EshopAspCore.Application.System.Users;
 using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
@@ -51,6 +52,7 @@ namespace EshopAspCore.BackendAPI
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IRoleService, RoleService>();
 
             //fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();

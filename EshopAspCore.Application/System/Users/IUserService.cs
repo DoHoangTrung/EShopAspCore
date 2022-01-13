@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.ViewModels.Common;
+using EshopAspCore.ViewModels.System.Roles;
 using EshopAspCore.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,7 @@ namespace EshopAspCore.Application.System.Users
         Task<ApiResult<UserViewModel>> GetById(Guid id);
 
         Task<ApiResult<bool>> Delete(Guid id);
+
+        Task<ApiResult<bool>> RoleAssign (Guid id, RoleAssignRequest request);
     }
 }
