@@ -12,7 +12,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize]*/
+    [Authorize]
     public class LanguagesController:ControllerBase
     {
         private readonly ILanguageService _languageService;
@@ -26,14 +26,14 @@ namespace EshopAspCore.BackendAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var languages = await _languageService.GetAll();
-            if(languages == null)
+            var roles = await _languageService.GetAll();
+            if(roles == null)
             {
                 var errorResult = new ApiErrorResult<List<LanguageViewModel>>("get all api return null");
                 return BadRequest(errorResult);
             }
 
-            var successResult = new ApiSuccessResult<List<LanguageViewModel>>(languages);
+            var successResult = new ApiSuccessResult<List<LanguageViewModel>>(roles);
             return Ok(successResult);
         }
     }

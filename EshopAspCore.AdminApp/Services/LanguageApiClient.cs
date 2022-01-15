@@ -23,7 +23,7 @@ namespace EshopAspCore.AdminApp.Services
 
         public async Task<ApiResult<List<LanguageViewModel>>> GetAll()
         {
-            var response = await GetAllAsync<ApiResult<List<LanguageViewModel>>>("/api/languages");
+            var response = await GetAsync<ApiResult<List<LanguageViewModel>>>("/api/languages");
 
             return response;
         }

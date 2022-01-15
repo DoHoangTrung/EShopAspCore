@@ -21,7 +21,7 @@ namespace EshopAspCore.AdminApp.Services
 
         public async Task<ApiResult<List<RoleViewModel>>> GetAll()
         {
-            return await GetAllAsync<ApiResult<List<RoleViewModel>>>("/api/roles");
+            return await GetAsync<ApiResult<List<RoleViewModel>>>("/api/roles");
         }
     }
 }
