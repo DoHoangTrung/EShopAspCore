@@ -88,3 +88,27 @@ create userviewModel: entity appuser mustnt has email
 -28: override on action execute (base controller)
 
 -30: pagination view component .net core
+-35: set default language:
+	defaut language id: app setting (common) -> set it to session (when login)
+	add select language on layout page -> new form
+	move navigation in layout to component view 
+	
+	create model : navagation
+		current language
+		list language
+		
+	create language view model: 
+		
+	get all language ()
+	
+	when onchange select, post language method, if it's successfull, redirect to action
+	
+	//optimize code
+	create base apiclient (protected constructor)
+	DI when call api: generic type function return, parameter Url
+	for post call: use multiple generic type
+	
+	when select lg ->submit form
+-when have both inheritant and interface implement: parent class , then interface
+
+-36: Admin product list

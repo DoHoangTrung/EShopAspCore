@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.AdminApp.Services;
+using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.System.Roles;
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
@@ -95,6 +96,8 @@ namespace EshopAspCore.AdminApp.Controllers
             };
 
             HttpContext.Session.SetString("Token", token);
+
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration[SystemConstants.AppSettings.DefaultLanguageId]);
 
             //login 
             await HttpContext.SignInAsync(
