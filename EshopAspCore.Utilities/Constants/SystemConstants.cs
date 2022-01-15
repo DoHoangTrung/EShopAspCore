@@ -11,5 +11,10 @@ namespace EshopAspCore.Utilities.Constants
         public const string MainConnectionString = "EshopAspCoreDatabase";
 
         public const string BaseApiUrlString = "BaseApiUrl";
+
+        public class AppSettings
+        {
+            public const string DefaultLanguageId = "DefaultLanguageId";
+        }
     }
 }

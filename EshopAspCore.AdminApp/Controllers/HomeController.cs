@@ -1,5 +1,7 @@
 ﻿using EshopAspCore.AdminApp.Models;
+using EshopAspCore.Utilities.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,13 +15,7 @@ namespace EshopAspCore.AdminApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        
         public IActionResult Index()
         {
             
@@ -31,10 +27,19 @@ namespace EshopAspCore.AdminApp.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        //POST: /home/language
+        [HttpPost]
+        public IActionResult Language(NavigationModel model)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if(model == null)
+            {
+                ModelState.AddModelError("", "parameter is null");
+                return BadRequest(ModelState);
+            }
+
+            HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, model.CurrentLanguageId);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
