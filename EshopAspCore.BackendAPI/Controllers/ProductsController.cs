@@ -1,7 +1,9 @@
 ﻿using EshopAspCore.Application.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.ProductImages;
+using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;
 using EshopAspCore.ViewModels.Catalog.Products.Public;
+using EshopAspCore.ViewModels.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +16,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    /*[Authorize]*/
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -25,10 +27,25 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //GET: /product?pageIndex=1&pageSize=10&categoryId=1
         [HttpGet("{languageId}")]
-        public async Task<IActionResult> Get(string languageId,[FromQuery] GetPublicProductPagingRequest request)
+        public async Task<IActionResult> GetPublicProduct(string languageId,[FromQuery] GetPublicProductPagingRequest request)
         {
             var products = await _productService.GetAllByCategoryId(languageId,request);
             return Ok(products);
+        }
+
+        //GET: /product?pageIndex=1&pageSize=10&categoryId=1&languageId=vi-VN
+        [HttpGet]
+        public async Task<IActionResult> GetManageProductPaging([FromQuery] GetManageProductPagingRequest request)
+        {
+            var products = await _productService.GetAllPaging(request);
+            if (products == null)
+            {
+                var errorResponse = new ApiErrorResult<PageResult<ProductViewModel>>("ERROR get all paging product service");
+                return BadRequest(errorResponse);
+            }
+
+            var successedResponse = new ApiSuccessResult<PageResult<ProductViewModel>>(products);
+            return Ok(successedResponse);
         }
 
         //GET: /product/1

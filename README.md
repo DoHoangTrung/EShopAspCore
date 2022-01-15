@@ -112,3 +112,12 @@ create userviewModel: entity appuser mustnt has email
 -when have both inheritant and interface implement: parent class , then interface
 
 -36: Admin product list
+	product controller
+	get product paging
+	
+	manage product request must have a language id for show language
+	in product service, get product view by language id
+	
+-api swagger didnt run: Fetch errorundefined /swagger/v1/swagger.json
+https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swagger-v1-swagger-json/
+	missing [http get]

@@ -26,24 +26,13 @@ namespace EshopAspCore.AdminApp.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        protected async Task<TResponse> GetAllAsync<TResponse>(string url)
+        protected async Task<TResponse> GetAsync<TResponse>(string url)
         {
             var client = GetBearerHeaderClient();
 
             var apiResponse = await client.GetAsync(url);
 
             var content = await apiResponse.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<TResponse>(content);
-        }
-
-        protected async Task<TResponse> GetByIdAsync<TResponse>(string url)
-        {
-            var client = GetBearerHeaderClient();
-
-            var response = await client.GetAsync(url);
-
-            var content = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<TResponse>(content);
         }

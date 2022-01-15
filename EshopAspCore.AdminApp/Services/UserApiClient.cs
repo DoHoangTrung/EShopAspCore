@@ -43,7 +43,7 @@ namespace EshopAspCore.AdminApp.Services
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
             string urlApi = $"/api/users/{id}";
-            var apiResult = await GetByIdAsync<ApiResult<UserViewModel>>(urlApi);
+            var apiResult = await GetAsync<ApiResult<UserViewModel>>(urlApi);
             return apiResult;
         }
 
