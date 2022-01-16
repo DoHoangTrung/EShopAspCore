@@ -15,6 +15,7 @@ namespace EshopAspCore.Utilities.Constants
         public class AppSettings
         {
             public const string DefaultLanguageId = "DefaultLanguageId";
+            public const string SuccessMessage = "SuccessMsg";
         }
     }
 }

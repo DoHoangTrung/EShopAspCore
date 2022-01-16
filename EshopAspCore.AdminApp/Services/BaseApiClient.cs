@@ -76,7 +76,7 @@ namespace EshopAspCore.AdminApp.Services
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
-        private HttpClient GetBearerHeaderClient()
+        protected HttpClient GetBearerHeaderClient()
         {
             var client = _httpClientFactory.CreateClient();
             var bearToken = _httpContextAccessor.HttpContext.Session.GetString("Token");

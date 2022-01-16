@@ -1,17 +1,31 @@
-﻿@model IEnumerable<EshopAspCore.ViewModels.Catalog.Products.ProductViewModel>
+﻿@using EshopAspCore.Utilities.Constants
+
+@model IEnumerable<EshopAspCore.ViewModels.Catalog.Products.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Scripts{
 
+    <script>
+        setTimeout(function () {
+            $('#successMsg').fadeOut('slow');
+        }, 1000)
+    </script>
+}
 <div class="container-fluid px-4">
     <h1 class="mt-4">Index</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active">Users</li>
     </ol>
-
+    @if (TempData[SystemConstants.AppSettings.SuccessMessage] != null)
+    {
+        <div id="successMsg" class="alert alert-success" role="alert">
+            @TempData[SystemConstants.AppSettings.SuccessMessage]
+        </div>
+    }
     <div class="card mb-4">
         <div class="card-header">
             <p>

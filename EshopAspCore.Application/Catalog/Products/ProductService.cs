@@ -122,40 +122,40 @@ namespace EshopAspCore.Application.Catalog.Products
         {
             //1. Select join
             var query = from p in _context.Products
+                        from pic in _context.ProductInCategories.Where(x=>x.ProductId == p.Id).DefaultIfEmpty()
+                        from c in _context.Categories.Where(c=>pic.CategoryId == c.Id).DefaultIfEmpty()
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        join c in _context.Categories on pic.CategoryId equals c.Id
                         where pt.LanguageId == request.LanguageId
-                        select new { p, pt, pic };
+                        select new ProductViewModel()
+                        {
+                            Id = p.Id,
+                            Name = pt.Name,
+                            DateCreated = p.DateCreated,
+                            Description = pt.Description,
+                            Details = pt.Details,
+                            LanguageId = pt.LanguageId,
+                            OriginalPrice = p.OriginalPrice,
+                            Price = p.Price,
+                            SeoAlias = pt.SeoAlias,
+                            SeoDescription =pt.SeoDescription,
+                            SeoTitle = pt.SeoTitle,
+                            Stock = p.Stock,
+                            ViewCount = p.ViewCount
+                        };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.pt.Name.Contains(request.Keyword));
-
+                query = query.Where(x => x.Name.Contains(request.Keyword));
+/*
             if (request.CategoryIds != null &&  request.CategoryIds.Count > 0)
             {
-                query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
-            }
+                query = query.Where(p => request.CategoryIds.Contains(p.CategoryId));
+            }*/
             //3. Paging
             int totalRow = await query.CountAsync();
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
-                .Select(x => new ProductViewModel()
-                {
-                    Id = x.p.Id,
-                    Name = x.pt.Name,
-                    DateCreated = x.p.DateCreated,
-                    Description = x.pt.Description,
-                    Details = x.pt.Details,
-                    LanguageId = x.pt.LanguageId,
-                    OriginalPrice = x.p.OriginalPrice,
-                    Price = x.p.Price,
-                    SeoAlias = x.pt.SeoAlias,
-                    SeoDescription = x.pt.SeoDescription,
-                    SeoTitle = x.pt.SeoTitle,
-                    Stock = x.p.Stock,
-                    ViewCount = x.p.ViewCount
-                }).ToListAsync();
+                .ToListAsync();
 
             //4. Select and projection
             var pagedResult = new PageResult<ProductViewModel>()

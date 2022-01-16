@@ -121,3 +121,32 @@ create userviewModel: entity appuser mustnt has email
 -api swagger didnt run: Fetch errorundefined /swagger/v1/swagger.json
 https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swagger-v1-swagger-json/
 	missing [http get]
+	
+-37:create product with file upload
+create() controller
+-> need view() : model: create product request
+->form encrype
+-> post create function()
+-> api client
+-> backend api product controller : create
+
+view: upload file -> send to controller (Iformfile)-> using form encrype
+send Iformfile to backend api -> convert to binary 
+-> do the same as other feature
+
+service product:
+	get token session
+	get client
+	base address
+	authorize
+	
+	MultipartFormDataContent()
+	convert thumbnail to binary
+	
+-38: CK editor
+	download or cdn 
+	put in script section
+	add id for field
+	https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#configuration
+
+-39: filter product 
