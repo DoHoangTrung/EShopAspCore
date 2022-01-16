@@ -1,5 +1,6 @@
 ﻿@using EshopAspCore.ViewModels.Common;
-@using EshopAspCore.AdminApp.Controllers.Components;
+@using EshopAspCore.Utilities.Constants
+
 @model PageResult<EshopAspCore.ViewModels.System.Users.UserViewModel>
 
 @{
@@ -7,11 +8,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Scripts{ 
+@section Scripts{
     <script>
         setTimeout(function () {
             $('#successMsg').fadeOut('slow');
-        },1000)
+        }, 1000)
     </script>
 }
 
@@ -44,10 +45,10 @@
                     </form>
                 </div>
             </div>
-            @if (TempData["SuccessMsg"] != null)
+            @if (TempData[SystemConstants.AppSettings.SuccessMessage] != null)
             {
                 <div id="successMsg" class="alert alert-success" role="alert">
-                    @TempData["SuccessMsg"]
+                    @TempData[SystemConstants.AppSettings.SuccessMessage]
                 </div>
             }
             <div class="card-body">
@@ -96,7 +97,7 @@
                                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                         @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                        @Html.ActionLink("RoleAssign", "RoleAssign" , new { id=item.Id})
+                                        @Html.ActionLink("RoleAssign", "RoleAssign", new { id = item.Id })
                                     </td>
                                 </tr>
                             }

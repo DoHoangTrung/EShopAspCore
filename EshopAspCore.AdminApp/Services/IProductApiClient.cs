@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.ViewModels.Catalog.Products;
+using EshopAspCore.ViewModels.Catalog.Products.Manage;
 using EshopAspCore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace EshopAspCore.AdminApp.Services
     public interface IProductApiClient
     {
         public Task<ApiResult<PageResult<ProductViewModel>>> GetAll(string url);
+        public Task<bool> Create (ProductCreateRequest request);
     }
 }

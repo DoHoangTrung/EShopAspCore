@@ -1,3 +1,6 @@
+##My ignore
+/EshopAspCore.BackendAPI/wwwroot/user-content
+
 EshopAspCore.BackendAPI\wwwroot\user-content\
 
 ## Ignore Visual Studio temporary files, build results, and
@@ -363,4 +366,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/EshopAspCore.BackendAPI/wwwroot/user-content
+
