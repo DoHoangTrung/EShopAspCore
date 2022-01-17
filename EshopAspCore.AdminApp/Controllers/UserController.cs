@@ -92,7 +92,7 @@ namespace EshopAspCore.AdminApp.Controllers
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(5), //if authenticate is not using for about 5m, it removed
-                IsPersistent = true,
+                IsPersistent = false,
             };
 
             HttpContext.Session.SetString("Token", token);

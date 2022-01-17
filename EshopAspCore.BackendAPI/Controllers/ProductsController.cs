@@ -25,7 +25,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             _productService = publicProductService;
         }
 
-        //GET: /product?pageIndex=1&pageSize=10&categoryId=1
+        //GET: api/products?pageIndex=1&pageSize=10&categoryId=1
         [HttpGet("{languageId}")]
         public async Task<IActionResult> GetPublicProduct(string languageId,[FromQuery] GetPublicProductPagingRequest request)
         {
@@ -33,7 +33,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             return Ok(products);
         }
 
-        //GET: /product?pageIndex=1&pageSize=10&categoryId=1&languageId=vi-VN
+        //GET: api/products?pageIndex=1&pageSize=10&categoryId=1&languageId=vi-VN
         [HttpGet]
         public async Task<IActionResult> GetManageProductPaging([FromQuery] GetManageProductPagingRequest request)
         {
@@ -48,7 +48,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             return Ok(successedResponse);
         }
 
-        //GET: /product/1
+        //GET: api/products/1
         [HttpGet("{productId}/{languageId}")]
         public async Task<IActionResult> GetById(int productId, string languageId)
         {
@@ -59,7 +59,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             return Ok(product);
         }
 
-        //POST: /product
+        //POST: api/products
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
@@ -110,7 +110,7 @@ namespace EshopAspCore.BackendAPI.Controllers
         }
 
 
-        //POST: /product/1/images
+        //POST: api/products/1/images
         [HttpPost("{productId}/images")]
         public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
@@ -128,7 +128,7 @@ namespace EshopAspCore.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
 
-        //GET: /product/1/images/1
+        //GET: api/products/1/images/1
         [HttpGet("{productId}/images/{imageId}")]
         public async Task<IActionResult> GetImageById(int imageId)
         {

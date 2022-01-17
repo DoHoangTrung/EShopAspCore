@@ -140,16 +140,17 @@ namespace EshopAspCore.Application.Catalog.Products
                             SeoDescription =pt.SeoDescription,
                             SeoTitle = pt.SeoTitle,
                             Stock = p.Stock,
-                            ViewCount = p.ViewCount
+                            ViewCount = p.ViewCount,
+                            CategoryId = pic.CategoryId
                         };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.Name.Contains(request.Keyword));
-/*
-            if (request.CategoryIds != null &&  request.CategoryIds.Count > 0)
+
+            if (request.CategoryId.HasValue)
             {
-                query = query.Where(p => request.CategoryIds.Contains(p.CategoryId));
-            }*/
+                query = query.Where(p => p.CategoryId ==  request.CategoryId);
+            }
             //3. Paging
             int totalRow = await query.CountAsync();
 
