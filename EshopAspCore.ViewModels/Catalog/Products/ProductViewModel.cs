@@ -23,5 +23,6 @@ namespace EshopAspCore.ViewModels.Catalog.Products
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public int? CategoryId { get; set; }
     }
 }

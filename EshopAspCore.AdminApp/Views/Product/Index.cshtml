@@ -28,14 +28,35 @@
     }
     <div class="card mb-4">
         <div class="card-header">
-            <p>
-                <a asp-action="Index" asp-controller="Product" class="btn btn-success">List</a>
-            </p>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <a asp-action="Create" class="btn btn-success">Create New</a>
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <form asp-action="Index" asp-controller="Product" method="get">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name ="categoryId" asp-items="@ViewBag.categories" class="form-control"
+                                        onchange="this.form.submit()">
+                                    <option>--Select category--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="keywords" class="form-control" value="@ViewBag.keywords" />
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="button" class="btn btn-dark" onclick="window.location.href='/product/index'">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="card-body">
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
+            
             <table class="table">
                 <thead>
                     <tr>

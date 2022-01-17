@@ -5,6 +5,7 @@ using EshopAspCore.ViewModels.Catalog.Products.Manage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,21 +17,43 @@ namespace EshopAspCore.AdminApp.Controllers
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly ICategoryApiClient _categoryApiClient;
 
-        public ProductController(IProductApiClient productApiClient)
+        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
         }
 
         //GET : /product/index
         [HttpGet]
-        public async Task<IActionResult> Index(string languageId, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string languageId, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
             if (string.IsNullOrEmpty(languageId))
             {
                 languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             }
-            string url = $"/api/products?pageindex={pageIndex}&pagesize={pageSize}&languageId={languageId}";
+
+            //get categories
+            var categoryApiResult = await _categoryApiClient.GetAll(languageId);
+            if (categoryApiResult.IsSuccessed)
+            {
+                var categories = categoryApiResult.ResultObject;
+                ViewBag.categories = categories.Select(x=>new SelectListItem()
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString(),
+                    Selected = categoryId.HasValue && x.Id == categoryId
+                });
+            }
+            else
+            {
+                return BadRequest(categoryApiResult.Message);
+            }
+
+            //get all product
+            string url = $"/api/products?pageindex={pageIndex}&pagesize={pageSize}" +
+                $"&languageId={languageId}&categoryId={categoryId}";
 
             var result = await _productApiClient.GetAll(url);
             if (result.IsSuccessed)
@@ -39,8 +62,10 @@ namespace EshopAspCore.AdminApp.Controllers
                 var products = pageResult.Items;
                 return View(products);
             }
-
-            return BadRequest(result.Message);
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
 
 

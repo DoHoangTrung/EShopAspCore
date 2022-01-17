@@ -1,6 +1,7 @@
 ## Asp.net 5 MVC study 
 ## Technologies
 ## Youtube tutorial
+https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 ## How to configure and run
 ## How to contribute
 ## My note
@@ -123,25 +124,25 @@ https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swa
 	missing [http get]
 	
 -37:create product with file upload
-create() controller
--> need view() : model: create product request
-->form encrype
--> post create function()
--> api client
--> backend api product controller : create
+	create() controller
+	-> need view() : model: create product request
+	->form encrype
+	-> post create function()
+	-> api client
+	-> backend api product controller : create
 
-view: upload file -> send to controller (Iformfile)-> using form encrype
-send Iformfile to backend api -> convert to binary 
--> do the same as other feature
+	view: upload file -> send to controller (Iformfile)-> using form encrype
+	send Iformfile to backend api -> convert to binary 
+	-> do the same as other feature
 
-service product:
-	get token session
-	get client
-	base address
-	authorize
-	
-	MultipartFormDataContent()
-	convert thumbnail to binary
+	service product:
+		get token session
+		get client
+		base address
+		authorize
+		
+		MultipartFormDataContent()
+		convert thumbnail to binary
 	
 -38: CK editor
 	download or cdn 
@@ -150,3 +151,12 @@ service product:
 	https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#configuration
 
 -39: filter product 
+	create select in form get product/index
+	get all category -> send to select through viewbag
+	
+	
+-why identity cookie still work after close browser .net core
+https://stackoverflow.com/questions/24530362/persistent-cookie-being-deleted-on-browser-close-identity-2-0
+https://stackoverflow.com/questions/31946582/how-ispersistent-works-in-owin-cookie-authentication/46659752#46659752
+change default setting of chrome
+it didnt work: because my chrome still open :v

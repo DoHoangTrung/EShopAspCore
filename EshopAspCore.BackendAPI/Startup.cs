@@ -1,3 +1,4 @@
+using EshopAspCore.Application.Catalog.Categories;
 using EshopAspCore.Application.Catalog.Products;
 using EshopAspCore.Application.Common;
 using EshopAspCore.Application.System.Languages;
@@ -55,6 +56,7 @@ namespace EshopAspCore.BackendAPI
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             //fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
