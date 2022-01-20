@@ -89,6 +89,7 @@ create userviewModel: entity appuser mustnt has email
 -28: override on action execute (base controller)
 
 -30: pagination view component .net core
+
 -35: set default language:
 	defaut language id: app setting (common) -> set it to session (when login)
 	add select language on layout page -> new form
@@ -145,12 +146,16 @@ https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swa
 		convert thumbnail to binary
 	
 -38: CK editor
+
 	download or cdn 
+	
 	put in script section
+	
 	add id for field
 	https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#configuration
 
 -39: filter product 
+
 	create select in form get product/index
 	get all category -> send to select through viewbag
 	
@@ -158,5 +163,7 @@ https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swa
 -why identity cookie still work after close browser .net core
 https://stackoverflow.com/questions/24530362/persistent-cookie-being-deleted-on-browser-close-identity-2-0
 https://stackoverflow.com/questions/31946582/how-ispersistent-works-in-owin-cookie-authentication/46659752#46659752
+
 change default setting of chrome
+
 it didnt work: because my chrome still open :v

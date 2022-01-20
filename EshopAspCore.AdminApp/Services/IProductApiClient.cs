@@ -12,5 +12,7 @@ namespace EshopAspCore.AdminApp.Services
     {
         public Task<ApiResult<PageResult<ProductViewModel>>> GetAll(string url);
         public Task<bool> Create (ProductCreateRequest request);
+
+        public Task<ApiResult<ProductViewModel>> GetById(int id, string languageId);
     }
 }

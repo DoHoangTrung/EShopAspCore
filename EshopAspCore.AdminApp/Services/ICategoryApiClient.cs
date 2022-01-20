@@ -10,5 +10,8 @@ namespace EshopAspCore.AdminApp.Services
     public interface ICategoryApiClient
     {
         Task<ApiResult<List<CategoryViewModel>>> GetAll (string languageId);
+
+        Task<ApiResult<List<CategoryViewModel>>> GetByProductId(int productId, string languageId);
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EshopAspCore.ViewModels.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,6 @@ namespace EshopAspCore.ViewModels.Catalog.Products
         public int Stock { set; get; }
         public int ViewCount { set; get; }
         public DateTime DateCreated { set; get; }
-
         public string Name { set; get; }
         public string Description { set; get; }
         public string Details { set; get; }
@@ -23,6 +23,9 @@ namespace EshopAspCore.ViewModels.Catalog.Products
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public string Language { get; set; }
         public int? CategoryId { get; set; }
+        public List<SelectedItem> AllCategory { get; set; } = new List<SelectedItem>();
+        public string CategoriesString { get; set; }
     }
 }

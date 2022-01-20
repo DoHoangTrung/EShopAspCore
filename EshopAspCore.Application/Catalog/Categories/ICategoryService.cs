@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.ViewModels.Catalog.Categories;
+using EshopAspCore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace EshopAspCore.Application.Catalog.Categories
     public interface ICategoryService
     {
         Task<List<CategoryViewModel>> GetAll(string languageId);
+        Task<List<CategoryViewModel>> GetById(int productId,string languageId);
+        Task<bool> Update(int productId, List<SelectedItem> categoryIds);
+
     }
 }
