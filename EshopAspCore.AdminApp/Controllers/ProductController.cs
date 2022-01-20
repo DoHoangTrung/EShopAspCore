@@ -92,5 +92,42 @@ namespace EshopAspCore.AdminApp.Controllers
             ModelState.AddModelError("", "Save product failed.");
             return View(newProduct);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var productApiResult = await _productApiClient.GetById(id,languageId);
+            if (productApiResult.IsSuccessed == false)
+            {
+                ModelState.AddModelError("", productApiResult.Message);
+                return View();
+            }
+
+            var productViewModel = productApiResult.ResultObject;
+
+            var updateRequest = new ProductUpdateRequest()
+            {
+                CategoryIds = productViewModel.AllCategory,
+                Description = productViewModel.Description,
+                Details = productViewModel.Details,
+                Id = productViewModel.Id,
+                LanguageId = productViewModel.LanguageId,
+                Name = productViewModel.Name,
+                SeoAlias = productViewModel.SeoAlias,
+                SeoDescription = productViewModel.SeoDescription,
+                SeoTitle = productViewModel.SeoTitle,
+            };
+
+            return View(updateRequest);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductUpdateRequest request)
+        {
+            return View();
+        }
     }
 }

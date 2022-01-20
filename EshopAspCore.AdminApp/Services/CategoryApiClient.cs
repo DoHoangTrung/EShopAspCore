@@ -22,5 +22,12 @@ namespace EshopAspCore.AdminApp.Services
             var apiResult = await GetAsync<ApiResult<List<CategoryViewModel>>>(url);
             return apiResult;
         }
+
+        public async Task<ApiResult<List<CategoryViewModel>>> GetByProductId(int productId, string languageId)
+        {
+            string url = $"/api/categories/{productId}/{languageId}";
+            var apiResult = await GetAsync<ApiResult<List<CategoryViewModel>>>(url);
+            return apiResult;
+        }
     }
 }

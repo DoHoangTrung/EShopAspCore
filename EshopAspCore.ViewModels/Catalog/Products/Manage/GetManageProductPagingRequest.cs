@@ -15,6 +15,5 @@ namespace EshopAspCore.ViewModels.Catalog.Products.Manage
         public int? CategoryId { get; set; }
 
         public string LanguageId { get; set; }
-
     }
 }

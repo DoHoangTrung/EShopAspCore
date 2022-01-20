@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EshopAspCore.ViewModels.System.Roles
+namespace EshopAspCore.ViewModels.Common
 {
     public class SelectedItem
     {

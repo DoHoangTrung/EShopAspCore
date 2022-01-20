@@ -35,5 +35,20 @@ namespace EshopAspCore.BackendAPI.Controllers
             var errorResponse = new ApiErrorResult<List<CategoryViewModel>>("get all categories return null");
             return BadRequest(errorResponse);
         }
+
+        //GET: api/categories?productId=1&languageId=vi-VN
+        [HttpGet("{productId}/{languageId}")]
+        public async Task<IActionResult> GetByProductId(int productId, string languageId)
+        {
+            var categories = await _categoryService.GetById(productId, languageId);
+            if (categories != null)
+            {
+                var successResponse = new ApiSuccessResult<List<CategoryViewModel>>(categories);
+                return Ok(successResponse);
+            }
+
+            var errorResponse = new ApiErrorResult<List<CategoryViewModel>>("get categories by id product return null");
+            return BadRequest(errorResponse);
+        }
     }
 }

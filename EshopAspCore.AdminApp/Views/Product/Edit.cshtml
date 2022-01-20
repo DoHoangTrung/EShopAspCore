@@ -1,0 +1,83 @@
+﻿@model EshopAspCore.ViewModels.Catalog.Products.Manage.ProductUpdateRequest
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Register</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Users</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <p>
+                <a asp-action="Index" asp-controller="User" class="btn btn-success">List</a>
+            </p>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            @for (int i = 0; i < Model.CategoryIds.Count; i++)
+                            {
+                                <label>
+                                    @Model.CategoryIds[i].Name
+                                    <input type="checkbox" asp-for="CategoryIds[i].Selected" value="@Model.CategoryIds[i].Id" />
+                                </label>
+                            }
+                        </div>
+                        <input type="hidden" asp-for="Id" class="form-control" />
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Details" class="control-label"></label>
+                            <input asp-for="Details" class="form-control" />
+                            <span asp-validation-for="Details" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SeoDescription" class="control-label"></label>
+                            <input asp-for="SeoDescription" class="form-control" />
+                            <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SeoTitle" class="control-label"></label>
+                            <input asp-for="SeoTitle" class="form-control" />
+                            <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SeoAlias" class="control-label"></label>
+                            <input asp-for="SeoAlias" class="form-control" />
+                            <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LanguageId" class="control-label"></label>
+                            <input asp-for="LanguageId" class="form-control" />
+                            <span asp-validation-for="LanguageId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

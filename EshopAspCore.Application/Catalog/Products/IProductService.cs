@@ -25,7 +25,7 @@ namespace EshopAspCore.Application.Catalog.Products
         Task<int> Delete(int productId);
 
         Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ApiResult<ProductViewModel>> GetById(int productId, string languageId);
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
