@@ -4,4 +4,18 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="LocalizationResources\ExpressLocalizationResource.cs" />
+    <Content Include="LocalizationResources\ViewLocalizationResource.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\themes\less\oregional\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
+    <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
+  </ItemGroup>
+
 </Project>

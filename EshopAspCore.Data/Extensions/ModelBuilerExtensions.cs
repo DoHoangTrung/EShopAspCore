@@ -21,8 +21,8 @@ namespace EshopAspCore.Data.Extensions
             );
 
             modelBuiler.Entity<Language>().HasData(
-                new Language() { Id = "vi-VN", Name = "Tiếng Việt", IsDefault = true },
-                new Language() { Id = "en-US", Name = "English", IsDefault = false }
+                new Language() { Id = "vi", Name = "Tiếng Việt", IsDefault = true },
+                new Language() { Id = "en", Name = "English", IsDefault = false }
             );
 
             modelBuiler.Entity<Category>().HasData(
@@ -51,7 +51,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 1,
                     CategoryId = 1,
                     Name = "Áo nam",
-                    LanguageId = "vi-VN",
+                    LanguageId = "vi",
                     SeoAlias = "ao-nam",
                     SeoDescription = "Sản phẩm áo thời trang nam",
                     SeoTitle = "Sản phẩm áo thời trang nam"
@@ -61,7 +61,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 2,
                     CategoryId = 1,
                     Name = "Men shirt",
-                    LanguageId = "en-US",
+                    LanguageId = "en",
                     SeoAlias = "men-shirt",
                     SeoDescription = "The shirt produtcs for men",
                     SeoTitle = "The shirt producs for men",
@@ -70,7 +70,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 3,
                     CategoryId = 2,
                     Name = "Áo nữ",
-                    LanguageId = "vi-VN",
+                    LanguageId = "vi",
                     SeoAlias = "ao-nu",
                     SeoDescription = "Sản phẩm áo thời trang nu",
                     SeoTitle = "Sản phẩm áo thời trang nu"
@@ -80,7 +80,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 4,
                     CategoryId = 2,
                     Name = "Women shirt",
-                    LanguageId = "en-US",
+                    LanguageId = "en",
                     SeoAlias = "Women-shirt",
                     SeoDescription = "The shirt produtcs for women",
                     SeoTitle = "The shirt producs for women",
@@ -104,7 +104,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 1,
                     ProductId = 1,
                     Name = "Áo hoodie nam",
-                    LanguageId = "vi-VN",
+                    LanguageId = "vi",
                     SeoAlias = "ao-hoodie-nam",
                     SeoDescription = "Sản phẩm áo hoodie nam",
                     SeoTitle = "Sản phẩm áo hoodie nam"
@@ -114,7 +114,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = 2,
                     ProductId = 1,
                     Name = "hoodie shirt for men",
-                    LanguageId = "en-US",
+                    LanguageId = "en",
                     SeoAlias = "hoodie-shirt-for-men",
                     SeoDescription = "The hoodie shirt produtcs for men",
                     SeoTitle = "The hoodie shirt products for men",

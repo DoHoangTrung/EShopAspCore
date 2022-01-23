@@ -164,6 +164,13 @@ https://www.thecodebuzz.com/resolved-failed-to-load-api-definition-undefined-swa
 https://stackoverflow.com/questions/24530362/persistent-cookie-being-deleted-on-browser-close-identity-2-0
 https://stackoverflow.com/questions/31946582/how-ispersistent-works-in-owin-cookie-authentication/46659752#46659752
 
-change default setting of chrome
+change default setting of chrome 
 
-it didnt work: because my chrome still open :v
+it didnt work: because my chrome still open :v 
+
+-42:
+build multi-cultural Asp.Net (old) 
+XLocalizer for Asp.Net Core (new) 
+
+1.package: LazZiya.ExpressLocalization 
+			LazZiya.TagHelpers

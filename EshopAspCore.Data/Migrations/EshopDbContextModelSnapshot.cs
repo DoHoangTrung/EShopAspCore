@@ -78,15 +78,15 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "77df1f14-07a1-45a3-80ff-e11a1a47ed33",
+                            ConcurrencyStamp = "a4adb7a8-edca-46b8-b46f-f6b16f3945b4",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("15479c4a-d0f2-418e-8662-cb79a3dd49f4"),
-                            ConcurrencyStamp = "846a4df3-8664-45f4-b295-d17d7916a43a",
+                            Id = new Guid("4c96553e-b170-4735-9344-2ccb7cd508e2"),
+                            ConcurrencyStamp = "dc46002a-9bdb-4ad1-808b-263c89ed2b50",
                             Description = "user role",
                             Name = "user",
                             NormalizedName = "user"
@@ -163,7 +163,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d7c25c8-9dbf-44c9-8c44-b8eff60a7950",
+                            ConcurrencyStamp = "f6a90528-59e3-4d8d-802c-2fd2cb9ff342",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -172,7 +172,7 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAWnMthFrCxe02VHm7EngRRO4XFpP9xwg4nBAWCtL6Qz7TOwlTs0lZWZ2ej+3uW6Kw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFqZctgCSYWQhS/iXhH2tNfLf1/2lP5z3TZ5FQnUzjzRymXmX51wjWAYlw7Sjy0d2A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -304,7 +304,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nam",
                             SeoAlias = "ao-nam",
                             SeoDescription = "Sản phẩm áo thời trang nam",
@@ -314,7 +314,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Men shirt",
                             SeoAlias = "men-shirt",
                             SeoDescription = "The shirt produtcs for men",
@@ -324,7 +324,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nữ",
                             SeoAlias = "ao-nu",
                             SeoDescription = "Sản phẩm áo thời trang nu",
@@ -334,7 +334,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Women shirt",
                             SeoAlias = "Women-shirt",
                             SeoDescription = "The shirt produtcs for women",
@@ -400,13 +400,13 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "vi-VN",
+                            Id = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            Id = "en-US",
+                            Id = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -511,7 +511,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 1, 13, 16, 15, 28, 962, DateTimeKind.Local).AddTicks(5109),
+                            DateCreated = new DateTime(2022, 1, 23, 15, 26, 39, 712, DateTimeKind.Local).AddTicks(6590),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -634,7 +634,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo hoodie nam",
                             ProductId = 1,
                             SeoAlias = "ao-hoodie-nam",
@@ -644,7 +644,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "hoodie shirt for men",
                             ProductId = 1,
                             SeoAlias = "hoodie-shirt-for-men",
