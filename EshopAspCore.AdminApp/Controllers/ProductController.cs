@@ -1,4 +1,5 @@
-﻿using EshopAspCore.AdminApp.Services;
+﻿
+using EshopAspCore.ApiIntegration;
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;

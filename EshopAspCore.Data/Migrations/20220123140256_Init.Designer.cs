@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    [Migration("20220103124408_AddTableProductImage")]
-    partial class AddTableProductImage
+    [Migration("20220123140256_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,11 +79,19 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "121b7849-c026-4e7c-b487-e45c1cf7af4c",
+                            Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
+                            ConcurrencyStamp = "df1ebb0a-dbdd-4f18-9315-f1f1e403985e",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("425bc5f9-b61a-45b4-a319-d7fc963871dd"),
+                            ConcurrencyStamp = "a290f4f1-418a-48cf-9609-ec9a32811df9",
+                            Description = "user role",
+                            Name = "user",
+                            NormalizedName = "user"
                         });
                 });
 
@@ -155,9 +163,9 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
+                            Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fba200ea-351c-4ce6-a85d-bf5712ffe1a6",
+                            ConcurrencyStamp = "151eefc1-1caf-4830-bbf4-4c043d51b2b1",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -166,11 +174,11 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOr1P5BLrbsAzJFVfypWnjjtNhfCM2uCANlKqr2ZjckMzXEbDZUia2YYIh98h25rwA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEA8lcpITZy7VM8xvP/NpL/Cuh3KPNKudtjxSCvAYiY0ePD3OXOcu9HxM6xBc/poKEw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "trung123"
                         });
                 });
 
@@ -298,7 +306,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nam",
                             SeoAlias = "ao-nam",
                             SeoDescription = "Sản phẩm áo thời trang nam",
@@ -308,7 +316,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Men shirt",
                             SeoAlias = "men-shirt",
                             SeoDescription = "The shirt produtcs for men",
@@ -318,7 +326,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nữ",
                             SeoAlias = "ao-nu",
                             SeoDescription = "Sản phẩm áo thời trang nu",
@@ -328,7 +336,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Women shirt",
                             SeoAlias = "Women-shirt",
                             SeoDescription = "The shirt produtcs for women",
@@ -394,13 +402,13 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "vi-VN",
+                            Id = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            Id = "en-US",
+                            Id = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -505,7 +513,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 1, 3, 19, 44, 7, 529, DateTimeKind.Local).AddTicks(6747),
+                            DateCreated = new DateTime(2022, 1, 23, 21, 2, 55, 922, DateTimeKind.Local).AddTicks(1621),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -628,7 +636,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo hoodie nam",
                             ProductId = 1,
                             SeoAlias = "ao-hoodie-nam",
@@ -638,7 +646,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "hoodie shirt for men",
                             ProductId = 1,
                             SeoAlias = "hoodie-shirt-for-men",

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace EshopAspCore.AdminApp.Services
+namespace EshopAspCore.ApiIntegration
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient
     {

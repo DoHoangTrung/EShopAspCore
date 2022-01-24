@@ -1,4 +1,4 @@
-using EshopAspCore.AdminApp.Services;
+using EshopAspCore.ApiIntegration;
 using EshopAspCore.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;

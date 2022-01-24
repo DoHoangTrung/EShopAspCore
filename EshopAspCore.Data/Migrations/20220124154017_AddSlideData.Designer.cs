@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    [Migration("20220111132936_newAppUserData")]
-    partial class newAppUserData
+    [Migration("20220124154017_AddSlideData")]
+    partial class AddSlideData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,11 +79,19 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
-                            ConcurrencyStamp = "e87f7b7b-9daf-4907-84a6-59340be7aa16",
+                            Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
+                            ConcurrencyStamp = "03f7ffcd-ad2a-40ae-b33c-5a7f4aafb6f8",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("273d0f75-8d5b-456e-a062-b57778675c0e"),
+                            ConcurrencyStamp = "d60944b0-142c-460a-9bd7-0d40bd761518",
+                            Description = "user role",
+                            Name = "user",
+                            NormalizedName = "user"
                         });
                 });
 
@@ -155,9 +163,9 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
+                            Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1298688-bb9e-4e73-81d7-274b3df9ec22",
+                            ConcurrencyStamp = "b0edefbe-cece-4410-b26a-19521604bc89",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -166,7 +174,7 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPrOGZRNXKek1NOwfZaEjbikKYZF376C5hqIsbJ9sW8ZrliceEykK7rZBncr+BObPw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPK7mUyrB09+0zxjzFIgJOft7D9ZJQKwsYNFPJK64yd6qQvLR1cQN6siXUysnG894Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -298,7 +306,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nam",
                             SeoAlias = "ao-nam",
                             SeoDescription = "Sản phẩm áo thời trang nam",
@@ -308,7 +316,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Men shirt",
                             SeoAlias = "men-shirt",
                             SeoDescription = "The shirt produtcs for men",
@@ -318,7 +326,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo nữ",
                             SeoAlias = "ao-nu",
                             SeoDescription = "Sản phẩm áo thời trang nu",
@@ -328,7 +336,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "Women shirt",
                             SeoAlias = "Women-shirt",
                             SeoDescription = "The shirt produtcs for women",
@@ -394,13 +402,13 @@ namespace EshopAspCore.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "vi-VN",
+                            Id = "vi",
                             IsDefault = true,
                             Name = "Tiếng Việt"
                         },
                         new
                         {
-                            Id = "en-US",
+                            Id = "en",
                             IsDefault = false,
                             Name = "English"
                         });
@@ -481,6 +489,9 @@ namespace EshopAspCore.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -505,7 +516,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 1, 11, 20, 29, 35, 243, DateTimeKind.Local).AddTicks(2346),
+                            DateCreated = new DateTime(2022, 1, 24, 22, 40, 16, 253, DateTimeKind.Local).AddTicks(6528),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -628,7 +639,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            LanguageId = "vi-VN",
+                            LanguageId = "vi",
                             Name = "Áo hoodie nam",
                             ProductId = 1,
                             SeoAlias = "ao-hoodie-nam",
@@ -638,7 +649,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            LanguageId = "en-US",
+                            LanguageId = "en",
                             Name = "hoodie shirt for men",
                             ProductId = 1,
                             SeoAlias = "hoodie-shirt-for-men",
@@ -687,6 +698,108 @@ namespace EshopAspCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Promotions");
+                });
+
+            modelBuilder.Entity("EshopAspCore.Data.Entity.Slide", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slides");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/1.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 1,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/2.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 2,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/3.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 3,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/4.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 4,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/5.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 5,
+                            Status = 1,
+                            Url = "#"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                            Image = "/themes/images/carousel/6.png",
+                            Name = "Second Thumbnail label",
+                            SortOrder = 6,
+                            Status = 1,
+                            Url = "#"
+                        });
                 });
 
             modelBuilder.Entity("EshopAspCore.Data.Entity.Transaction", b =>

@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EShopAspCore.ApiIntegration\EShopAspCore.ApiIntegration.csproj" />
-    <ProjectReference Include="..\EshopAspCore.Data\EshopAspCore.Data.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EshopAspCore.Utilities\EshopAspCore.Utilities.csproj" />
     <ProjectReference Include="..\EshopAspCore.ViewModels\EshopAspCore.ViewModels.csproj" />
   </ItemGroup>

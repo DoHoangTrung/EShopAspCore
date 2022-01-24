@@ -26,5 +26,7 @@ namespace EshopAspCore.ViewModels.Catalog.Products.Manage
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
         public IFormFile ThumbNailImage { get; set; }
+        public bool? IsFeatured { get; set; }
+
     }
 }

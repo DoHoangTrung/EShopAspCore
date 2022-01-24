@@ -119,7 +119,7 @@ namespace EshopAspCore.Data.Extensions
                     SeoDescription = "The hoodie shirt produtcs for men",
                     SeoTitle = "The hoodie shirt products for men",
                 }
-                ) ;
+                );
 
             modelBuiler.Entity<ProductInCategory>().HasData(
                new List<ProductInCategory>()
@@ -135,12 +135,12 @@ namespace EshopAspCore.Data.Extensions
             modelBuiler.Entity<AppRole>().HasData(
                 new AppRole()
                 {
-                    Id = ADMIN_ID,
+                    Id = ROLE_ID,
                     Name = "admin",
                     NormalizedName = "admin",
-                    Description="Administrator role"
+                    Description = "Administrator role"
                 },
-                new AppRole() 
+                new AppRole()
                 {
                     Id = Guid.NewGuid(),
                     Name = "user",
@@ -149,20 +149,22 @@ namespace EshopAspCore.Data.Extensions
                 });
 
             var hasher = new PasswordHasher<AppUser>();
-            modelBuiler.Entity<AppUser>().HasData(new AppUser
+            var seedUser = new AppUser
             {
-                Id = ROLE_ID,
+                Id = ADMIN_ID,
                 UserName = "trung123",
                 NormalizedUserName = "admin",
                 Email = "some-admin-email@nonce.fake",
                 NormalizedEmail = "some-admin-email@nonce.fake",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Trung123$"),
                 SecurityStamp = string.Empty,
                 FirstName = "Trung",
                 LastName = "Do",
-                Dob = new DateTime(1998,3,18)
-            }) ;
+                Dob = new DateTime(1998, 3, 18),
+            };
+
+            seedUser.PasswordHash = hasher.HashPassword(seedUser, "Trung123$");
+            modelBuiler.Entity<AppUser>().HasData(seedUser);
 
             modelBuiler.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {
@@ -170,7 +172,67 @@ namespace EshopAspCore.Data.Extensions
                 UserId = ADMIN_ID
             });
 
-
+            modelBuiler.Entity<Slide>().HasData(
+                 new Slide()
+                 {
+                     Id = 1,
+                     Name = "Second Thumbnail label",
+                     Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                     SortOrder = 1,
+                     Url = "#",
+                     Image = "/themes/images/carousel/1.png",
+                     Status = Status.Active,
+                 },
+                new Slide()
+                {
+                     Id =2,
+                    Name = "Second Thumbnail label",
+                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                    SortOrder = 2,
+                    Url = "#",
+                    Image = "/themes/images/carousel/2.png",
+                    Status = Status.Active,
+                },
+                new Slide()
+                {
+                     Id = 3,
+                    Name = "Second Thumbnail label",
+                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                    SortOrder = 3,
+                    Url = "#",
+                    Image = "/themes/images/carousel/3.png",
+                    Status = Status.Active,
+                },
+                new Slide()
+                {
+                     Id = 4,
+                    Name = "Second Thumbnail label",
+                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                    SortOrder = 4,
+                    Url = "#",
+                    Image = "/themes/images/carousel/4.png",
+                    Status = Status.Active,
+                },
+                new Slide()
+                {
+                     Id = 5,
+                    Name = "Second Thumbnail label",
+                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                    SortOrder = 5,
+                    Url = "#",
+                    Image = "/themes/images/carousel/5.png",
+                    Status = Status.Active,
+                },
+                new Slide()
+                {
+                     Id = 6,
+                    Name = "Second Thumbnail label",
+                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
+                    SortOrder = 6,
+                    Url = "#",
+                    Image = "/themes/images/carousel/6.png",
+                    Status = Status.Active,
+                });
         }
     }
 }

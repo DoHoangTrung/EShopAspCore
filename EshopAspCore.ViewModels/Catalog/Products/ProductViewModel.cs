@@ -20,7 +20,7 @@ namespace EshopAspCore.ViewModels.Catalog.Products
         public string Details { set; get; }
         public string SeoDescription { set; get; }
         public string SeoTitle { set; get; }
-
+        public bool? IsFeatured { get; set; }
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
         public string Language { get; set; }
