@@ -165,5 +165,38 @@ namespace EshopAspCore.BackendAPI.Controllers
 
             return Ok();
         }
+
+
+        //GET: api/products/featured/4/vi-VN
+        [HttpGet("featured/{take}/{languageId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        {
+            var products = await _productService.GetFeaturedProduct(languageId, take);
+            if (products == null)
+            {
+                var errorResponse = new ApiErrorResult<List<ProductViewModel>>("Slide service return NULL.");
+                return BadRequest(errorResponse);
+            }
+
+            var sussessResponse = new ApiSuccessResult<List<ProductViewModel>>(products);
+            return Ok(sussessResponse);
+        }
+
+        //GET: api/products/latest/4/vi-VN
+        [HttpGet("latest/{take}/{languageId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+        {
+            var products = await _productService.GetLatestProduct(languageId, take);
+            if (products == null)
+            {
+                var errorResponse = new ApiErrorResult<List<ProductViewModel>>("Slide service return NULL.");
+                return BadRequest(errorResponse);
+            }
+
+            var sussessResponse = new ApiSuccessResult<List<ProductViewModel>>(products);
+            return Ok(sussessResponse);
+        }
     }
 }

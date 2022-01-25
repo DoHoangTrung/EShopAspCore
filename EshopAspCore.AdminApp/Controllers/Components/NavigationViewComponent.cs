@@ -1,5 +1,5 @@
 ﻿using EshopAspCore.AdminApp.Models;
-using EshopAspCore.AdminApp.Services;
+using EshopAspCore.ApiIntegration;
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.System.Languages;
 using Microsoft.AspNetCore.Http;

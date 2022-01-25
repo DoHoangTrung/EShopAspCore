@@ -34,7 +34,7 @@ namespace EshopAspCore.ViewModels.System.Users
 
         [DataType(DataType.Password)]
         [DisplayName("Mật khẩu")]
-        //Default identity password role .net core(see it on gg)
+        //Default identity password role .net core(find it on gg)
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$", ErrorMessage = "Password at least 6 characters and contain one uppercase letter, one lowercase letter, one digit and one special character.")]
         public string Password { get; set; }
 

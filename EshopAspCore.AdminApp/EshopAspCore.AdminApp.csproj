@@ -5,12 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\EShopAspCore.ApiIntegration\EShopAspCore.ApiIntegration.csproj" />
     <ProjectReference Include="..\EshopAspCore.Data\EshopAspCore.Data.csproj" />
     <ProjectReference Include="..\EshopAspCore.Utilities\EshopAspCore.Utilities.csproj" />
     <ProjectReference Include="..\EshopAspCore.ViewModels\EshopAspCore.ViewModels.csproj" />

@@ -34,6 +34,8 @@ namespace EshopAspCore.Application.Catalog.Products
 
         Task<ProductImageViewModel> GetProductImageById(int imageId);
         Task<PageResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+        Task<List<ProductViewModel>> GetFeaturedProduct(string languageId, int take);
+        Task<List<ProductViewModel>> GetLatestProduct(string languageId, int take);
 
     }
 }

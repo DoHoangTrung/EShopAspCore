@@ -4,6 +4,7 @@ using EshopAspCore.Application.Common;
 using EshopAspCore.Application.System.Languages;
 using EshopAspCore.Application.System.Roles;
 using EshopAspCore.Application.System.Users;
+using EshopAspCore.Application.Utilities.Slides;
 using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.Utilities.Constants;
@@ -57,6 +58,7 @@ namespace EshopAspCore.BackendAPI
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISlideService, SlideService>();
 
             //fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();

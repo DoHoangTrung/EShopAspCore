@@ -1,7 +1,10 @@
+using EshopAspCore.ApiIntegration;
+using EshopAspCore.Application.Utilities.Slides;
 using EshopeMvcCore.Web.LocalizationResources;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +30,13 @@ namespace EshopeMvcCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+
             var cultures = new[]
             {
                 new CultureInfo("vi"),
@@ -61,6 +71,13 @@ namespace EshopeMvcCore.Web
                     o.DefaultRequestCulture = new RequestCulture("vi");
                 };
             });
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = false;
+                //options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,11 +99,48 @@ namespace EshopeMvcCore.Web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "product en",
+                    pattern: "{culture}/product/{id?}",
+                    new 
+                    {
+                        Controller ="Product",
+                        Action = "Details"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "product vi",
+                    pattern: "{culture}/san-pham/{id?}",
+                    new
+                    {
+                        Controller = "Product",
+                        Action = "Details"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "category en",
+                    pattern: "{culture}/category/{id?}",
+                    new
+                    {
+                        Controller = "Product",
+                        Action = "Category"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "category vi",
+                    pattern: "{culture}/danh-muc/{id?}",
+                    new
+                    {
+                        Controller = "Product",
+                        Action = "Category"
+                    });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");

@@ -1,4 +1,4 @@
-using EshopAspCore.AdminApp.Services;
+using EshopAspCore.ApiIntegration;
 using EshopAspCore.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,8 +29,8 @@ namespace EshopAspCore.AdminApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services for using call api 
             services.AddHttpClient();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
@@ -55,8 +55,6 @@ namespace EshopAspCore.AdminApp
                     option.LoginPath = "/User/login";
                     option.AccessDeniedPath = "/User/Forbidden";
                 });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
