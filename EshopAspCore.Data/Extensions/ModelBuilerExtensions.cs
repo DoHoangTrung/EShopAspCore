@@ -95,7 +95,7 @@ namespace EshopAspCore.Data.Extensions
                     Price = 200000,
                     Stock = 0,
                     ViewCount = 0,
-
+                    IsFeatured = true,
                 });
 
             modelBuiler.Entity<ProductTranslation>().HasData(

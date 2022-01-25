@@ -16,10 +16,13 @@
   <ItemGroup>
     <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
     <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EShopAspCore.ApiIntegration\EShopAspCore.ApiIntegration.csproj" />
+    <ProjectReference Include="..\EshopAspCore.Application\EshopAspCore.Application.csproj" />
+    <ProjectReference Include="..\ExtensionMethods\EshopAspCore.ExtensionMethods.csproj" />
   </ItemGroup>
 
 </Project>

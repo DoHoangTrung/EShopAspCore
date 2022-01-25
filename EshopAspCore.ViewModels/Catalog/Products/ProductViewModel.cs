@@ -27,5 +27,6 @@ namespace EshopAspCore.ViewModels.Catalog.Products
         public int? CategoryId { get; set; }
         public List<SelectedItem> AllCategory { get; set; } = new List<SelectedItem>();
         public string CategoriesString { get; set; }
+        public string ThumbnailImage { get; set; }
     }
 }

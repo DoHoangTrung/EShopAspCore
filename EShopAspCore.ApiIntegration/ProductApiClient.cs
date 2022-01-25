@@ -64,5 +64,18 @@ namespace EshopAspCore.ApiIntegration
             var apiResult = await GetAsync<ApiResult<ProductViewModel>>(urlApi);
             return apiResult;
         }
+        public async Task<ApiResult<List<ProductViewModel>>> GetFeaturedProduct(string languageId, int take)
+        {
+            string url = $"/api/products/featured/{take}/{languageId}";
+            var apiResult = await GetAsync<ApiResult<List<ProductViewModel>>>(url);
+            return apiResult;
+        }
+
+        public async Task<ApiResult<List<ProductViewModel>>> GetLatestProduct(string languageId, int take)
+        {
+            string url = $"/api/products/latest/{take}/{languageId}";
+            var apiResult = await GetAsync<ApiResult<List<ProductViewModel>>>(url);
+            return apiResult;
+        }
     }
 }

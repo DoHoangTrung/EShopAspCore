@@ -175,6 +175,12 @@ XLocalizer for Asp.Net Core (new)
 1.package: LazZiya.ExpressLocalization 
 			LazZiya.TagHelpers
 			
-			
+
+-43:
+missing or declared service which is not nessessary can raise error (ex: ISlideService in WebApp need database connect)
+
+-43:
+use localize-content taghelper or <localize></>
+
 ##???
 -cant login in first time after init migration

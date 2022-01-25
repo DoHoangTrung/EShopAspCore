@@ -402,5 +402,79 @@ namespace EshopAspCore.Application.Catalog.Products
 
             return pageResult;
         }
+
+        public async Task<List<ProductViewModel>> GetFeaturedProduct(string languageId, int takeNum)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        from pic in _context.ProductInCategories.Where(x => x.ProductId == p.Id).DefaultIfEmpty()
+                        join pi in _context.ProductImages.Where(x=>x.IsDefault == true) on p.Id equals pi.ProductId into ProductAndImage
+                        from pi in ProductAndImage.DefaultIfEmpty()
+                        from c in _context.Categories.Where(c => pic.CategoryId == c.Id).DefaultIfEmpty()
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join l in _context.Languages on pt.LanguageId equals l.Id
+                        where pt.LanguageId == languageId && p.IsFeatured == true
+                        select new { p, pic, pt, c, l, pi };
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated)
+                .Take(takeNum)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.pt.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    Language = x.l.Name,
+                    ThumbnailImage = x.pi.ImagePath,
+                }).ToListAsync();
+
+            return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetLatestProduct(string languageId, int takeNum)
+        {
+            //1. Select join
+            var query = from p in _context.Products
+                        from pic in _context.ProductInCategories.Where(x => x.ProductId == p.Id).DefaultIfEmpty()
+                        join pi in _context.ProductImages.Where(x=>x.IsDefault == true) on p.Id equals pi.ProductId into ProductAndImage
+                        from pi in ProductAndImage.DefaultIfEmpty()
+                        from c in _context.Categories.Where(c => pic.CategoryId == c.Id).DefaultIfEmpty()
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        join l in _context.Languages on pt.LanguageId equals l.Id
+                        where pt.LanguageId == languageId
+                        select new { p, pic, pt, c, l, pi };
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated)
+                .Take(takeNum)
+                .Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.pt.Name,
+                    DateCreated = x.p.DateCreated,
+                    Description = x.pt.Description,
+                    Details = x.pt.Details,
+                    LanguageId = x.pt.LanguageId,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    SeoAlias = x.pt.SeoAlias,
+                    SeoDescription = x.pt.SeoDescription,
+                    SeoTitle = x.pt.SeoTitle,
+                    Stock = x.p.Stock,
+                    ViewCount = x.p.ViewCount,
+                    Language = x.l.Name,
+                    ThumbnailImage = x.pi.ImagePath,
+                }).ToListAsync();
+
+            return data;
+        }
     }
 }

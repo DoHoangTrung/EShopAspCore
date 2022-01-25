@@ -17,5 +17,12 @@ namespace EshopAspCore.Utilities.Constants
             public const string DefaultLanguageId = "DefaultLanguageId";
             public const string SuccessMessage = "SuccessMsg";
         }
+
+        public class ProductSettings
+        {
+            public const int NumberOfFeaturedProducts = 4;
+
+            public const int NumberOfLatestProducts = 6;
+        }
     }
 }

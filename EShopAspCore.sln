@@ -28,7 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Host", "3.Host", "{F680DB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopAspCore.AdminApp", "EshopAspCore.AdminApp\EshopAspCore.AdminApp.csproj", "{7E183CF3-313A-4184-AB56-25D8D10A8CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopAspCore.ApiIntegration", "EShopAspCore.ApiIntegration\EShopAspCore.ApiIntegration.csproj", "{42D6B947-468E-4B5C-90A1-677743204BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopAspCore.ApiIntegration", "EShopAspCore.ApiIntegration\EShopAspCore.ApiIntegration.csproj", "{42D6B947-468E-4B5C-90A1-677743204BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testtttttttttttttt", "Testtttttttttttttt\Testtttttttttttttt.csproj", "{F12D6905-5D53-42B4-86A0-819097CCEC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopAspCore.ExtensionMethods", "ExtensionMethods\EshopAspCore.ExtensionMethods.csproj", "{743FBDED-A835-4AF1-838B-CB730B214CC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +72,14 @@ Global
 		{42D6B947-468E-4B5C-90A1-677743204BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42D6B947-468E-4B5C-90A1-677743204BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42D6B947-468E-4B5C-90A1-677743204BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12D6905-5D53-42B4-86A0-819097CCEC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12D6905-5D53-42B4-86A0-819097CCEC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12D6905-5D53-42B4-86A0-819097CCEC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12D6905-5D53-42B4-86A0-819097CCEC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{743FBDED-A835-4AF1-838B-CB730B214CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{743FBDED-A835-4AF1-838B-CB730B214CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{743FBDED-A835-4AF1-838B-CB730B214CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{743FBDED-A835-4AF1-838B-CB730B214CC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +93,8 @@ Global
 		{4BE0116F-4CAA-4879-BE77-3E5A0E1AC7A7} = {F680DB46-883A-419B-8C62-9950E6202701}
 		{7E183CF3-313A-4184-AB56-25D8D10A8CA0} = {F680DB46-883A-419B-8C62-9950E6202701}
 		{42D6B947-468E-4B5C-90A1-677743204BA9} = {F680DB46-883A-419B-8C62-9950E6202701}
+		{F12D6905-5D53-42B4-86A0-819097CCEC99} = {F680DB46-883A-419B-8C62-9950E6202701}
+		{743FBDED-A835-4AF1-838B-CB730B214CC7} = {B969A7E6-CB30-48E4-AE17-B1BF57C921C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA833F80-BA60-4A34-87C0-7A3DD1E90935}

@@ -28,7 +28,8 @@ namespace EshopAspCore.Application.Catalog.Categories
                         select (new CategoryViewModel()
                         {
                             Id = c.Id,
-                            Name = ct.Name
+                            Name = ct.Name,
+                            ParentId = c.ParentId
                         });
 
             var categories = await query.ToListAsync();

@@ -14,5 +14,8 @@ namespace EshopAspCore.ApiIntegration
         public Task<bool> Create (ProductCreateRequest request);
 
         public Task<ApiResult<ProductViewModel>> GetById(int id, string languageId);
+        Task<ApiResult<List<ProductViewModel>>> GetFeaturedProduct(string languageId, int take);
+        Task<ApiResult<List<ProductViewModel>>> GetLatestProduct(string languageId, int take);
+
     }
 }
