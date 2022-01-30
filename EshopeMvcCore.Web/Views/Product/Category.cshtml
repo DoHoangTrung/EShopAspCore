@@ -1,8 +1,106 @@
-﻿
+﻿@model ProductCategoryViewModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
 @{
-    ViewData["Title"] = "Category";
+    ViewData["Title"] = Model.Category.Name + "-" + "page " + Model.ProductPages.PageIndex;
+
+    var culture = CultureInfo.CurrentCulture;
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Category</h1>
+<ul class="breadcrumb">
+    <li><a href="index.html"><localize>Home</localize></a> <span class="divider">/</span></li>
+    <li class="active">@Model.Category.Name</li>
+</ul>
+<h3> @Model.Category.Name <small class="pull-right"> @Model.ProductCount <localize>products are available</localize> </small></h3>
+<hr class="soft" />
+<p>
+    Description for this category
+</p>
+<hr class="soft" />
+<form class="form-horizontal span6" action=@($"/{culture}/{_loc["CategoryUrl"] }/{Model.Category.Id}") method="get">
+    <div class="control-group">
+        <label class="control-label alignL" localize-content>Sort By </label>
+        <select asp-for="SelectionSortOrder" asp-items="@ViewBag.selectionSortOrder"
+                onchange="this.form.submit()">
+            <option localize-content>--Please select one--</option>
+        </select>
+    </div>
+</form>
 
+<div id="myTab" class="pull-right">
+    <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+    <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+</div>
+<br class="clr" />
+<div class="tab-content">
+    <div class="tab-pane" id="listView">
+        @foreach (var item in Model.ProductPages.Items)
+        {
+            var url = $"/{culture}/{_loc["ProductUrl"]}/{item.Id}";
+
+            <div class="row">
+                <div class="span2">
+                    <img src=@item.ThumbnailImage alt="" />
+                </div>
+                <div class="span4">
+                    <h3>New | Available</h3>
+                    <hr class="soft" />
+                    <h5>@item.Name</h5>
+                    <p>
+                        @item.Description
+                    </p>
+                    <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+                    <br class="clr" />
+                </div>
+                <div class="span3 alignR">
+                    <form class="form-horizontal qtyFrm">
+                        <h3>@item.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</h3>
+                        <label class="checkbox">
+                            <input type="checkbox">  Adds product to compair
+                        </label><br />
+
+                        <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+                        <a href=@url class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+                    </form>
+                </div>
+            </div>
+            <hr class="soft" />
+        }
+    </div>
+
+    <div class="tab-pane  active" id="blockView">
+        <ul class="thumbnails">
+            @foreach (var item in Model.ProductPages.Items)
+            {
+                var url = $"/{culture}/{_loc["ProductUrl"]}/{item.Id}";
+
+                <li class="span3">
+                    <div class="thumbnail">
+                        <a href=@url><img src=@item.ThumbnailImage alt="" /></a>
+                        <div class="caption">
+                            <h5>@item.Name</h5>
+                            <p>
+                                @Html.Raw(item.Description)
+                            </p>
+                            <h4 style="text-align:center">
+                                <a class="btn" href=@url> <i class="icon-zoom-in"></i></a>
+                                <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
+                                <a class="btn btn-primary" href="#">@item.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</a>
+                            </h4>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <hr class="soft" />
+    </div>
+</div>
+
+<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
+
+@await Component.InvokeAsync("Pager", Model.ProductPages)
+
+<br class="clr" />

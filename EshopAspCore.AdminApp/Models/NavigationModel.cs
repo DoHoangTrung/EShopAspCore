@@ -10,5 +10,7 @@ namespace EshopAspCore.AdminApp.Models
     {
         public string CurrentLanguageId { get; set; }
         public List<LanguageViewModel> Languages { get; set; }
+
+        public string CurrentUrl { get; set; }
     }
 }

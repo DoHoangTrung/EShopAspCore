@@ -36,7 +36,23 @@ namespace EshopAspCore.Application.Catalog.Categories
             return categories;
         }
 
-        public async Task<List<CategoryViewModel>> GetById(int productId, string languageId)
+        public async Task<CategoryViewModel> GetById(int id, string languageId)
+        {
+            var category = await (from c in _context.Categories
+                            join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
+                            where c.Id == id && ct.LanguageId == languageId
+                            select (new CategoryViewModel()
+                            {
+                                Id = c.Id,
+                                LanguageId = ct.LanguageId,
+                                Name = ct.Name,
+                                ParentId = c.ParentId,
+                            })).FirstOrDefaultAsync();
+
+            return category;
+        }
+
+        public async Task<List<CategoryViewModel>> GetByProductId(int productId, string languageId)
         {
             //return list{id, name by language} by id product
             var categories = await (from pic in _context.ProductInCategories
@@ -44,7 +60,7 @@ namespace EshopAspCore.Application.Catalog.Categories
                                     where pic.ProductId == productId && ct.LanguageId == languageId
                                     select new CategoryViewModel() 
                                     {
-                                        Id = ct.Id,
+                                        Id = ct.CategoryId,
                                         Name = ct.Name
                                     }).ToListAsync();
 

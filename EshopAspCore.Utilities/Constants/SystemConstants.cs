@@ -9,8 +9,8 @@ namespace EshopAspCore.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConnectionString = "EshopAspCoreDatabase";
-
         public const string BaseApiUrlString = "BaseApiUrl";
+        public const string NA = "N/A";
 
         public class AppSettings
         {
@@ -23,6 +23,14 @@ namespace EshopAspCore.Utilities.Constants
             public const int NumberOfFeaturedProducts = 4;
 
             public const int NumberOfLatestProducts = 6;
+        }
+
+        public static class SelectionSortOrder
+        {
+            public const string PriceLowestFirst = "Price lowest first";
+            public const string ProductNameAZ = " Product name A - Z";
+            public const string ProductNameZA = "Product name Z - A";
+            public const string ProductStocke = "Product Stoke";
         }
     }
 }

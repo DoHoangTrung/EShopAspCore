@@ -15,10 +15,8 @@ namespace EshopAspCore.AdminApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -39,7 +37,7 @@ namespace EshopAspCore.AdminApp.Controllers
 
             HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, model.CurrentLanguageId);
 
-            return RedirectToAction(nameof(Index));
+            return Redirect(model.CurrentUrl);
         }
     }
 }

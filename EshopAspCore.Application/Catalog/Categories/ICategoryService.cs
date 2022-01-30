@@ -11,8 +11,9 @@ namespace EshopAspCore.Application.Catalog.Categories
     public interface ICategoryService
     {
         Task<List<CategoryViewModel>> GetAll(string languageId);
-        Task<List<CategoryViewModel>> GetById(int productId,string languageId);
+        Task<List<CategoryViewModel>> GetByProductId(int productId,string languageId);
         Task<bool> Update(int productId, List<SelectedItem> categoryIds);
 
+        Task<CategoryViewModel> GetById(int id, string languageId);
     }
 }

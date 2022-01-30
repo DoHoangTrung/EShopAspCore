@@ -41,15 +41,20 @@ add connection string to appsetting.developement.json
 config DI (dependence inject dot net core)
 
 -add swagger
-.net5 to now : project api auto intergrate swagger
+.net5 to present : project api auto intergrate swagger
 
 -add solution file : (logical file, it's not show in location folder)
 -fromform vs frombody : when use swagger 
 fromquery : path?p=1
 if path/{id} : dont need from query(it will add a text value when
 use swagger)
--bug: if we dont create user-content folder in wwwroot
-productimage cant save
+
+-16: 
+bug: if we dont create user-content folder in wwwroot
+productimage cant save 
+
+FileStorage : IwebhostEvirontment:  
+https://stackoverflow.com/questions/68764432/how-to-access-iwebhostenvironment-in-class-library-net-5
 
 --feature/login
 create system/users folder
@@ -181,6 +186,12 @@ missing or declared service which is not nessessary can raise error (ex: ISlideS
 
 -43:
 use localize-content taghelper or <localize></>
+-45: 
 
+-48: 
+	product service 472: thumbnail = images.FirstOrDefault(x => x.IsDefault).FileUrl ==> ERROR
+sql server : tool -> profiler
 ##???
--cant login in first time after init migration
+-cant login in first time after init migration 
+-description of category in product category page
+-public language nav : return url (always home/index)?

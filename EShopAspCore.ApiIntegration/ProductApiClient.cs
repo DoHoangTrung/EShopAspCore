@@ -52,8 +52,11 @@ namespace EshopAspCore.ApiIntegration
             return apiResponse.IsSuccessStatusCode;
         }
 
-        public async Task<ApiResult<PageResult<ProductViewModel>>> GetAll(string url)
+        public async Task<ApiResult<PageResult<ProductViewModel>>> GetAll(GetManageProductPagingRequest request)
         {
+            string url = $"api/products?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
+                $"&categoryId={request.CategoryId}&languageId={request.LanguageId}" +
+                $"&SelectionSortOrder={request.SelectionSortOrder}";
             var apiResponse = await GetAsync<ApiResult<PageResult<ProductViewModel>>>(url);
             return apiResponse;
         }
@@ -76,6 +79,44 @@ namespace EshopAspCore.ApiIntegration
             string url = $"/api/products/latest/{take}/{languageId}";
             var apiResult = await GetAsync<ApiResult<List<ProductViewModel>>>(url);
             return apiResult;
+        }
+
+        public async Task<bool> Update(int id, ProductUpdateRequest request)
+        {
+            HttpClient client = GetBearerHeaderClient();
+
+            var requestContent = new MultipartFormDataContent();
+
+            //iformfile to binary
+            if (request.ThumbNailImage != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbNailImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbNailImage.OpenReadStream().Length);
+                }
+
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "ThumbNailImage", request.ThumbNailImage.FileName);
+            }
+
+            requestContent.Add(new StringContent(request.Id.ToString()), "id");
+            requestContent.Add(new StringContent(request.Name), "name");
+            requestContent.Add(new StringContent(request.Description), "Description");
+            requestContent.Add(new StringContent(request.Details), "Details");
+            requestContent.Add(new StringContent(request.SeoAlias), "SeoAlias");
+            requestContent.Add(new StringContent(request.SeoDescription) , "SeoDescription");
+            requestContent.Add(new StringContent(request.SeoTitle), "SeoTitle");
+            requestContent.Add(new StringContent(request.LanguageId), "LanguageId");
+
+            var response = await client.PutAsync($"/api/products/{id}", requestContent);
+
+            return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> Delete(int id)
+        {
+            var isSuccess = await DeleteAsync<bool>($"/api/products/{id}");
+            return isSuccess;
         }
     }
 }

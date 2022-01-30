@@ -40,7 +40,7 @@ namespace EshopAspCore.AdminApp.Controllers
             if (categoryApiResult.IsSuccessed)
             {
                 var categories = categoryApiResult.ResultObject;
-                ViewBag.categories = categories.Select(x=>new SelectListItem()
+                ViewBag.categories = categories.Select(x => new SelectListItem()
                 {
                     Text = x.Name,
                     Value = x.Id.ToString(),
@@ -53,10 +53,15 @@ namespace EshopAspCore.AdminApp.Controllers
             }
 
             //get all product
-            string url = $"/api/products?pageindex={pageIndex}&pagesize={pageSize}" +
-                $"&languageId={languageId}&categoryId={categoryId}";
 
-            var result = await _productApiClient.GetAll(url);
+            var result = await _productApiClient.GetAll(new GetManageProductPagingRequest()
+            {
+                LanguageId = languageId,
+                CategoryId = categoryId,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+            });
+
             if (result.IsSuccessed)
             {
                 var pageResult = result.ResultObject;
@@ -100,7 +105,7 @@ namespace EshopAspCore.AdminApp.Controllers
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var productApiResult = await _productApiClient.GetById(id,languageId);
+            var productApiResult = await _productApiClient.GetById(id, languageId);
             if (productApiResult.IsSuccessed == false)
             {
                 ModelState.AddModelError("", productApiResult.Message);
@@ -126,9 +131,61 @@ namespace EshopAspCore.AdminApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductUpdateRequest request)
+        public async Task<IActionResult> Edit(ProductUpdateRequest request)
         {
-            return View();
+            //update categories of this product
+            var isCategoryUpdateSuccess = await _categoryApiClient.Update(request.Id, request.CategoryIds);
+
+            //update product informations
+            var isProductUpdateSuccess = await _productApiClient.Update(request.Id, request);
+
+            if (isCategoryUpdateSuccess == false && isProductUpdateSuccess == false)
+            {
+                return View(request);
+            }
+
+            TempData[SystemConstants.AppSettings.SuccessMessage] = "Update product successed!";
+            return RedirectToAction("Index", "Product");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var productApiResult = await _productApiClient.GetById(id, languageId);
+            if (productApiResult.IsSuccessed == false)
+            {
+                ModelState.AddModelError("", productApiResult.Message);
+                return View();
+            }
+
+            var product = productApiResult.ResultObject;
+
+            return View(new ProductDeleteRequest()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                DateCreated = product.DateCreated,
+                Description = product.Description,
+                Price = product.Price,
+                Stock = product.Stock,
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDeleteRequest request)
+        {
+            var isSuccess = await _productApiClient.Delete(request.Id);
+
+            if (isSuccess)
+            {
+                TempData[SystemConstants.AppSettings.SuccessMessage] = "Delete successed!";
+                return RedirectToAction("Index", "Product");
+            }
+
+            ModelState.AddModelError("", "Delete failed.");
+            return View(request);
         }
     }
 }

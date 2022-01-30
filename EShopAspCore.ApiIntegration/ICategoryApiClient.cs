@@ -9,9 +9,12 @@ namespace EshopAspCore.ApiIntegration
 {
     public interface ICategoryApiClient
     {
-        Task<ApiResult<List<CategoryViewModel>>> GetAll (string languageId);
+        Task<ApiResult<List<CategoryViewModel>>> GetAll(string languageId);
 
         Task<ApiResult<List<CategoryViewModel>>> GetByProductId(int productId, string languageId);
 
+        Task<bool> Update(int id, List<SelectedItem> items);
+
+        Task<ApiResult<CategoryViewModel>> GetById(int id, string languageId);
     }
 }

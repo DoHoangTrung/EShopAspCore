@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="--Please select one--" xml:space="preserve">
+    <value>--Please select one--</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="Add to" xml:space="preserve">
     <value>Add to</value>
     <comment>/Home/Index</comment>
@@ -137,6 +141,10 @@
     <value>Featured Products</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Latest Products</value>
     <comment>/Home/Index</comment>
@@ -145,9 +153,37 @@
     <value>Login</value>
     <comment>/Shared/_Layout</comment>
   </data>
+  <data name="LoginUrl" xml:space="preserve">
+    <value>Login</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
+  <data name="Price lowest first" xml:space="preserve">
+    <value>Price lowest first</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product name A - Z" xml:space="preserve">
+    <value>Product name A - Z</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product name Z - A" xml:space="preserve">
+    <value>Product name Z - A</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product Stoke" xml:space="preserve">
+    <value>Product Stoke</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="products are available" xml:space="preserve">
+    <value>products are available</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="ProductUrl" xml:space="preserve">
     <value>product</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sort By</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Specials Offer</value>

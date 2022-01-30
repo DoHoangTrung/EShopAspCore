@@ -1,12 +1,12 @@
 ﻿@model HomeViewModel
 
-@using EshopAspCore.ExtensionMethods
-@using LazZiya.ExpressLocalization;
+@using EshopAspCore.Utilities.ExtensionMethods
 
-@inject ISharedCultureLocalizer _loc;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @{
     ViewData["Title"] = "Home Page";
     var culture = CultureInfo.CurrentCulture.Name;
+
 }
 
 @section Slider{
@@ -44,24 +44,23 @@
                 }
                 @for (int i = 0; i < parts.Count; i++)
                 {
-
                     <div class="item @(i==0 ? "active" : "")">
                         <ul class="thumbnails">
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    @foreach (var product in parts[i])
-                                    {
-                                        var url = $"/{culture}/{_loc["ProductUrl"]}/{product.Id}";
 
+                            @foreach (var product in parts[i])
+                            {
+                                var url = $"/{culture}/{_loc["ProductUrl"]}/{product.Id}";
+                                <li class="span3">
+                                    <div class="thumbnail">
                                         <i class="tag"></i>
                                         <a href=@url><img src=@product.ThumbnailImage alt="@product.Name"></a>
                                         <div class="caption">
                                             <h5>@product.Name</h5>
                                             <h4><a class="btn" href=@url localize-content>VIEW</a> <span class="pull-right">@product.Price.ToString()</span></h4>
                                         </div>
-                                    }
-                                </div>
-                            </li>
+                                    </div>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
@@ -83,12 +82,12 @@
                 <div class="caption">
                     <h5>@product.Name</h5>
                     <p>
-                        @product.Description
+                       @Html.Raw( @product.Description)
                     </p>
                     <h4 style="text-align:center">
                         <a class="btn" href=@url> <i class="icon-zoom-in"></i></a>
                         <a class="btn" href="#"><localize>Add to </localize><i class="icon-shopping-cart"></i></a>
-                        <a class="btn btn-primary" href="#">@product.Price.ToString()</a>
+                        <a class="btn btn-primary" href="#">@product.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</a>
                     </h4>
                 </div>
             </div>

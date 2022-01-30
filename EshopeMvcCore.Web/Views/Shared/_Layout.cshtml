@@ -1,6 +1,9 @@
 ﻿@{
     var culture = CultureInfo.CurrentCulture.Name;
 }
+
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,19 +41,21 @@
         <div class="container">
             <div id="welcomeLine" class="row">
                 <div class="span6">Welcome!<strong> User</strong></div>
-                <div class="span6">
+                <div class="span4">
+                    <div class="pull-right">
+                        <language-nav language-label="NativeName" cookie-handler-url="@(Url.Action("SetCultureCookie", "Home", new { area= "", cltr="{0}", returnUrl="{1}" }))">
+                        </language-nav>
+                    </div>
+                </div>
+                <div class="span2">
                     <div class="pull-right">
                         @*<a href="product_summary.html"><span class="">Fr</span></a>
-                        <a href="product_summary.html"><span class="">Es</span></a>
-                        <span class="btn btn-mini">En</span>
-                        <a href="product_summary.html"><span>&pound;</span></a>
-                        <span class="btn btn-mini">$155.00</span>
-                        <a href="product_summary.html"><span class="">$</span></a>*@
+                            <a href="product_summary.html"><span class="">Es</span></a>
+                            <span class="btn btn-mini">En</span>
+                            <a href="product_summary.html"><span>&pound;</span></a>
+                            <span class="btn btn-mini">$155.00</span>
+                            <a href="product_summary.html"><span class="">$</span></a>*@
                         <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart </span> </a>
-                    </div>
-                    <div class="pull-right">
-                        <language-nav cookie-handler-url="@(Url.Action("SetCultureCookie", "Home", new { area= "", cltr="{0}", returnUrl="{1}" }))">
-                        </language-nav>
                     </div>
                 </div>
             </div>
@@ -63,7 +68,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-inner">
-                    <a class="brand" href="index.html"><img src="/themes/images/logo.png" alt="Bootsshop" /></a>
+                    <a class="brand" href="/"><img src="/themes/images/logo.png" alt="Bootsshop" /></a>
                     <form class="form-inline navbar-search" method="post" action="products.html">
                         <input id="srchFld" class="srchTxt" type="text" />
                         <select class="srchTxt">
@@ -90,30 +95,32 @@
                                localize-content>Contact</a>
                         </li>
                         <li class="">
-                            <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success"><localize>Login</localize></span></a>
-                            <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3>Login Block</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <form class="form-horizontal loginFrm">
-                                        <div class="control-group">
-                                            <input type="text" id="inputEmail" placeholder="Email">
-                                        </div>
-                                        <div class="control-group">
-                                            <input type="password" id="inputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox"> Remember me
-                                            </label>
-                                        </div>
-                                    </form>
-                                    <button type="submit" class="btn btn-success">Sign in</button>
-                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                </div>
-                            </div>
+                            <a href=@($"/{culture}/{_loc["LoginUrl"]}") role="button" @*data-toggle="modal"*@ style="padding-right:0">
+                                <span class="btn btn-large btn-success"><localize>Login</localize></span>
+                            </a>
+                            @*<div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3>Login Block</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal loginFrm">
+                                            <div class="control-group">
+                                                <input type="text" id="inputEmail" placeholder="Email">
+                                            </div>
+                                            <div class="control-group">
+                                                <input type="password" id="inputPassword" placeholder="Password">
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="checkbox">
+                                                    <input type="checkbox"> Remember me
+                                                </label>
+                                            </div>
+                                        </form>
+                                        <button type="submit" class="btn btn-success">Sign in</button>
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    </div>
+                                </div>*@
                         </li>
                     </ul>
                 </div>
@@ -121,12 +128,14 @@
         </div>
     </div>
     <!-- Header End====================================================================== -->
-    @RenderSection("Slider",false)
+    @RenderSection("Slider", false)
     <div id="mainBody">
         <div class="container">
             <div class="row">
                 <!-- Sidebar ================================================== -->
-                @await Component.InvokeAsync("SideBar")
+                <div id="sidebar" class="span3">
+                    @await Component.InvokeAsync("SideBar")
+                </div>
                 <!-- Sidebar end=============================================== -->
                 <div class="span9">
                     @RenderBody()

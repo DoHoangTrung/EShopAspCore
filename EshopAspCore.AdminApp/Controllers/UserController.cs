@@ -1,5 +1,4 @@
-﻿using EshopAspCore.AdminApp.Models;
-using EshopAspCore.ApiIntegration;
+﻿using EshopAspCore.ApiIntegration;
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.System.Roles;

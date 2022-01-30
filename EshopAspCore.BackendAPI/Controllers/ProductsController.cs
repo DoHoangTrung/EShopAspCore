@@ -16,7 +16,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /*[Authorize]*/
+    [AllowAnonymous]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -25,17 +25,9 @@ namespace EshopAspCore.BackendAPI.Controllers
             _productService = publicProductService;
         }
 
-        //GET: api/products?pageIndex=1&pageSize=10&categoryId=1
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetPublicProduct(string languageId,[FromQuery] GetPublicProductPagingRequest request)
-        {
-            var products = await _productService.GetAllByCategoryId(languageId,request);
-            return Ok(products);
-        }
-
         //GET: api/products?pageIndex=1&pageSize=10&categoryId=1&languageId=vi-VN
         [HttpGet]
-        public async Task<IActionResult> GetManageProductPaging([FromQuery] GetManageProductPagingRequest request)
+        public async Task<IActionResult> GetProductPaging([FromQuery] GetManageProductPagingRequest request)
         {
             var products = await _productService.GetAllPaging(request);
             if (products == null)
@@ -61,13 +53,14 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //POST: api/products
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var productId = await _productService.Create(request);
-            if (productId == 0) 
+            if (productId == 0)
                 return BadRequest("Created product failed.");
 
             var product = await _productService.GetById(productId, request.LanguageId);
@@ -75,8 +68,10 @@ namespace EshopAspCore.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = product }, product);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        //PUT: api/products/1
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Update(int id, [FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -89,17 +84,21 @@ namespace EshopAspCore.BackendAPI.Controllers
         }
 
 
+        //DELETE: api/products/1
         [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<IActionResult> Delete (int productId)
         {
             var affortedProduct = await _productService.Delete(productId);
             if (affortedProduct == 0)
-                return BadRequest();
+                return BadRequest(false);
 
-            return Ok();
+            return Ok(true);
         }
 
         [HttpPatch("{productId}/{newPrice}")]
+        [Authorize]
+
         public async Task<IActionResult> UpdatePrice (int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId,newPrice);
@@ -112,6 +111,8 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //POST: api/products/1/images
         [HttpPost("{productId}/images")]
+        [Authorize]
+
         public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -130,6 +131,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //GET: api/products/1/images/1
         [HttpGet("{productId}/images/{imageId}")]
+
         public async Task<IActionResult> GetImageById(int imageId)
         {
             var image = await _productService.GetProductImageById(imageId);
@@ -141,6 +143,8 @@ namespace EshopAspCore.BackendAPI.Controllers
 
 
         [HttpPut("{productId}/images/{imageId}")]
+        [Authorize]
+
         public async Task<IActionResult> UpdateImage(int imageId,[FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -154,6 +158,8 @@ namespace EshopAspCore.BackendAPI.Controllers
         }
 
         [HttpDelete("{productId}/images/{imageId}")]
+        [Authorize]
+
         public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -169,7 +175,6 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //GET: api/products/featured/4/vi-VN
         [HttpGet("featured/{take}/{languageId}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
         {
             var products = await _productService.GetFeaturedProduct(languageId, take);
@@ -185,7 +190,6 @@ namespace EshopAspCore.BackendAPI.Controllers
 
         //GET: api/products/latest/4/vi-VN
         [HttpGet("latest/{take}/{languageId}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetLatestProducts(int take, string languageId)
         {
             var products = await _productService.GetLatestProduct(languageId, take);

@@ -21,6 +21,6 @@ namespace EshopAspCore.ViewModels.Catalog.Products.Manage
         public List<SelectedItem> CategoryIds{ set; get; }
         public IFormFile ThumbNailImage { get; set; }
         public bool? IsFeatured { get; set; }
-
+        public string ImagePath { get; }
     }
 }
