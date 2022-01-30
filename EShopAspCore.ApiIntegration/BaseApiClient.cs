@@ -37,13 +37,12 @@ namespace EshopAspCore.ApiIntegration
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
-        protected async Task<TResponse> CreateAsync<TResponse, DataType>(string url, DataType newObject)
+        protected async Task<TResponse> PostAsync<TResponse, DataType>(string url, DataType newObject)
         {
             var json = JsonConvert.SerializeObject(newObject);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
+            var client = GetBearerHeaderClient();
 
             var response = await client.PostAsync(url, httpContent);
 
@@ -52,8 +51,9 @@ namespace EshopAspCore.ApiIntegration
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
-        protected async Task<TResponse> UpdateAsync<TResponse, DataType>(string url, DataType updateOject)
+        protected async Task<TResponse> PutAsync<TResponse, DataType>(string url, DataType updateOject)
         {
+            //use json convert data
             var client = GetBearerHeaderClient();
 
             var json = JsonConvert.SerializeObject(updateOject);

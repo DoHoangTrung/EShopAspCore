@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ViewModels.Common;
+﻿using EshopAspCore.ViewModels.Catalog.ProductImages;
+using EshopAspCore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace EshopAspCore.ViewModels.Catalog.Products
         public int? CategoryId { get; set; }
         public List<SelectedItem> AllCategory { get; set; } = new List<SelectedItem>();
         public string CategoriesString { get; set; }
+        public List<ProductImageViewModel> Images { get; set; }
         public string ThumbnailImage { get; set; }
     }
 }

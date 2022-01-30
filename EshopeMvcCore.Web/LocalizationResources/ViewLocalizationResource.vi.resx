@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="--Please select one--" xml:space="preserve">
+    <value>--Chọn--</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="Add to" xml:space="preserve">
     <value>Thêm vào</value>
     <comment>/Home/Index</comment>
@@ -137,6 +141,10 @@
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang chủ</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Sản phẩm mới nhất</value>
     <comment>/Home/Index</comment>
@@ -145,9 +153,37 @@
     <value>Đăng nhập</value>
     <comment>/Shared/_Layout</comment>
   </data>
+  <data name="LoginUrl" xml:space="preserve">
+    <value>Dang-nhap</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
+  <data name="Price lowest first" xml:space="preserve">
+    <value>Giá từ thấp nhất tới cao nhất</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product name A - Z" xml:space="preserve">
+    <value>Tên sản phẩm từ A-Z</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product name Z - A" xml:space="preserve">
+    <value>Tên sản phẩm từ Z-A</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="Product Stoke" xml:space="preserve">
+    <value>Số lượng còn trong kho</value>
+    <comment>/Product/Category</comment>
+  </data>
+  <data name="products are available" xml:space="preserve">
+    <value>sản phẩm có sẵn</value>
+    <comment>/Product/Category</comment>
+  </data>
   <data name="ProductUrl" xml:space="preserve">
     <value>san-pham</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Sort By" xml:space="preserve">
+    <value>Sắp xếp theo</value>
+    <comment>/Product/Category</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
     <value>Khuyến mãi</value>

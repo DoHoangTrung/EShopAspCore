@@ -12,6 +12,7 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -37,18 +38,41 @@ namespace EshopAspCore.BackendAPI.Controllers
         }
 
         //GET: api/categories?productId=1&languageId=vi-VN
-        [HttpGet("{productId}/{languageId}")]
+        [HttpGet("product-id/{productId}/{languageId}")]
         public async Task<IActionResult> GetByProductId(int productId, string languageId)
         {
-            var categories = await _categoryService.GetById(productId, languageId);
+            var categories = await _categoryService.GetByProductId(productId, languageId);
             if (categories != null)
             {
                 var successResponse = new ApiSuccessResult<List<CategoryViewModel>>(categories);
                 return Ok(successResponse);
             }
 
-            var errorResponse = new ApiErrorResult<List<CategoryViewModel>>("get categories by id product return null");
+            var errorResponse = new ApiErrorResult<List<CategoryViewModel>>("Get categories by id product return null");
             return BadRequest(errorResponse);
+        }
+
+        //GET: api/categories?productId=1&languageId=vi-VN
+        [HttpGet("{id}/{languageId}")]
+        public async Task<IActionResult> GetById(int id, string languageId)
+        {
+            var categories = await _categoryService.GetById(id, languageId);
+            if (categories != null)
+            {
+                var successResponse = new ApiSuccessResult<CategoryViewModel>(categories);
+                return Ok(successResponse);
+            }
+
+            var errorResponse = new ApiErrorResult<CategoryViewModel>("Get category by id return null");
+            return BadRequest(errorResponse);
+        }
+
+        //POST: api/categories/1
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update (int id, List<SelectedItem> items)
+        {
+            var resutl =await _categoryService.Update(id,items);
+            return Ok(resutl);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace EshopAspCore.ApiIntegration
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
-            var apiResponse = await CreateAsync<ApiResult<bool>, RegisterRequest>("/api/users", request);
+            var apiResponse = await PostAsync<ApiResult<bool>, RegisterRequest>("/api/users", request);
 
             return apiResponse;
         }
@@ -79,7 +79,7 @@ namespace EshopAspCore.ApiIntegration
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
             string urlApi = $"/api/users/{id}";
-            var apiResponse = await UpdateAsync<ApiResult<bool>, UserUpdateRequest>(urlApi,request);
+            var apiResponse = await PutAsync<ApiResult<bool>, UserUpdateRequest>(urlApi,request);
 
             return apiResponse;
         }

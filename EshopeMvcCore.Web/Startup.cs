@@ -2,6 +2,7 @@ using EshopAspCore.ApiIntegration;
 using EshopAspCore.Application.Utilities.Slides;
 using EshopeMvcCore.Web.LocalizationResources;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +33,8 @@ namespace EshopeMvcCore.Web
         {
             services.AddHttpClient();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
@@ -78,6 +80,13 @@ namespace EshopeMvcCore.Web
                 options.Cookie.HttpOnly = false;
                 //options.Cookie.IsEssential = true;
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/User/login";
+                    option.AccessDeniedPath = "/User/Forbidden";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +104,7 @@ namespace EshopeMvcCore.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
@@ -139,6 +149,24 @@ namespace EshopeMvcCore.Web
                     {
                         Controller = "Product",
                         Action = "Category"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "category vi",
+                    pattern: "{culture}/login",
+                    new
+                    {
+                        Controller = "User",
+                        Action = "Login"
+                    });
+
+                endpoints.MapControllerRoute(
+                    name: "category vi",
+                    pattern: "{culture}/dang-nhap",
+                    new
+                    {
+                        Controller = "User",
+                        Action = "Login"
                     });
 
                 endpoints.MapControllerRoute(
