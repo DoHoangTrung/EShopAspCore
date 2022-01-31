@@ -40,7 +40,7 @@ namespace EshopAspCore.ViewModels.System.Users
 
         [DataType(DataType.Password)]
         [DisplayName("Xác nhận mật khẩu")]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "ConfirmPassword and Password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 using EshopAspCore.ApiIntegration;
 using EshopAspCore.Application.Utilities.Slides;
+using EshopAspCore.ViewModels.System.Users;
 using EshopeMvcCore.Web.LocalizationResources;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -44,7 +46,10 @@ namespace EshopeMvcCore.Web
                 new CultureInfo("vi"),
                 new CultureInfo("en"),
             };
-            services.AddControllersWithViews().AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
+            services
+                .AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()) //register all validator file in same url with login request validator
+                .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
             {
                 // When using all the culture providers, the localization process will
                 // check all available culture providers in order to detect the request culture.

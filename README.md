@@ -191,6 +191,8 @@ use localize-content taghelper or <localize></>
 -48: 
 	product service 472: thumbnail = images.FirstOrDefault(x => x.IsDefault).FileUrl ==> ERROR
 sql server : tool -> profiler
+
+-49: fluent validation .net core
 ##???
 -cant login in first time after init migration 
 -description of category in product category page

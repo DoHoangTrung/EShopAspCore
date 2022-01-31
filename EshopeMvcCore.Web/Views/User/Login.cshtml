@@ -1,14 +1,18 @@
 ﻿@model EshopAspCore.ViewModels.System.Users.LoginRequest
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = _loc["LoginUrl"];
+
+    var culture = CultureInfo.CurrentCulture;
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <ul class="breadcrumb">
-    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-    <li class="active">Login</li>
+    <li><a href="index.html"><localize>Home</localize></a> <span class="divider">/</span></li>
+    <li class="active" localize-content>Login</li>
 </ul>
-<h3> Login</h3>
+<h3 localize-content> Login</h3>
 <hr class="soft" />
 
 <div class="row">
@@ -16,7 +20,7 @@
         <div class="well">
             <h5>CREATE YOUR ACCOUNT</h5><br />
             Enter your e-mail address to create an account.<br /><br /><br />
-            <form action="register.html">
+            <form action="/@culture/user/register">
                 <div class="control-group">
                     <label class="control-label" for="inputEmail0">E-mail address</label>
                     <div class="controls">
@@ -33,18 +37,24 @@
     <div class="span4">
         <div class="well">
             <h5>ALREADY REGISTERED ?</h5>
-            <form action="">
+
+            <form action=@($"/{culture}/{_loc["LoginUrl"]}") method="post">
+                <div asp-validation-summary="ModelOnly" class="text-error"></div>
                 <div class="control-group">
-                    <label class="control-label" for="inputEmail1">Email</label>
+                    <label class="control-label" for="UserName">UserName</label>
                     <div class="controls">
-                        <input class="span3" asp-for="UserName" placeholder="Email">
+                        <input class="span3" type="text" asp-for="UserName" placeholder="UserName">
                     </div>
+                    <span asp-validation-for="UserName" class="text-error"></span>
+
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword1">Password</label>
+                    <label class="control-label" for="Password">Password</label>
                     <div class="controls">
                         <input type="password" class="span3" asp-for="Password" placeholder="Password">
                     </div>
+                    <span asp-validation-for="Password" class="text-error"></span>
+
                 </div>
                 <div class="control-group">
                     <div class="controls">
