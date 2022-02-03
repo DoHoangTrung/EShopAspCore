@@ -10,13 +10,13 @@ namespace EshopeMvcCore.Web.Models
     {
         public List<CartItemViewModel> Items { get; set; } = new List<CartItemViewModel>();
 
-        public decimal TotalPrice { get; set; }
+        public decimal TotalCartPrice { get; set; }
 
-        public string GetTotalPriceVND
+        public string GetTotalCartPriceVND
         {
             get
             {
-                return TotalPrice.ToVNDString();
+                return TotalCartPrice.ToVNDString();
             }
         }
     }

@@ -14,10 +14,10 @@ namespace EshopeMvcCore.Web.Models
         public int Quantity { get; set; }
         public string Description { get; set; }
         public decimal Price { set; get; }
-        public decimal TotalCost { get; set; }
-        public string GetTotalCostVND { get
+        public decimal TotalPrice { get; set; }
+        public string GetTotalPriceVND { get
             {
-                return TotalCost.ToVNDString();
+                return TotalPrice.ToVNDString();
             } }
 
         public string GetPriceVND { get

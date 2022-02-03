@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+
 }
 
 @section Scripts{
@@ -12,6 +14,7 @@
         cartController.initialize();
     </script>
 }
+<input type="hidden" id="hidCulture" value="@culture" />
 
 <ul class="breadcrumb">
     <li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -73,27 +76,27 @@
             <td>{{name}}</td>
             <td>
                 <div class="input-append">
-                    <input class="span1" style="max-width:34px" placeholder={{quantity}} id="appendedInputButtons" size="16" type="text">
-                    <button class="btn" type="button">
+                    <input class="span1" style="max-width:34px" value={{quantity}} id="quantityProduct{{id}}" size="16" type="text">
+                    <button class="btn btn-minus" type="button" data-id={{id}} data-quantity={{quantity}}>
                         <i class="icon-minus"></i>
                     </button>
-                    <button class="btn" type="button">
+                    <button class="btn btn-plus" type="button" data-id={{id}} data-quantity={{quantity}}>
                         <i class="icon-plus"></i>
                     </button>
-                    <button class="btn btn-danger" type="button">
+                    <button class="btn btn-danger btn-remove" type="button" data-id={{id}} data-quantity={{quantity}}>
                         <i class="icon-remove icon-white"></i>
                     </button>
                 </div>
             </td>
             <td>{{getPriceVND}}</td>
             <td>$0.00</td>
-            <td>{{getTotalCostVND}}</td>
+            <td>{{getTotalPriceVND}}</td>
         </tr>
         {{/items}}
 
         <tr>
             <td colspan="6" style="text-align:right">Total Price:	</td>
-            <td> {{getTotalPriceVND}}</td>
+            <td> {{getTotalCartPriceVND}}</td>
         </tr>
         <tr>
             <td colspan="6" style="text-align:right">Total Discount:	</td>
@@ -101,11 +104,13 @@
         </tr>
         <tr>
             <td colspan="6" style="text-align:right"><strong>TOTAL =</strong></td>
-            <td class="label label-important" style="display:block"> <strong> {{getTotalPriceVND}} </strong></td>
+            <td class="label label-important" style="display:block"> <strong> {{getTotalCartPriceVND}} </strong></td>
         </tr>
     </tbody>
 </table>
+
 </script>
+
 
 <table class="table table-bordered">
     <tbody>
