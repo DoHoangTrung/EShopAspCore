@@ -5,6 +5,7 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @{
     ViewData["Title"] = "Home Page";
+
     var culture = CultureInfo.CurrentCulture.Name;
 
 }
@@ -72,6 +73,7 @@
 </div>
 <h4 localize-content>Latest Products</h4>
 <ul class="thumbnails">
+    <input type="hidden" id="hidCulture" value="@culture" />
     @foreach (var product in Model.LatestProducts)
     {
         var url = $"/{culture}/{_loc["ProductUrl"]}/{product.Id}";
@@ -86,8 +88,8 @@
                     </p>
                     <h4 style="text-align:center">
                         <a class="btn" href=@url> <i class="icon-zoom-in"></i></a>
-                        <a class="btn" href="#"><localize>Add to </localize><i class="icon-shopping-cart"></i></a>
-                        <a class="btn btn-primary" href="#">@product.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</a>
+                        <a class="btn btn-add-cart" href="#" data-id="@product.Id"><localize>Add to </localize><i class="icon-shopping-cart"></i></a>
+                        <a class="btn btn-primary" href="#">@product.Price.ToVNDString()</a>
                     </h4>
                 </div>
             </div>

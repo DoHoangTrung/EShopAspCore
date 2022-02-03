@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\plugin\" />
     <Folder Include="wwwroot\themes\less\oregional\" />
   </ItemGroup>
 
@@ -17,6 +18,7 @@
     <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
     <PackageReference Include="LazZiya.TagHelpers" Version="6.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="mustache.js2" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

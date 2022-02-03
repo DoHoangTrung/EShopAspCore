@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace EshopAspCore.Utilities.ExtensionMethods
@@ -13,6 +14,11 @@ namespace EshopAspCore.Utilities.ExtensionMethods
                 .GroupBy(x => x.Index / chunkSize)
                 .Select(x => x.Select(v => v.Value).ToList())
                 .ToList();
+        }
+
+        public static string ToVNDString(this decimal value)
+        {
+            return value.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"));
         }
     }
 }
