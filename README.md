@@ -193,6 +193,13 @@ use localize-content taghelper or <localize></>
 sql server : tool -> profiler
 
 -49: fluent validation .net core
+
+-51: 
+how to use mustache.js: 
+1. download mustache.js : if we copy only code, we should set name : mustache.min.js (+ cdn ver)
+2. loop: data={"items": list_data} 
+	Mustache.render(template, data)
+3. in template, we should see how object show in console to get exactly name (wrong: IdProduct >< right: idProduct)
 ##???
 -cant login in first time after init migration 
 -description of category in product category page
