@@ -60,7 +60,7 @@ namespace EshopeMvcCore.Web.Controllers
             {
                 var item = cart.Items.First(x => x.Id == id);
                 item.Quantity += 1;
-                item.TotalCost = item.Quantity * item.Price;
+                item.TotalPrice = item.Quantity * item.Price;
             }
             else
             {
@@ -72,16 +72,50 @@ namespace EshopeMvcCore.Web.Controllers
                     Name = product.Name,
                     Quantity = quantity,
                     Price = product.Price,
-                    TotalCost = quantity * product.Price,
+                    TotalPrice = quantity * product.Price,
                 };
                 cart.Items.Add(item);
             }
 
-            cart.TotalPrice = cart.Items.Sum(x => x.TotalCost);
+            cart.TotalCartPrice = cart.Items.Sum(x => x.TotalPrice);
 
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(cart));
 
             return Ok();
+        }
+
+        //POST: vi/cart/updateCart
+        [HttpPost]
+        public IActionResult UpdateCart(int id, int quantity)
+        {
+            var cart = new CartViewModel();
+
+            var currentCart = HttpContext.Session.GetString(SystemConstants.CartSession);
+            if (currentCart != null)
+            {
+                cart = JsonConvert.DeserializeObject<CartViewModel>(currentCart);
+            }
+
+            foreach (var item in cart.Items)
+            {
+                if (item.Id == id)
+                {
+                    if (quantity == 0)
+                    {
+                        cart.Items.Remove(item);
+                        break;
+                    }
+
+                    item.Quantity = quantity;
+                    item.TotalPrice = quantity * item.Price;
+                    break;
+                }
+            }
+
+            cart.TotalCartPrice = cart.Items.Sum(x => x.TotalPrice);
+
+            HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(cart));
+            return Ok(cart);
         }
     }
 }
