@@ -15,11 +15,11 @@ namespace EshopAspCore.Data.Configurations
         {
             builder.ToTable("OrderDetail");
 
-            builder.HasKey(o => o.OrderId);
+            builder.HasKey(o => o.Id);
 
             builder.HasOne(od => od.Order).WithMany(od => od.OrderDetails).HasForeignKey(od => od.OrderId);
 
-            builder.HasOne(o => o.Product).WithMany(o => o.OrderDetails).HasForeignKey(o => o.OrderId);
+            builder.HasOne(o => o.Product).WithMany(o => o.OrderDetails).HasForeignKey(o => o.ProductId);
         }
     }
 }

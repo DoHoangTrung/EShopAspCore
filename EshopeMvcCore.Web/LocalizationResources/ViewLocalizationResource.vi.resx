@@ -145,6 +145,14 @@
     <value>Trang chủ</value>
     <comment>/Product/Category</comment>
   </data>
+  <data name="Itemes in your cart" xml:space="preserve">
+    <value>Sản phẩm trong giỏ</value>
+    <comment>common</comment>
+  </data>
+  <data name="Items in your cart" xml:space="preserve">
+    <value>Sản phẩm trong giỏ</value>
+    <comment>common</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Sản phẩm mới nhất</value>
     <comment>/Home/Index</comment>

@@ -145,6 +145,14 @@
     <value>Home</value>
     <comment>/Product/Category</comment>
   </data>
+  <data name="Itemes in your cart" xml:space="preserve">
+    <value>Itemes in your cart</value>
+    <comment>common</comment>
+  </data>
+  <data name="Items in your cart" xml:space="preserve">
+    <value>Items in your cart</value>
+    <comment>common</comment>
+  </data>
   <data name="Latest Products" xml:space="preserve">
     <value>Latest Products</value>
     <comment>/Home/Index</comment>

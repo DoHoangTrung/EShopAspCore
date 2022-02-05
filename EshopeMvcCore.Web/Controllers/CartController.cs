@@ -1,5 +1,6 @@
 ﻿using EshopAspCore.ApiIntegration;
 using EshopAspCore.Utilities.Constants;
+using EshopAspCore.ViewModels.Sales;
 using EshopeMvcCore.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,12 @@ namespace EshopeMvcCore.Web.Controllers
     public class CartController : Controller
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly IOrderApiClient _orderApiClient;
 
-        public CartController(IProductApiClient productApiClient)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient)
         {
             _productApiClient = productApiClient;
+            _orderApiClient = orderApiClient;
         }
 
         public IActionResult Index()
@@ -28,6 +31,13 @@ namespace EshopeMvcCore.Web.Controllers
         [HttpGet]
         public IActionResult GetCartItems()
         {
+            var cart = GetCartSession();
+
+            return Ok(cart);
+        }
+
+        private CartViewModel GetCartSession()
+        {
             var cart = new CartViewModel();
 
             var currentCart = HttpContext.Session.GetString(SystemConstants.CartSession);
@@ -36,8 +46,7 @@ namespace EshopeMvcCore.Web.Controllers
             {
                 cart = JsonConvert.DeserializeObject<CartViewModel>(currentCart);
             }
-
-            return Ok(cart);
+            return cart;
         }
 
         //POST: vi/cart/AddToCart
@@ -47,13 +56,7 @@ namespace EshopeMvcCore.Web.Controllers
             var apiResult = await _productApiClient.GetById(id, culture);
             var product = apiResult.ResultObject;
 
-            var cart = new CartViewModel();
-
-            var currentCart = HttpContext.Session.GetString(SystemConstants.CartSession);
-            if (currentCart != null)
-            {
-                cart = JsonConvert.DeserializeObject<CartViewModel>(currentCart);
-            }
+            var cart = GetCartSession();
 
             int quantity = 1;
             if (cart.Items.Any(x => x.Id == id))
@@ -88,13 +91,7 @@ namespace EshopeMvcCore.Web.Controllers
         [HttpPost]
         public IActionResult UpdateCart(int id, int quantity)
         {
-            var cart = new CartViewModel();
-
-            var currentCart = HttpContext.Session.GetString(SystemConstants.CartSession);
-            if (currentCart != null)
-            {
-                cart = JsonConvert.DeserializeObject<CartViewModel>(currentCart);
-            }
+            var cart = GetCartSession();
 
             foreach (var item in cart.Items)
             {
@@ -116,6 +113,74 @@ namespace EshopeMvcCore.Web.Controllers
 
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(cart));
             return Ok(cart);
+        }
+
+        //GET: vi/cart/checkout
+        [HttpGet]
+        public IActionResult CheckOut()
+        {
+            var cart = GetCheckOutCart();
+
+            return View(cart);
+        }
+
+        //POST: vi/cart/checkout
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(CheckOutViewModel model)
+        {
+            var cart = GetCheckOutCart();
+
+            var request = new CheckOutRequest()
+            {
+                Name = model.Name,
+                Phone = model.Phone,
+                UserId = model.UserId,
+                Address = model.Address,
+                Email = model.Email,
+            };
+
+            foreach (var item in cart.cartItems)
+            {
+                request.cartItems.Add(new OrderItemViewModel()
+                {
+                    ProductId = item.Id,
+                    Price =  item.Price,
+                    Quantity = item.Quantity
+                });
+            };
+
+            var isSuccess = await _orderApiClient.CheckOut(request);
+            if (isSuccess)
+            {
+                ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success";
+            }
+
+            return View();
+        }
+
+        //GET: vi/cart/countCartItem
+        [HttpGet]
+        public IActionResult CountCartItem()
+        {
+            var cart = GetCartSession();
+            return Ok(cart.Items.Count);
+        }
+
+        private CheckOutViewModel GetCheckOutCart()
+        {
+            var cart = new CartViewModel();
+
+            var currentCart = HttpContext.Session.GetString(SystemConstants.CartSession);
+            if (currentCart != null)
+            {
+                cart = JsonConvert.DeserializeObject<CartViewModel>(currentCart);
+            }
+
+            return new CheckOutViewModel()
+            {
+                cartItems = cart.Items,
+                TotalCartPrice = cart.TotalCartPrice
+            };
         }
     }
 }

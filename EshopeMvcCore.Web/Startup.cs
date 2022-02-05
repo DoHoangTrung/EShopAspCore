@@ -40,6 +40,7 @@ namespace EshopeMvcCore.Web
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
 
             var cultures = new[]
             {

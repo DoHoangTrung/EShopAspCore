@@ -83,6 +83,7 @@
                 var rendered = Mustache.render(template, cart);
                 document.getElementById('cart-items-target').innerHTML = rendered;
 
+                CountCartItems();
             }).fail(function (err) {
                 console.log(err)
             });
@@ -116,9 +117,16 @@
                 var rendered = Mustache.render(template, cart);
                 document.getElementById('cart-items-target').innerHTML = rendered;
 
+                CountCartItems();
             }).fail(function (err) {
                 console.log(err)
             });
+        })
+    };
+
+    function CountCartItems() {
+        $.get(`/${culture}/cart/countCartItem`, function (data) {
+            $('.labelCartItemCount').text(`[${data}]`);
         })
     };
 }
