@@ -1,0 +1,156 @@
+﻿@model CheckOutViewModel
+@using EshopAspCore.Utilities.Constants
+@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+<script>
+    setTimeout(function () {
+        $('#successMsg').fadeOut('slow');
+        window.location.href = '/@culture/home/index';
+    }, 1000);
+
+</script>
+
+@{
+    if (ViewData[SystemConstants.AppSettings.SuccessMessage] != null)
+    {
+        <div id="successMsg" class="alert alert-success" role="alert">
+            @ViewData[SystemConstants.AppSettings.SuccessMessage]
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].Image)</th>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].Quantity)</th>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].GetPriceVND)</th>
+                    <th>@Html.DisplayNameFor(model => model.cartItems[0].GetTotalPriceVND)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.cartItems.Count(); i++)
+                {
+                    <tr>
+                        <td> <img width="60" src=@Model.cartItems[i].Image alt="" /></td>
+                        <td>@Model.cartItems[i].Name</td>
+                        <td>@Html.Raw(@Model.cartItems[i].Description)</td>
+                        <td>@Model.cartItems[i].Quantity</td>
+                        <td>@Model.cartItems[i].GetPriceVND</td>
+                        <td>@Model.cartItems[i].GetTotalPriceVND</td>
+                        <td>@Model.cartItems[i].Quantity</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td colspan="6" style="text-align:right">Total Price:   </td>
+                    <td>@Model.GetTotalCartPriceVND</td>
+                </tr>
+                <tr>
+                    <td colspan="6" style="text-align:right">Total Discount:    </td>
+                    <td> $0.00</td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="6" style="text-align:right"><strong>TOTAL =</strong></td>
+                    <td class="label label-important" style="display:block"> <strong>@Model.GetTotalCartPriceVND</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-bordered">
+            <tr><th> USER INFORMATIONS </th></tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <p>Already have a account? <a href="/@culture/user/login" style="text-decoration:underline">Login</a></p>
+                    </div>
+                    <form class="form-horizontal" action="/@culture/cart/checkout" method="POST">
+                        <div class="control-group">
+                            <label class="control-label" asp-for="Name">Name</label>
+                            <div class="controls">
+                                <input asp-for="Name" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" asp-for="Email">Email</label>
+                            <div class="controls">
+                                <input asp-for="Email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" asp-for="Address">Address</label>
+                            <div class="controls">
+                                <input asp-for="Address" placeholder="Address">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" asp-for="Phone">Phone</label>
+                            <div class="controls">
+                                <input asp-for="Phone" placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn">Check out</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        @*<table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+                                    <div class="controls">
+                                        <input type="text" class="input-medium" placeholder="CODE">
+                                        <button type="submit" class="btn"> ADD </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered">
+                <tr><th>ESTIMATE YOUR SHIPPING </th></tr>
+                <tr>
+                    <td>
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputCountry">Country </label>
+                                <div class="controls">
+                                    <input type="text" id="inputCountry" placeholder="Country">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="inputPost">Post Code/ Zipcode </label>
+                                <div class="controls">
+                                    <input type="text" id="inputPost" placeholder="Postcode">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button type="submit" class="btn">ESTIMATE </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        *@
+    }
+}

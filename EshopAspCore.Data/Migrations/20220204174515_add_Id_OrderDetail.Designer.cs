@@ -4,14 +4,16 @@ using EshopAspCore.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    partial class EshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220204174515_add_Id_OrderDetail")]
+    partial class add_Id_OrderDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,15 +80,15 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
-                            ConcurrencyStamp = "87ecd522-86a3-422a-a857-9101f18763fb",
+                            ConcurrencyStamp = "3503ab8a-5c71-45d8-9afb-08d4ae8f692a",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("e30efbc8-f12b-44cb-a434-c7f1a9859f74"),
-                            ConcurrencyStamp = "ed4e6a0e-3eb7-4e8a-b53e-f6e59e7081d1",
+                            Id = new Guid("1a981257-02b3-49cd-a85c-bf584a2d8205"),
+                            ConcurrencyStamp = "991c4173-cfd1-4ec7-97bd-f58532948d67",
                             Description = "user role",
                             Name = "user",
                             NormalizedName = "user"
@@ -163,7 +165,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ccd9b03d-b1a5-48f2-9590-d9289fb9ded0",
+                            ConcurrencyStamp = "c29fad55-6c33-4945-a51b-e19a049990df",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -172,7 +174,7 @@ namespace EshopAspCore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAELBVmX8N2XROsY2f4qt+TjROR+VXTbzjfK0EnDv+4E8kg8jyE22ce5qaT81d2l/0Xg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELo8PlZSe3K2h9+WAh8bhGrqgO++pLx0BV7Pz5zgeEKIPaFX1XPGkk+bMTwG/qmMSw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -481,8 +483,6 @@ namespace EshopAspCore.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("OrderDetail");
                 });
 
@@ -523,7 +523,7 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 2, 5, 0, 50, 50, 189, DateTimeKind.Local).AddTicks(3661),
+                            DateCreated = new DateTime(2022, 2, 5, 0, 45, 14, 201, DateTimeKind.Local).AddTicks(9355),
                             IsFeatured = true,
                             OriginalPrice = 100000m,
                             Price = 200000m,
@@ -1012,7 +1012,7 @@ namespace EshopAspCore.Data.Migrations
 
                     b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

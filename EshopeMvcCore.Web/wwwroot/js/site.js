@@ -17,7 +17,9 @@ $('body').on('click', '.btn-add-cart', function (e) {
         url: `/${culture}/cart/addToCart`,
         data: data,
     }).done(function (res) {
-        console.log(res)
+        $.get(`/${culture}/cart/countCartItem`, function (data) {
+            $('.labelCartItemCount').text(`[${data}]`);
+        })
     }).fail(function (err) {
         console.log(err)
     });
