@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.AdminApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = SystemConstants.AppRole.Admin)]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -2,6 +2,7 @@
 using EshopAspCore.Utilities.Constants;
 using EshopeMvcCore.Web.Models;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace EshopeMvcCore.Web.Controllers
 {
+    [AllowAnonymous] 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

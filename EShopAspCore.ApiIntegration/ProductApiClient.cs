@@ -55,8 +55,17 @@ namespace EshopAspCore.ApiIntegration
         public async Task<ApiResult<PageResult<ProductViewModel>>> GetAll(GetManageProductPagingRequest request)
         {
             string url = $"api/products?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
-                $"&categoryId={request.CategoryId}&languageId={request.LanguageId}" +
-                $"&SelectionSortOrder={request.SelectionSortOrder}";
+                $"&languageId={request.LanguageId}";
+
+            if (request.CategoryId.HasValue)
+            {
+                url += $"&categoryId={request.CategoryId}";
+            }
+            if (!string.IsNullOrEmpty(request.SelectionSortOrder))
+            {
+                url += $"&SelectionSortOrder={request.SelectionSortOrder}";
+            }
+
             var apiResponse = await GetAsync<ApiResult<PageResult<ProductViewModel>>>(url);
             return apiResponse;
         }

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.AdminApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = SystemConstants.AppRole.Admin)]
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
@@ -35,6 +35,7 @@ namespace EshopAspCore.AdminApp.Controllers
             _roleApiClient = roleApiClient;
         }
 
+        
         [HttpGet]
         public async Task<IActionResult> Index(string keywords, int pageIndex = 1, int pageSize = 10)
         {
@@ -107,6 +108,7 @@ namespace EshopAspCore.AdminApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -137,7 +139,7 @@ namespace EshopAspCore.AdminApp.Controllers
             if (result.IsSuccessed)
             {
                 TempData["SuccessMsg"] = "Register successed.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login","User");
             }
 
             ModelState.AddModelError("", result.Message);
@@ -323,6 +325,14 @@ namespace EshopAspCore.AdminApp.Controllers
             }
 
             return roleAssignRequest;
+        }
+
+        //GET: /User/Forbidden
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Forbidden()
+        {
+            return View();
         }
     }
 }

@@ -230,9 +230,12 @@ namespace EshopAspCore.Application.Catalog.Products
                    IsDefault = x.IsDefault,
                    SortOrder = x.SortOrder,
                }).ToListAsync();
-
-                p.Images = images;
-                p.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                
+                if(images.Count > 0)
+                {
+                    p.Images = images;
+                    p.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                }
             }
 
             //4. Select and projection
@@ -281,8 +284,8 @@ namespace EshopAspCore.Application.Catalog.Products
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
-                Images = images,
-                ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl,
+                Images = (images.Count >0 ? images:null),
+                ThumbnailImage = (images.Count > 0? images.FirstOrDefault(x => x.IsDefault).FileUrl : ""),
             };
 
             var currentCategories = await _categoryService.GetByProductId(productId, languageId);
@@ -524,8 +527,11 @@ namespace EshopAspCore.Application.Catalog.Products
                    SortOrder = x.SortOrder,
                }).ToListAsync();
 
-                product.Images = images;
-                product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                if(images.Count > 0)
+                {
+                    product.Images = images;
+                    product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                }
             }
 
             return data;
@@ -539,8 +545,6 @@ namespace EshopAspCore.Application.Catalog.Products
                         join l in _context.Languages on pt.LanguageId equals l.Id
                         where pt.LanguageId == languageId
                         select new { p,  pt, l };
-
-            
 
             var data = await query.OrderByDescending(x => x.p.DateCreated)
                 .Take(takeNum)
@@ -577,8 +581,10 @@ namespace EshopAspCore.Application.Catalog.Products
                    SortOrder = x.SortOrder,
                }).ToListAsync();
 
-                product.Images = images;
-                product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                if (images.Count > 0) {
+                    product.Images = images;
+                    product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                }    
             }
 
             return data;

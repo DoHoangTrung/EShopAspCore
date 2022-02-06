@@ -78,7 +78,7 @@ namespace EshopAspCore.ApiIntegration
 
         protected HttpClient GetBearerHeaderClient()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("HttpClientWithSSLUntrusted");
             var bearToken = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
             client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
