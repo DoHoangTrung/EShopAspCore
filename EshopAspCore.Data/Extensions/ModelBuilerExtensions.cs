@@ -145,7 +145,7 @@ namespace EshopAspCore.Data.Extensions
                     Id = Guid.NewGuid(),
                     Name = "user",
                     NormalizedName = "user",
-                    Description = "user role"
+                    Description = "User role"
                 });
 
             var hasher = new PasswordHasher<AppUser>();
@@ -153,7 +153,7 @@ namespace EshopAspCore.Data.Extensions
             {
                 Id = ADMIN_ID,
                 UserName = "trung123",
-                NormalizedUserName = "admin",
+                NormalizedUserName = "trung123",
                 Email = "some-admin-email@nonce.fake",
                 NormalizedEmail = "some-admin-email@nonce.fake",
                 EmailConfirmed = true,

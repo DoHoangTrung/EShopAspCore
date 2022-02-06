@@ -1,4 +1,5 @@
 using EshopAspCore.ApiIntegration;
+using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -19,18 +20,29 @@ namespace EshopAspCore.AdminApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment ev)
         {
             Configuration = configuration;
+            Env = ev;
         }
 
         public IConfiguration Configuration { get; }
-
+        public IWebHostEnvironment Env { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //services for using call api 
-            services.AddHttpClient();
+            //bypass-invalid-ssl-certificate (when deploy to iss)
+            services.AddHttpClient(SystemConstants.AppSettings.HttpClientWithSSLUntrusted)
+                .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                {
+                    ClientCertificateOptions = ClientCertificateOption.Manual,
+                    ServerCertificateCustomValidationCallback =
+                    (httpRequestMessage, cert, cetChain, policyErrors) =>
+                    {
+                        return true;
+                    }
+                });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
@@ -53,16 +65,28 @@ namespace EshopAspCore.AdminApp
                 .AddCookie(option =>
                 {
                     option.LoginPath = "/User/login";
-                    option.AccessDeniedPath = "/User/Forbidden";
+                    option.Events.OnRedirectToAccessDenied = (context) =>
+                    {
+                        context.Response.Redirect("/User/Forbidden");
+                        return Task.CompletedTask;
+                    };
                 });
+
+            // debug runtime compile
+            var builder = services.AddRazorPages();
+            if (Env.IsDevelopment())
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -84,7 +108,6 @@ namespace EshopAspCore.AdminApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-        //            pattern: "{controller=Home}/{action=Index}/{id?}");
                     pattern: "{controller=User}/{action=Login}/{id?}");
             });
         }

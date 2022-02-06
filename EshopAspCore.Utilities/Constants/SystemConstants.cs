@@ -17,6 +17,8 @@ namespace EshopAspCore.Utilities.Constants
         {
             public const string DefaultLanguageId = "DefaultLanguageId";
             public const string SuccessMessage = "SuccessMsg";
+            public const string HttpClientWithSSLUntrusted = "HttpClientWithSSLUntrusted";
+
         }
 
         public class ProductSettings
@@ -32,6 +34,12 @@ namespace EshopAspCore.Utilities.Constants
             public const string ProductNameAZ = " Product name A - Z";
             public const string ProductNameZA = "Product name Z - A";
             public const string ProductStocke = "Product Stoke";
+        }
+
+        public static class AppRole
+        {
+            public const string User = "user";
+            public const string Admin = "admin";
         }
     }
 }

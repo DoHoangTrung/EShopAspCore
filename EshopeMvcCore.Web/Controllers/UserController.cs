@@ -3,6 +3,7 @@ using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace EshopeMvcCore.Web.Controllers
 {
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;

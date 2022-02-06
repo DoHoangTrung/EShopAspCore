@@ -4,39 +4,40 @@
 https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 ## How to configure and run
 ## How to contribute
-## My note
-branch master-main only include README.md file
-branch develope - base: main
-branch feature/db_design - base: develope
+## My note 
+branch master-main only include README.md file 
+branch develope - base: main 
+branch feature/db_design - base: develope 
 
-in EshopData: add nuget: 
-	efcore.sqlserver
-	efcore.design
-	efcore.tool
+in EshopData: add nuget:  
+	efcore.sqlserver 
+	efcore.design  
+	efcore.tool 
+	Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 
-config table dbset:
-	attribute configuration
-	fluent api
+config table dbset: 
+	attribute configuration 
+	fluent api 
 
-migration database:
-- branch feature/database_design:
-	+ init appsettings.json -> add connection string
-	+ add class dbcontext factory
-	+ install nuget: configuration file + json
-- migration:
-	+add-migration initial
-	+update-database
-- create seeding data
--add class + config: IdentityUserClaim, IdentityUserRole, IdentityUserLogin, IdentityRoleClaim, IdentityUserToken
--seeding data: 
--tạo tầng application:
-	+SOLID: D(dependencies inject)
-	+tạo 2 interface product: admin (manage) vs web(public)
-	+moi C, U, R, D co mot DTO
+migration database: 
+- branch feature/database_design: 
+	+ init appsettings.json -> add connection string 
+	+ add class dbcontext factory 
+	+ install nuget: configuration file + json 
+- migration: 
+	+add-migration initial 
+	+update-database 
+- create seeding data 
+-add class + config: IdentityUserClaim, IdentityUserRole, IdentityUserLogin, IdentityRoleClaim, IdentityUserToken 
+-seeding data:  
+-tạo tầng application: 
+	+SOLID: D(dependencies inject)  
+	+tạo 2 interface product: admin (manage) vs web(public) 
+	+moi C, U, R, D co mot DTO 
 	
 	
--create api 
-add connection string to appsetting.developement.json
+-create api  
+add connection string to appsetting.developement.json 
 
 config DI (dependence inject dot net core)
 
@@ -200,7 +201,30 @@ how to use mustache.js:
 2. loop: data={"items": list_data} 
 	Mustache.render(template, data)
 3. in template, we should see how object show in console to get exactly name (wrong: IdProduct >< right: idProduct)
+
+-55: 
+deploy on IIS:
+https://stackoverflow.com/questions/62397386/swagger-ui-not-displaying-when-deploying-api-on-iis 
+ 
+https://www.youtube.com/watch?v=Q_A_t7KS5Ss 
+install .net core hosting bundle 5.0 
+setting iis service
+
+1.database : console -> Script-Migration
+2. back end api
+
+cannot connect to db: create new login in sql server -> assign db and role  
+run project in product environment(launching setting) -> debug 
+
+bypass-invalid-ssl-certificate-in-net-core: 
+https://stackoverflow.com/questions/38138952/bypass-invalid-ssl-certificate-in-net-core
+use when create client to call api 
+
+
 ##???
--cant login in first time after init migration 
+-cant login in first time after init migration (SOLVED) 
+	https://entityframeworkcore.com/knowledge-base/60282522/cannot-login-to-seeded-custom-identityuser-from-passwordhasher 
+	by default, identity login by NormalizedUserName 
 -description of category in product category page
 -public language nav : return url (always home/index)?
+-razor page: layout = null

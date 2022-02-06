@@ -26,7 +26,7 @@ namespace EshopAspCore.ApiIntegration
             var json = JsonConvert.SerializeObject(request);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var client = _httpClientFactory.CreateClient();
+            var client = GetBearerHeaderClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
             var response = await client.PostAsync("/api/users/authenticate", data);
             var content = await response.Content.ReadAsStringAsync();
@@ -49,7 +49,7 @@ namespace EshopAspCore.ApiIntegration
 
         public async Task<ApiResult<PageResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = GetBearerHeaderClient();
 
             client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
             client.DefaultRequestHeaders.Authorization =
@@ -95,7 +95,7 @@ namespace EshopAspCore.ApiIntegration
         public async Task<ApiResult<bool>> RoleAssign (Guid id, RoleAssignRequest request)
         {
             var bearToken = _httpContextAccessor.HttpContext.Session.GetString("Token");
-            var client = _httpClientFactory.CreateClient();
+            var client = GetBearerHeaderClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.BaseApiUrlString]);
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearToken);

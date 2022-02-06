@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EshopAspCore.Utilities.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EshopeMvcCore.Web.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EshopAspCore.AdminApp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = SystemConstants.AppRole.Admin)]
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
@@ -146,6 +146,33 @@ namespace EshopAspCore.AdminApp.Controllers
 
             TempData[SystemConstants.AppSettings.SuccessMessage] = "Update product successed!";
             return RedirectToAction("Index", "Product");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var productApiResult = await _productApiClient.GetById(id, languageId);
+            if (productApiResult.IsSuccessed == false)
+            {
+                ModelState.AddModelError("", productApiResult.Message);
+                return View();
+            }
+
+            var product = productApiResult.ResultObject;
+
+            return View(new ProductDetailViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                DateCreated = product.DateCreated,
+                Description = product.Description,
+                Price = product.Price,
+                Stock = product.Stock,
+                CategoriesString = product.CategoriesString,
+                Images = product.Images,
+            }) ;
         }
 
         [HttpGet]

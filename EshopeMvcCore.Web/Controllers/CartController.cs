@@ -2,6 +2,7 @@
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Sales;
 using EshopeMvcCore.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace EshopeMvcCore.Web.Controllers
 {
+    [AllowAnonymous]
     public class CartController : Controller
     {
         private readonly IProductApiClient _productApiClient;
