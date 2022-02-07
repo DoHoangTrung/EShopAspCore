@@ -17,10 +17,10 @@ namespace EshopAspCore.ApiIntegration
         {
         }
 
-        public async Task<ApiResult<CategoryViewModel>> GetById(int id, string languageId)
+        public async Task<OrderViewModel> GetById(int id, string languageId)
         {
-            string url = $"api/categories/{id}/{languageId}";
-            var apiResult = await GetAsync<ApiResult<CategoryViewModel>>(url);
+            string url = $"api/orders/{id}/{languageId}";
+            var apiResult = await GetAsync<OrderViewModel>(url);
             return apiResult;
         }
 
@@ -28,6 +28,17 @@ namespace EshopAspCore.ApiIntegration
         {
             string url = $"api/orders";
             var apiResult = await PostAsync<bool, CheckOutRequest>(url, request);
+            return apiResult;
+        }
+
+        public async Task<List<OrderViewModel>> GetAll(OrderGetRequest request)
+        {
+            string url = "/api/orders";
+            if (request.status != null)
+            {
+                url += $"?status={request.status}";
+            }
+            var apiResult = await GetAsync<List<OrderViewModel>>(url);
             return apiResult;
         }
     }

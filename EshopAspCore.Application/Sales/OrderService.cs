@@ -1,6 +1,7 @@
 ﻿using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.ViewModels.Sales;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,60 @@ namespace EshopAspCore.Application.Sales
 
                 throw;
             }
+        }
+
+        public async Task<List<OrderViewModel>> GetAll(OrderGetRequest request)
+        {
+            var query = _context.Orders.Select(x=>x);
+
+            if(request.status != null)
+            {
+                query = query.Where(x => x.Status == request.status);
+            }
+
+            return await query.Select(x=> new OrderViewModel()
+            {
+                Id = x.Id,
+                OrderDate = x.OrderDate,
+                ShipAddress = x.ShipAddress,
+                ShipEmail = x.ShipEmail,
+                ShipName = x.ShipName,
+                ShipPhoneNumber = x.ShipPhoneNumber
+            }).ToListAsync();
+        }
+
+        public async Task<OrderViewModel> GetById(int id, string languageId)
+        {
+            var query = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (query == null) return null;
+
+            var order = new OrderViewModel()
+            {
+                Id = query.Id,
+                OrderDate = query.OrderDate,
+                ShipAddress = query.ShipAddress,
+                ShipEmail = query.ShipEmail,
+                ShipName = query.ShipName,
+                ShipPhoneNumber = query.ShipPhoneNumber
+            };
+
+            //get list order item
+            var orderitems =await (from od in _context.OrderDetails
+                            join pt in _context.ProductTranslations on od.ProductId equals pt.ProductId
+                            where od.OrderId == order.Id && pt.LanguageId == languageId
+                            select new OrderItemViewModel()
+                            {
+                                Name = pt.Name,
+                                Price = od.Price,
+                                ProductId = od.ProductId,
+                                Quantity = od.Quantity
+                            }).ToListAsync();
+
+            order.OrderItems = orderitems;
+            order.TotalBillCash = orderitems.Sum(x => x.TotalPrice);
+
+            return order;
         }
     }
 }

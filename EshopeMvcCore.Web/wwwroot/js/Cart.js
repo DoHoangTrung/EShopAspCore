@@ -89,6 +89,7 @@
             });
         })
     };
+
     function btnMinusQuantityClick() {
         $('body').on('click', '.btn-minus', function (e) {
             e.preventDefault();
