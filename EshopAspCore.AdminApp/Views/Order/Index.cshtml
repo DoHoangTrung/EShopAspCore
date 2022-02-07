@@ -1,0 +1,108 @@
+﻿@model IEnumerable<EshopAspCore.ViewModels.Sales.OrderViewModel>
+@using Microsoft.AspNetCore.Http.Extensions
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script>
+       
+    </script>
+}
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">List users</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Orders</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p><a asp-controller="Order" asp-action="Create" class="btn btn-success">Create New</a></p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <form asp-action="Index" asp-controller="Order" method="get">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <input type="text" name="keywords" class="form-control" value="@ViewBag.keywords" />
+                            </div>
+                            <div class="col-md-5">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button type="button" class="btn btn-dark" onclick="window.location.href=@Context.Request.GetDisplayUrl()">Reset</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDate)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipAddress)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ShipPhoneNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+                                    <a href="/order/print?orderId=@item.Id">Print</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

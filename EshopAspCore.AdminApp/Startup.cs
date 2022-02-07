@@ -50,6 +50,7 @@ namespace EshopAspCore.AdminApp
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
 
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); //register all validator file in same url with login request validator

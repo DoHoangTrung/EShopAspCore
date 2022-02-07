@@ -14,22 +14,38 @@ namespace EshopAspCore.BackendAPI.Controllers
     [AllowAnonymous]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderService _checkoutService;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(IOrderService checkoutService)
+        public OrdersController(IOrderService orderService)
         {
-            _checkoutService = checkoutService;
+            _orderService = orderService;
         }
 
         //POST: api/orders
         [HttpPost]
         public async Task<IActionResult> SaveOrders(CheckOutRequest request)
         {
-            var result = await _checkoutService.CheckOutOrders(request);
+            var result = await _orderService.CheckOutOrders(request);
             if (result == true)
                 return Ok(result);
 
             return BadRequest(result);
+        }
+
+        //GET: api/orders
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] OrderGetRequest request)
+        {
+            var orders =await _orderService.GetAll(request);
+            return Ok(orders);
+        }
+
+        //GET: api/orders/1/vi
+        [HttpGet("{id}/{languageId}")]
+        public async Task<IActionResult> GetById(int id, string languageId)
+        {
+            var orders = await _orderService.GetById(id, languageId);
+            return Ok(orders);
         }
     }
 }
