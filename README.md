@@ -1,7 +1,4 @@
 ## Asp.net 5 MVC study 
-## Technologies
-## Youtube tutorial
-https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 ## How to configure and run
 -This project used:  
 	visual studio 2019  
@@ -23,7 +20,6 @@ https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 	
 -config AdminApp, Web:  
 	appsettings.developement.json -> config baseUrl = BankendApi 's url  
-## How to contribute
 ## My note 
 branch master-main only include README.md file  
 branch develope - base: main  
@@ -241,9 +237,9 @@ use when create client to call api
 
 
 ##???
--cant login in first time after init migration (SOLVED)\ 
+-cant login in first time after init migration (SOLVED)  
 	https://entityframeworkcore.com/knowledge-base/60282522/cannot-login-to-seeded-custom-identityuser-from-passwordhasher 
-	by default, identity login by NormalizedUserName\ 
--description of category in product category page\
--public language nav : return url (always home/index)?\
--razor page: layout = null\
+	by default, identity login by NormalizedUserName   
+-description of category in product category page  
+-public language nav : return url (always home/index)?  
+-razor page: layout = null  
