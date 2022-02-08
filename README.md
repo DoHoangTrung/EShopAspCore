@@ -25,14 +25,14 @@ https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 	appsettings.developement.json -> config baseUrl = BankendApi 's url\
 ## How to contribute
 ## My note 
-branch master-main only include README.md file 
-branch develope - base: main 
-branch feature/db_design - base: develope 
+branch master-main only include README.md file\
+branch develope - base: main\ 
+branch feature/db_design - base: develope\ 
 
-in EshopData: add nuget:  
-	efcore.sqlserver 
-	efcore.design  
-	efcore.tool 
+in EshopData: add nuget:\  
+	efcore.sqlserver\ 
+	efcore.design\  
+	efcore.tool\ 
 	Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
 
 config table dbset: 
@@ -223,28 +223,28 @@ how to use mustache.js:
 3. in template, we should see how object show in console to get exactly name (wrong: IdProduct >< right: idProduct)
 
 -55: 
-deploy on IIS:
+deploy on IIS:\
 https://stackoverflow.com/questions/62397386/swagger-ui-not-displaying-when-deploying-api-on-iis 
  
 https://www.youtube.com/watch?v=Q_A_t7KS5Ss 
-install .net core hosting bundle 5.0 
-setting iis service
+install .net core hosting bundle 5.0\ 
+setting iis service\
 
-1.database : console -> Script-Migration
-2. back end api
+1.database : console -> Script-Migration\
+2. back end api\
 
-cannot connect to db: create new login in sql server -> assign db and role  
-run project in product environment(launching setting) -> debug 
+cannot connect to db: create new login in sql server -> assign db and role\ 
+run project in product environment(launching setting) -> debug\ 
 
-bypass-invalid-ssl-certificate-in-net-core: 
+bypass-invalid-ssl-certificate-in-net-core:\ 
 https://stackoverflow.com/questions/38138952/bypass-invalid-ssl-certificate-in-net-core
-use when create client to call api 
+use when create client to call api\ 
 
 
 ##???
--cant login in first time after init migration (SOLVED) 
+-cant login in first time after init migration (SOLVED)\ 
 	https://entityframeworkcore.com/knowledge-base/60282522/cannot-login-to-seeded-custom-identityuser-from-passwordhasher 
-	by default, identity login by NormalizedUserName 
--description of category in product category page
--public language nav : return url (always home/index)?
--razor page: layout = null
+	by default, identity login by NormalizedUserName\ 
+-description of category in product category page\
+-public language nav : return url (always home/index)?\
+-razor page: layout = null\
