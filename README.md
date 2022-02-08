@@ -3,6 +3,26 @@
 ## Youtube tutorial
 https://www.youtube.com/playlist?list=PLRhlTlpDUWsyN_FiVQrDWMtHix_E2A_UD
 ## How to configure and run
+-This project used: 
+	visual studio 2019 
+	.net 5.0 
+	sql server 2019 
+-create database: 
+	set EshopAspCore.Data as start up project 
+	go to appsettings.json file to config connection string 
+	open package manager console -> set default project is EshopAspCore.Data 
+	type: init-migration init 
+	type: update-database 
+	
+	admin account : 
+	username: trung123 
+	password: Trung123$ 
+	
+-config BackendApi project: 
+	appsettings.developement.json -> config your connection string
+	
+-config AdminApp, Web: 
+	appsettings.developement.json -> config baseUrl = BankendApi 's url
 ## How to contribute
 ## My note 
 branch master-main only include README.md file 
