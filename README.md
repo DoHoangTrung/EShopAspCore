@@ -60,6 +60,9 @@ config DI (dependence inject dot net core)
 -add swagger  
 .net5 to present : project api auto intergrate swagger  
 
+add jwt bearer to swagger  
+https://www.c-sharpcorner.com/article/authentication-authorization-using-net-core-web-api-using-jwt-token-and/  
+
 -add solution file : (logical file, it's not show in location folder)  
 -fromform vs frombody : when use swagger   
 fromquery : path?p=1  

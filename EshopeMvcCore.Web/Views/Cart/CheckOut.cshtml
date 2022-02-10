@@ -8,8 +8,10 @@
 
 <script>
     setTimeout(function () {
-        $('#successMsg').fadeOut('slow');
-        window.location.href = '/@culture/home/index';
+        if ($('#successMsg').length) {
+            $('#successMsg').fadeOut('slow');
+            window.location.href = '/@culture/home/index';
+        }
     }, 1000);
 
 </script>

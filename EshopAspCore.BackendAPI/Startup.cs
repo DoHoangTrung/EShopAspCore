@@ -9,12 +9,14 @@ using EshopAspCore.Application.Utilities.Slides;
 using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.Utilities.Constants;
+using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.System.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,22 +35,23 @@ namespace EshopAspCore.BackendAPI
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EshopDbContext>(
-                 options => options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+                 options => options.UseSqlServer(_configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<EshopDbContext>()
                 .AddDefaultTokenProviders();
+
             //Declare DI
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
@@ -61,6 +64,7 @@ namespace EshopAspCore.BackendAPI
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IEmailService, EmailService>();
 
             //fluent validator
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
@@ -105,8 +109,8 @@ namespace EshopAspCore.BackendAPI
                 });
             });
 
-            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
-            string signingKey = Configuration.GetValue<string>("Tokens:Key");
+            string issuer = _configuration.GetValue<string>("Tokens:Issuer");
+            string signingKey = _configuration.GetValue<string>("Tokens:Key");
 
             services.AddAuthentication(option =>
             {
@@ -130,6 +134,9 @@ namespace EshopAspCore.BackendAPI
                 };
             });
 
+            services.AddOptions();
+            var mailSettings = _configuration.GetSection("MailSettings");
+            services.Configure<MailSettings>(mailSettings);
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -161,6 +168,23 @@ namespace EshopAspCore.BackendAPI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapGet("/testMail", async context =>
+                {
+                    // L?y d?ch v? sendmailservice
+                    var sendmailservice = context.RequestServices.GetService<IEmailService>();
+
+                    MailContent content = new MailContent
+                    {
+                        To = "dohoangtrung1831998@gmail.com",
+                        Subject = "Ki?m tra th?",
+                        Body = "<p><strong>yo im buu</strong></p>"
+                    };
+
+                    await sendmailservice.SendAsyn(content);
+                    await context.Response.WriteAsync("Send mail");
+
+                });
             });
         }
     }

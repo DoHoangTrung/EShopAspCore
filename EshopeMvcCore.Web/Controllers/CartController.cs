@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EshopAspCore.ViewModels.Common;
 
 namespace EshopeMvcCore.Web.Controllers
 {
@@ -155,6 +156,12 @@ namespace EshopeMvcCore.Web.Controllers
             if (isSuccess)
             {
                 ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success";
+                var isSuccessed = await _orderApiClient.SendEmail(new MailContent()
+                {
+                    To = request.Email,
+                    Body = "checkout succesed",
+                    Subject = "checkout succesed",
+                }) ;
             }
 
             return View();

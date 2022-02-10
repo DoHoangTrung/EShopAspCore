@@ -41,5 +41,12 @@ namespace EshopAspCore.ApiIntegration
             var apiResult = await GetAsync<List<OrderViewModel>>(url);
             return apiResult;
         }
+
+        public async Task<bool> SendEmail(MailContent mailContent)
+        {
+            string url = "api/emails";
+            var apiResult = await PostAsync<bool, MailContent>(url, mailContent);
+            return apiResult;
+        }
     }
 }

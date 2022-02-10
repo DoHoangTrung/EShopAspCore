@@ -20,6 +20,7 @@ namespace EshopAspCore.Application.Common
         {
             _configuration = configuration;
 
+            //create folder if not exist
             _userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
             if (!Directory.Exists(_userContentFolder))
             {

@@ -14,5 +14,7 @@ namespace EshopAspCore.ApiIntegration
 
         Task<List<OrderViewModel>> GetAll(OrderGetRequest request);
         Task<OrderViewModel> GetById (int id, string languageId);
+
+        Task<bool> SendEmail(MailContent mailContent);
     }
 }

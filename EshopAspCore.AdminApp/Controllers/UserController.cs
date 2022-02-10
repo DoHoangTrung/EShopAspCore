@@ -87,7 +87,7 @@ namespace EshopAspCore.AdminApp.Controllers
 
             var token = apiResult.ResultObject;
             
-            var userPrincipals = ValidateToken(apiResult.ResultObject);
+            var userPrincipals = ValidateToken(token);
 
             var authProperties = new AuthenticationProperties
             {
