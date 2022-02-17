@@ -17,13 +17,18 @@ namespace Testtttttttttttttt
 
         static void Main(string[] args)
         {
-            List<int> ids = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }; // 10 elements
+            const int cannonNumber = 7;
+            const int cardNumber = 4;
 
-            var result = ChunkBy<int>(ids, 4);
-            foreach (var item in result)
-            {
+            const int idxStartCannon = 1;
+            const int idxEndCannon = idxStartCannon + cannonNumber - 1;
+            const int idxStartCard = idxEndCannon + 1;
+            const int idxEndCard = idxStartCannon + cardNumber - 1; //(4): number of card
+            Console.WriteLine(idxStartCannon);
+            Console.WriteLine(idxEndCannon);
+            Console.WriteLine(idxStartCard);
+            Console.WriteLine(idxEndCard);
 
-            }
         }
     }
 }

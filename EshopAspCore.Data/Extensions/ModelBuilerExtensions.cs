@@ -14,17 +14,31 @@ namespace EshopAspCore.Data.Extensions
     {
         public static void Seed(this ModelBuilder modelBuiler)
         {
+            const int cannonNumber = 7;
+            const int cardNumber = 4;
+
+            const int idxStartCannon = 1;
+            const int idxEndCannon = idxStartCannon + cannonNumber - 1;
+            const int idxStartCard = idxEndCannon + 1;
+            const int idxEndCard = idxStartCard + cardNumber - 1; //(4): number of card
+            int idValue;
+
+            #region AppConfig
             modelBuiler.Entity<AppConfig>().HasData(
                 new AppConfig() { Key = "HomeTitle", Value = "This is homepage of Eshop" },
                 new AppConfig() { Key = "HomeKeyword", Value = "This is keyword of Eshop" },
                 new AppConfig() { Key = "HomeDescription", Value = "This is discription of Eshop" }
             );
+            #endregion
 
+            #region Language
             modelBuiler.Entity<Language>().HasData(
                 new Language() { Id = "vi", Name = "Tiếng Việt", IsDefault = true },
                 new Language() { Id = "en", Name = "English", IsDefault = false }
             );
+            #endregion
 
+            #region Category
             modelBuiler.Entity<Category>().HasData(
                 new Category()
                 {
@@ -50,84 +64,194 @@ namespace EshopAspCore.Data.Extensions
                 {
                     Id = 1,
                     CategoryId = 1,
-                    Name = "Áo nam",
+                    Name = "Máy ảnh",
                     LanguageId = "vi",
-                    SeoAlias = "ao-nam",
-                    SeoDescription = "Sản phẩm áo thời trang nam",
-                    SeoTitle = "Sản phẩm áo thời trang nam"
+                    SeoAlias = "may-anh",
+                    SeoDescription = "Sản phẩm máy ảnh",
+                    SeoTitle = "Sản phẩm máy ảnh"
                 },
                 new CategoryTranslation()
                 {
                     Id = 2,
                     CategoryId = 1,
-                    Name = "Men shirt",
+                    Name = "Cannon",
                     LanguageId = "en",
-                    SeoAlias = "men-shirt",
-                    SeoDescription = "The shirt produtcs for men",
-                    SeoTitle = "The shirt producs for men",
+                    SeoAlias = "Cannon",
+                    SeoDescription = "The cheap cannon",
+                    SeoTitle = "Cannon",
                 }, new CategoryTranslation()
                 {
                     Id = 3,
                     CategoryId = 2,
-                    Name = "Áo nữ",
+                    Name = "Thẻ nhớ",
                     LanguageId = "vi",
-                    SeoAlias = "ao-nu",
-                    SeoDescription = "Sản phẩm áo thời trang nu",
-                    SeoTitle = "Sản phẩm áo thời trang nu"
+                    SeoAlias = "the-nho",
+                    SeoDescription = "Sản phẩm thẻ nhớ",
+                    SeoTitle = "Sản phẩm thẻ nhớ tốt"
                 },
                 new CategoryTranslation()
                 {
                     Id = 4,
                     CategoryId = 2,
-                    Name = "Women shirt",
+                    Name = "Memory stick",
                     LanguageId = "en",
-                    SeoAlias = "Women-shirt",
-                    SeoDescription = "The shirt produtcs for women",
-                    SeoTitle = "The shirt producs for women",
+                    SeoAlias = "Memory-stick",
+                    SeoDescription = "The best memory stick",
+                    SeoTitle = "Memory stick",
                 });
 
-            modelBuiler.Entity<Product>().HasData(
-                new Product()
+            #endregion
+
+            #region Product
+            //product
+            var products = new List<Product>();
+            for (int i = idxStartCannon; i <= idxEndCannon; i++)
+            {
+                products.Add(new Product()
                 {
-                    Id = 1,
+                    Id = i,
                     DateCreated = DateTime.Now,
                     OriginalPrice = 100000,
                     Price = 200000,
-                    Stock = 0,
+                    Stock = 20,
                     ViewCount = 0,
                     IsFeatured = true,
                 });
+            }
 
-            modelBuiler.Entity<ProductTranslation>().HasData(
-                new ProductTranslation()
+            for (int i = idxStartCard; i <= idxEndCard; i++)
+            {
+                products.Add(new Product()
                 {
-                    Id = 1,
-                    ProductId = 1,
-                    Name = "Áo hoodie nam",
+                    Id = i,
+                    DateCreated = DateTime.Now,
+                    OriginalPrice = 50000,
+                    Price = 100000,
+                    Stock = 30,
+                    ViewCount = 0,
+                    IsFeatured = true,
+                });
+            }
+
+            modelBuiler.Entity<Product>().HasData(products);
+
+            //product translation
+            var tranProducts = new List<ProductTranslation>();
+            idValue = 1;
+            for (int i = idxStartCannon; i <= idxEndCannon; i++)
+            {
+                tranProducts.Add(new ProductTranslation()
+                {
+                    Id = idValue,
+                    ProductId = i,
+                    Name = $"Máy ảnh { i }",
                     LanguageId = "vi",
-                    SeoAlias = "ao-hoodie-nam",
-                    SeoDescription = "Sản phẩm áo hoodie nam",
-                    SeoTitle = "Sản phẩm áo hoodie nam"
-                },
-                new ProductTranslation()
+                    SeoAlias = "may-anh",
+                    SeoTitle = "Sản phẩm máy ảnh",
+                    SeoDescription = "Sản phẩm máy ảnh tốt"
+                });
+                idValue++;
+
+                tranProducts.Add(new ProductTranslation()
                 {
-                    Id = 2,
-                    ProductId = 1,
-                    Name = "hoodie shirt for men",
+                    Id = idValue,
+                    ProductId = i,
+                    Name = $"Cannon {i}",
                     LanguageId = "en",
-                    SeoAlias = "hoodie-shirt-for-men",
-                    SeoDescription = "The hoodie shirt produtcs for men",
-                    SeoTitle = "The hoodie shirt products for men",
-                }
+                    SeoAlias = "cannon",
+                    SeoTitle = "cannon",
+                    SeoDescription = "The best cannon",
+                });
+                idValue++;
+            }
+
+            for (int i = idxStartCard; i <= idxEndCard; i++)
+            {
+                tranProducts.Add(new ProductTranslation()
+                {
+                    Id = idValue,
+                    ProductId = i,
+                    Name = $"Thẻ nhớ { i }",
+                    LanguageId = "vi",
+                    SeoAlias = "the-nho",
+                    SeoTitle = "Sản phẩm thẻ nhớ",
+                    SeoDescription = "Sản phẩm thẻ nhớ tốt"
+                });
+                idValue++;
+
+                tranProducts.Add(new ProductTranslation()
+                {
+                    Id = idValue,
+                    ProductId = i,
+                    Name = $"Memory card {i}",
+                    LanguageId = "en",
+                    SeoAlias = "memory-card",
+                    SeoTitle = "memory-card",
+                    SeoDescription = "The best memory card",
+                });
+                idValue++;
+            }
+            modelBuiler.Entity<ProductTranslation>().HasData(tranProducts);
+
+            //product in category
+            
+            for (int i = idxStartCannon; i <= idxEndCannon; i++)
+            {
+                modelBuiler.Entity<ProductInCategory>().HasData(
+                new List<ProductInCategory>()
+                     {
+                        new ProductInCategory(){CategoryId=1, ProductId=i}
+                     }
                 );
+            }
+            for (int i = idxStartCard; i <= idxEndCard; i++)
+            {
+                modelBuiler.Entity<ProductInCategory>().HasData(
+                new List<ProductInCategory>()
+                     {
+                        new ProductInCategory(){CategoryId=2, ProductId=i}
+                     }
+                );
+            }
+            
 
-            modelBuiler.Entity<ProductInCategory>().HasData(
-               new List<ProductInCategory>()
-                    {
-                        new ProductInCategory(){CategoryId=1, ProductId=1}
-                    }
-               );
+            //add product image 
+            var images = new List<ProductImage>();
+            idValue = 1;
+            for (int i = 1; i <= cannonNumber; i++)
+            {
+                images.Add(new ProductImage()
+                {
+                    Id = idValue,
+                    Caption = "ThumbnailImage",
+                    DateCreated = DateTime.Now,
+                    FileSize = 5000,
+                    IsDefault = true,
+                    ProductId = i,
+                    SortOrder = 1,
+                    ImagePath = $"m{i}.jpg"
+                });
+                idValue++;
+            }
+            for (int i = 1; i <= cardNumber; i++)
+            {
+                images.Add(new ProductImage()
+                {
+                    Id = idValue,
+                    Caption = "ThumbnailImage",
+                    DateCreated = DateTime.Now,
+                    FileSize = 5000,
+                    IsDefault = true,
+                    ProductId = i + idxEndCannon,
+                    SortOrder = 1,
+                    ImagePath = $"t{i}.jpg"
+                });
+                idValue++;
+            }
+            modelBuiler.Entity<ProductImage>().HasData(images);
 
+
+            #endregion
 
             var ADMIN_ID = new Guid("DB9ED923-492B-467A-97E4-EE81C9DE0A64");
             var ROLE_ID = new Guid("2A905B66-98FB-4E82-9D98-5CF68EBB16EA");
@@ -172,67 +296,25 @@ namespace EshopAspCore.Data.Extensions
                 UserId = ADMIN_ID
             });
 
-            modelBuiler.Entity<Slide>().HasData(
-                 new Slide()
-                 {
-                     Id = 1,
-                     Name = "Second Thumbnail label",
-                     Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                     SortOrder = 1,
-                     Url = "#",
-                     Image = "/themes/images/carousel/1.png",
-                     Status = Status.Active,
-                 },
-                new Slide()
+            #region Slides
+            var slides = new List<Slide>();
+            for (int i = 1; i <= 6; i++)
+            {
+                slides.Add(new Slide()
                 {
-                     Id =2,
+                    Id = i,
                     Name = "Second Thumbnail label",
                     Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                    SortOrder = 2,
+                    SortOrder = i,
                     Url = "#",
-                    Image = "/themes/images/carousel/2.png",
-                    Status = Status.Active,
-                },
-                new Slide()
-                {
-                     Id = 3,
-                    Name = "Second Thumbnail label",
-                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                    SortOrder = 3,
-                    Url = "#",
-                    Image = "/themes/images/carousel/3.png",
-                    Status = Status.Active,
-                },
-                new Slide()
-                {
-                     Id = 4,
-                    Name = "Second Thumbnail label",
-                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                    SortOrder = 4,
-                    Url = "#",
-                    Image = "/themes/images/carousel/4.png",
-                    Status = Status.Active,
-                },
-                new Slide()
-                {
-                     Id = 5,
-                    Name = "Second Thumbnail label",
-                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                    SortOrder = 5,
-                    Url = "#",
-                    Image = "/themes/images/carousel/5.png",
-                    Status = Status.Active,
-                },
-                new Slide()
-                {
-                     Id = 6,
-                    Name = "Second Thumbnail label",
-                    Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.",
-                    SortOrder = 6,
-                    Url = "#",
-                    Image = "/themes/images/carousel/6.png",
+                    Image = $"/themes/images/carousel/{i}.png",
                     Status = Status.Active,
                 });
+            }
+
+            modelBuiler.Entity<Slide>().HasData(slides);
+
+            #endregion
         }
     }
 }

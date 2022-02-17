@@ -2,15 +2,21 @@
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 
 @{
-    ViewData["Title"] = Model.Category.Name + "-" + "page " + Model.ProductPages.PageIndex;
+    var category = Model.Category;
+    string title  = "Eshop";
+    if (category != null)
+    {
+        title = Model.Category.Name + "-" + "page " + Model.ProductPages.PageIndex;
+    }
+
+    ViewData["Title"] = title;
 
     var culture = CultureInfo.CurrentCulture;
 
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <ul class="breadcrumb">
-    <li><a href="index.html"><localize>Home</localize></a> <span class="divider">/</span></li>
+    <li><a href="/@culture/home/index"><localize>Home</localize></a> <span class="divider">/</span></li>
     <li class="active">@Model.Category.Name</li>
 </ul>
 <h3> @Model.Category.Name <small class="pull-right"> @Model.ProductCount <localize>products are available</localize> </small></h3>
@@ -97,10 +103,8 @@
         </ul>
         <hr class="soft" />
     </div>
+    @*@await Component.InvokeAsync("Pager", Model.ProductPages)*@
 </div>
 
 <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
-
-@await Component.InvokeAsync("Pager", Model.ProductPages)
-
 <br class="clr" />

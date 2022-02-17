@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.Data.Entity;
+using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.System.Roles;
 using EshopAspCore.ViewModels.System.Users;
@@ -154,7 +155,12 @@ namespace EshopAspCore.Application.System.Users
 
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
+            {
+                //asign user role for new account
+                await _userManager.AddToRoleAsync(user, SystemConstants.AppRole.User);
+
                 return new ApiSuccessResult<bool>(true);
+            }
 
             return new ApiErrorResult<bool>();
         }

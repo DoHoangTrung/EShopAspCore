@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ApiIntegration;
+﻿using EshopAspCore.AdminApp.Models;
+using EshopAspCore.ApiIntegration;
 using EshopAspCore.Data.Enum;
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Sales;
@@ -22,17 +23,20 @@ namespace EshopAspCore.AdminApp.Controllers
             _orderApiClient = orderApiClient;
         }
 
-        public async Task<IActionResult> Index(string status)
+        public async Task<IActionResult> Index(OrderStatus status)
         {
             //find enum by string
-            OrderStatus orderstatus = (OrderStatus)System.Enum.Parse(typeof(OrderStatus), status);
-
             var orders = await _orderApiClient.GetAll(new OrderGetRequest()
             {
-                status = orderstatus,
+                status = status,
             });
 
-            return View(orders);
+            return View(new OrderPageViewModel()
+            {
+                Orders = orders,
+                Status = status,
+                listState = new ManageOrderStatus(status).GetManageOrderState()
+            });
         }
 
         //GET: order/print?orderId=1
@@ -42,6 +46,14 @@ namespace EshopAspCore.AdminApp.Controllers
             string languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var order = await _orderApiClient.GetById(orderId, languageId);
             return View(order);
+        }
+
+        //POST  
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(int id, OrderStatus status)
+        {
+            var affected = await _orderApiClient.UpdateStatus(id, status);
+            return Ok(affected);
         }
     }
 }

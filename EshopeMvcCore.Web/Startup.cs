@@ -25,11 +25,12 @@ namespace EshopeMvcCore.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
-
+        public IWebHostEnvironment Env { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -38,14 +39,14 @@ namespace EshopeMvcCore.Web
             //bypass-invalid-ssl-certificate (when deploy to iss)
             services.AddHttpClient(SystemConstants.AppSettings.HttpClientWithSSLUntrusted)
                 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-            {
-                ClientCertificateOptions = ClientCertificateOption.Manual,
-                ServerCertificateCustomValidationCallback =
+                {
+                    ClientCertificateOptions = ClientCertificateOption.Manual,
+                    ServerCertificateCustomValidationCallback =
                     (httpRequestMessage, cert, cetChain, policyErrors) =>
                     {
                         return true;
                     }
-            });
+                });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
@@ -105,6 +106,14 @@ namespace EshopeMvcCore.Web
                     option.LoginPath = "/User/login";
                     option.AccessDeniedPath = "/User/Forbidden";
                 });
+
+
+            //razor runtime compilation
+            var builder = services.AddControllersWithViews();
+            if (Env.IsDevelopment() || Env.IsProduction())
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -185,6 +194,22 @@ namespace EshopeMvcCore.Web
                     {
                         Controller = "User",
                         Action = "Login"
+                    });
+                endpoints.MapControllerRoute(
+                    name: "search vi",
+                    pattern: "{culture}/tim-kiem",
+                    new
+                    {
+                        Controller = "Product",
+                        Action = "Search"
+                    });
+                endpoints.MapControllerRoute(
+                    name: "search en",
+                    pattern: "{culture}/search",
+                    new
+                    {
+                        Controller = "Product",
+                        Action = "Search"
                     });
 
                 endpoints.MapControllerRoute(

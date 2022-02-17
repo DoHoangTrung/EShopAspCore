@@ -156,10 +156,19 @@ namespace EshopeMvcCore.Web.Controllers
             if (isSuccess)
             {
                 ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success";
+
+                var textCart = "<p>Thank you for chosing our <strong>Eshop</strong><br/>You have checking out success:<br/>";
+                for (int i = 0; i < cart.cartItems.Count; i++)
+                {
+                    var item = cart.cartItems[i];
+                    textCart += $"{i+1}_{item.Name}, quantity: {item.Quantity}, price: {item.Price}<br/>";
+                }
+                textCart += "Your orders will be ship soon</p>";
+
                 var isSuccessed = await _orderApiClient.SendEmail(new MailContent()
                 {
                     To = request.Email,
-                    Body = "checkout succesed",
+                    Body = textCart,
                     Subject = "checkout succesed",
                 }) ;
             }

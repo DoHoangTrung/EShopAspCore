@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ViewModels.Catalog.Categories;
+﻿using EshopAspCore.Data.Enum;
+using EshopAspCore.ViewModels.Catalog.Categories;
 using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.Sales;
 using Microsoft.AspNetCore.Http;
@@ -47,6 +48,13 @@ namespace EshopAspCore.ApiIntegration
             string url = "api/emails";
             var apiResult = await PostAsync<bool, MailContent>(url, mailContent);
             return apiResult;
+        }
+
+        public async Task<int> UpdateStatus(int id, OrderStatus status)
+        {
+            string url = $"api/orders/{id}/status";
+            var apiRestult = await PutAsync<int, OrderStatus>(url, status);
+            return apiRestult;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EshopAspCore.ViewModels.Catalog.Categories;
+﻿using EshopAspCore.Data.Enum;
+using EshopAspCore.ViewModels.Catalog.Categories;
 using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.Sales;
 using System;
@@ -16,5 +17,6 @@ namespace EshopAspCore.ApiIntegration
         Task<OrderViewModel> GetById (int id, string languageId);
 
         Task<bool> SendEmail(MailContent mailContent);
+        Task<int> UpdateStatus(int id, OrderStatus status);
     }
 }

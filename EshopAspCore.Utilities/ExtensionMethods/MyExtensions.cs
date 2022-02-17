@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace EshopAspCore.Utilities.ExtensionMethods
 {
@@ -19,6 +20,29 @@ namespace EshopAspCore.Utilities.ExtensionMethods
         public static string ToVNDString(this decimal value)
         {
             return value.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"));
+        }
+
+        public static string ToSearchFormat(this string text)
+        {
+            text = text.ToLower();
+
+            //RemoveDiacritics
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder(capacity: normalizedString.Length);
+
+            for (int i = 0; i < normalizedString.Length; i++)
+            {
+                char c = normalizedString[i];
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder
+                .ToString()
+                .Normalize(NormalizationForm.FormC);
         }
     }
 }

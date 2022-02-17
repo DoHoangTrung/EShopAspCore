@@ -1,5 +1,6 @@
 ﻿using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
+using EshopAspCore.Data.Enum;
 using EshopAspCore.ViewModels.Sales;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -75,7 +76,8 @@ namespace EshopAspCore.Application.Sales
                 ShipAddress = x.ShipAddress,
                 ShipEmail = x.ShipEmail,
                 ShipName = x.ShipName,
-                ShipPhoneNumber = x.ShipPhoneNumber
+                ShipPhoneNumber = x.ShipPhoneNumber,
+                Status = x.Status
             }).ToListAsync();
         }
 
@@ -111,6 +113,18 @@ namespace EshopAspCore.Application.Sales
             order.TotalBillCash = orderitems.Sum(x => x.TotalPrice);
 
             return order;
+        }
+
+        public async Task<int> UpdateStatus(int id, OrderStatus newStatus)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x=>x.Id == id);
+            if (order == null) return 0;
+
+            if (newStatus == order.Status) return 0;
+
+            order.Status = newStatus;
+            _context.Orders.Update(order);
+            return await _context.SaveChangesAsync();
         }
     }
 }

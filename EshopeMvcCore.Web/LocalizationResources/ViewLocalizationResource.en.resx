@@ -125,6 +125,10 @@
     <value>Add to</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Add to cart" xml:space="preserve">
+    <value>Add to cart</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
   <data name="CategoryUrl" xml:space="preserve">
     <value>category</value>
     <comment>/Shared/_Layout</comment>
@@ -188,6 +192,14 @@
   <data name="ProductUrl" xml:space="preserve">
     <value>product</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
+  <data name="SearchUrl" xml:space="preserve">
+    <value>search</value>
+    <comment>/Shared/_Layout</comment>
   </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sort By</value>

@@ -50,7 +50,11 @@
                 <div class="col-md-8">
                     <form asp-action="Create" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
+                            </label>
+                        </div>
                         <div class="form-group">
                             <label asp-for="Name" class="control-label"></label>
                             <input asp-for="Name" class="form-control" />
@@ -97,22 +101,20 @@
                             <span asp-validation-for="SeoAlias" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="LanguageId" class="control-label"></label>
-                            <input asp-for="LanguageId" class="form-control" />
-                            <span asp-validation-for="LanguageId" class="text-danger"></span>
+                            <input type="hidden" name="LanguageId" value="" />
                         </div>
-                        <div class="form-group">
-                            <label asp-for="IsDefault" class="control-label"></label>
-                            <input asp-for="IsDefault" class="" checked />
-                            <span asp-validation-for="IsDefault" class="text-danger"></span>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsDefault" /> @Html.DisplayNameFor(model => model.IsDefault)
+                            </label>
                         </div>
                         <div class="form-group">
                             <label asp-for="ThumbNailImage" class="control-label"></label>
-                            <input asp-for="ThumbNailImage" type="file" class="form-control" onchange="readURL(this)"/>
+                            <input asp-for="ThumbNailImage" type="file" class="form-control" onchange="readURL(this)" />
                             <span asp-validation-for="ThumbNailImage" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <img id="productThumbnail" src="#" alt="IMG"/>
+                            <img id="productThumbnail" src="#" alt="IMG" />
                         </div>
                         <div class="form-group d-flex justify-content-center">
                             <input type="submit" value="Create" class="btn btn-primary" />

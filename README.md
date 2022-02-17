@@ -234,10 +234,16 @@ setting iis service
 cannot connect to db: create new login in sql server -> assign db and role  
 run project in product environment(launching setting) -> debug  
 
+-bug: get file image : (dont have url api string -appsettings in webapi)
+
 bypass-invalid-ssl-certificate-in-net-core:  
 https://stackoverflow.com/questions/38138952/bypass-invalid-ssl-certificate-in-net-core  
 use when create client to call api  
 
+-Email service:
+https://xuanthulab.net/asp-net-core-gui-mail-trong-ung-dung-web-asp-net.html
+
+error: https://stackoverflow.com/questions/59026301/sslhandshakeexception-an-error-occurred-while-attempting-to-establish-an-ssl-or 
 
 ##???
 -cant login in first time after init migration (SOLVED)  
@@ -246,3 +252,5 @@ use when create client to call api
 -description of category in product category page  
 -public language nav : return url (always home/index)?  
 -razor page: layout = null  
+-email == username 
+-razor runtime compilation didnt work in production environment
