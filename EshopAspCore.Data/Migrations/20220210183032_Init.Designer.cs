@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EshopAspCore.Data.Migrations
 {
     [DbContext(typeof(EshopDbContext))]
-    [Migration("20220124154017_AddSlideData")]
-    partial class AddSlideData
+    [Migration("20220210183032_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,16 +80,16 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = new Guid("2a905b66-98fb-4e82-9d98-5cf68ebb16ea"),
-                            ConcurrencyStamp = "03f7ffcd-ad2a-40ae-b33c-5a7f4aafb6f8",
+                            ConcurrencyStamp = "92db9d58-bd10-450e-ad3a-3fdb570c20cc",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("273d0f75-8d5b-456e-a062-b57778675c0e"),
-                            ConcurrencyStamp = "d60944b0-142c-460a-9bd7-0d40bd761518",
-                            Description = "user role",
+                            Id = new Guid("8ff7b33b-1376-4f70-b65a-0337b3e74d25"),
+                            ConcurrencyStamp = "1ac5e86c-32e7-4e50-9281-f7635f51e8d4",
+                            Description = "User role",
                             Name = "user",
                             NormalizedName = "user"
                         });
@@ -165,7 +165,7 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = new Guid("db9ed923-492b-467a-97e4-ee81c9de0a64"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0edefbe-cece-4410-b26a-19521604bc89",
+                            ConcurrencyStamp = "9e264588-2feb-41a5-9344-922e92ff9666",
                             Dob = new DateTime(1998, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "some-admin-email@nonce.fake",
                             EmailConfirmed = true,
@@ -173,8 +173,8 @@ namespace EshopAspCore.Data.Migrations
                             LastName = "Do",
                             LockoutEnabled = false,
                             NormalizedEmail = "some-admin-email@nonce.fake",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPK7mUyrB09+0zxjzFIgJOft7D9ZJQKwsYNFPJK64yd6qQvLR1cQN6siXUysnG894Q==",
+                            NormalizedUserName = "trung123",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFkdgpV02mVGsUZAQfqScVqQncjhR04+zNpua0mQ05Bw/hda7Y5BimnsCxy5HFZd4A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -307,40 +307,40 @@ namespace EshopAspCore.Data.Migrations
                             Id = 1,
                             CategoryId = 1,
                             LanguageId = "vi",
-                            Name = "Áo nam",
-                            SeoAlias = "ao-nam",
-                            SeoDescription = "Sản phẩm áo thời trang nam",
-                            SeoTitle = "Sản phẩm áo thời trang nam"
+                            Name = "Máy ảnh",
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh",
+                            SeoTitle = "Sản phẩm máy ảnh"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
                             LanguageId = "en",
-                            Name = "Men shirt",
-                            SeoAlias = "men-shirt",
-                            SeoDescription = "The shirt produtcs for men",
-                            SeoTitle = "The shirt producs for men"
+                            Name = "Cannon",
+                            SeoAlias = "Cannon",
+                            SeoDescription = "The cheap cannon",
+                            SeoTitle = "Cannon"
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 2,
                             LanguageId = "vi",
-                            Name = "Áo nữ",
-                            SeoAlias = "ao-nu",
-                            SeoDescription = "Sản phẩm áo thời trang nu",
-                            SeoTitle = "Sản phẩm áo thời trang nu"
+                            Name = "Thẻ nhớ",
+                            SeoAlias = "the-nho",
+                            SeoDescription = "Sản phẩm thẻ nhớ",
+                            SeoTitle = "Sản phẩm thẻ nhớ tốt"
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 2,
                             LanguageId = "en",
-                            Name = "Women shirt",
-                            SeoAlias = "Women-shirt",
-                            SeoDescription = "The shirt produtcs for women",
-                            SeoTitle = "The shirt producs for women"
+                            Name = "Memory stick",
+                            SeoAlias = "Memory-stick",
+                            SeoDescription = "The best memory stick",
+                            SeoTitle = "Memory stick"
                         });
                 });
 
@@ -450,7 +450,7 @@ namespace EshopAspCore.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -462,6 +462,11 @@ namespace EshopAspCore.Data.Migrations
 
             modelBuilder.Entity("EshopAspCore.Data.Entity.OrderDetail", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -474,7 +479,11 @@ namespace EshopAspCore.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetail");
                 });
@@ -516,10 +525,111 @@ namespace EshopAspCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2022, 1, 24, 22, 40, 16, 253, DateTimeKind.Local).AddTicks(6528),
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 210, DateTimeKind.Local).AddTicks(3400),
+                            IsFeatured = true,
                             OriginalPrice = 100000m,
                             Price = 200000m,
-                            Stock = 0,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7551),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7573),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7576),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7577),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7584),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7586),
+                            IsFeatured = true,
+                            OriginalPrice = 100000m,
+                            Price = 200000m,
+                            Stock = 20,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7587),
+                            IsFeatured = true,
+                            OriginalPrice = 50000m,
+                            Price = 100000m,
+                            Stock = 30,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7589),
+                            IsFeatured = true,
+                            OriginalPrice = 50000m,
+                            Price = 100000m,
+                            Stock = 30,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7592),
+                            IsFeatured = true,
+                            OriginalPrice = 50000m,
+                            Price = 100000m,
+                            Stock = 30,
+                            ViewCount = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 211, DateTimeKind.Local).AddTicks(7593),
+                            IsFeatured = true,
+                            OriginalPrice = 50000m,
+                            Price = 100000m,
+                            Stock = 30,
                             ViewCount = 0
                         });
                 });
@@ -562,6 +672,129 @@ namespace EshopAspCore.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImage");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(3941),
+                            FileSize = 5000L,
+                            ImagePath = "m1.jpg",
+                            IsDefault = true,
+                            ProductId = 1,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5591),
+                            FileSize = 5000L,
+                            ImagePath = "m2.jpg",
+                            IsDefault = true,
+                            ProductId = 2,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5607),
+                            FileSize = 5000L,
+                            ImagePath = "m3.jpg",
+                            IsDefault = true,
+                            ProductId = 3,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5610),
+                            FileSize = 5000L,
+                            ImagePath = "m4.jpg",
+                            IsDefault = true,
+                            ProductId = 4,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5612),
+                            FileSize = 5000L,
+                            ImagePath = "m5.jpg",
+                            IsDefault = true,
+                            ProductId = 5,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5617),
+                            FileSize = 5000L,
+                            ImagePath = "m6.jpg",
+                            IsDefault = true,
+                            ProductId = 6,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5620),
+                            FileSize = 5000L,
+                            ImagePath = "m7.jpg",
+                            IsDefault = true,
+                            ProductId = 7,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5623),
+                            FileSize = 5000L,
+                            ImagePath = "t1.jpg",
+                            IsDefault = true,
+                            ProductId = 8,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5626),
+                            FileSize = 5000L,
+                            ImagePath = "t2.jpg",
+                            IsDefault = true,
+                            ProductId = 9,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5629),
+                            FileSize = 5000L,
+                            ImagePath = "t3.jpg",
+                            IsDefault = true,
+                            ProductId = 10,
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Caption = "ThumbnailImage",
+                            DateCreated = new DateTime(2022, 2, 11, 1, 30, 32, 212, DateTimeKind.Local).AddTicks(5631),
+                            FileSize = 5000L,
+                            ImagePath = "t4.jpg",
+                            IsDefault = true,
+                            ProductId = 11,
+                            SortOrder = 1
+                        });
                 });
 
             modelBuilder.Entity("EshopAspCore.Data.Entity.ProductInCategory", b =>
@@ -583,6 +816,56 @@ namespace EshopAspCore.Data.Migrations
                         {
                             ProductId = 1,
                             CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 6,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            CategoryId = 2
                         });
                 });
 
@@ -640,21 +923,221 @@ namespace EshopAspCore.Data.Migrations
                         {
                             Id = 1,
                             LanguageId = "vi",
-                            Name = "Áo hoodie nam",
+                            Name = "Máy ảnh 1",
                             ProductId = 1,
-                            SeoAlias = "ao-hoodie-nam",
-                            SeoDescription = "Sản phẩm áo hoodie nam",
-                            SeoTitle = "Sản phẩm áo hoodie nam"
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
                         },
                         new
                         {
                             Id = 2,
                             LanguageId = "en",
-                            Name = "hoodie shirt for men",
+                            Name = "Cannon 1",
                             ProductId = 1,
-                            SeoAlias = "hoodie-shirt-for-men",
-                            SeoDescription = "The hoodie shirt produtcs for men",
-                            SeoTitle = "The hoodie shirt products for men"
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 2",
+                            ProductId = 2,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            LanguageId = "en",
+                            Name = "Cannon 2",
+                            ProductId = 2,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 3",
+                            ProductId = 3,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            LanguageId = "en",
+                            Name = "Cannon 3",
+                            ProductId = 3,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 4",
+                            ProductId = 4,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            LanguageId = "en",
+                            Name = "Cannon 4",
+                            ProductId = 4,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 5",
+                            ProductId = 5,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            LanguageId = "en",
+                            Name = "Cannon 5",
+                            ProductId = 5,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 6",
+                            ProductId = 6,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            LanguageId = "en",
+                            Name = "Cannon 6",
+                            ProductId = 6,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            LanguageId = "vi",
+                            Name = "Máy ảnh 7",
+                            ProductId = 7,
+                            SeoAlias = "may-anh",
+                            SeoDescription = "Sản phẩm máy ảnh tốt",
+                            SeoTitle = "Sản phẩm máy ảnh"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            LanguageId = "en",
+                            Name = "Cannon 7",
+                            ProductId = 7,
+                            SeoAlias = "cannon",
+                            SeoDescription = "The best cannon",
+                            SeoTitle = "cannon"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            LanguageId = "vi",
+                            Name = "Thẻ nhớ 8",
+                            ProductId = 8,
+                            SeoAlias = "the-nho",
+                            SeoDescription = "Sản phẩm thẻ nhớ tốt",
+                            SeoTitle = "Sản phẩm thẻ nhớ"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            LanguageId = "en",
+                            Name = "Memory card 8",
+                            ProductId = 8,
+                            SeoAlias = "memory-card",
+                            SeoDescription = "The best memory card",
+                            SeoTitle = "memory-card"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            LanguageId = "vi",
+                            Name = "Thẻ nhớ 9",
+                            ProductId = 9,
+                            SeoAlias = "the-nho",
+                            SeoDescription = "Sản phẩm thẻ nhớ tốt",
+                            SeoTitle = "Sản phẩm thẻ nhớ"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            LanguageId = "en",
+                            Name = "Memory card 9",
+                            ProductId = 9,
+                            SeoAlias = "memory-card",
+                            SeoDescription = "The best memory card",
+                            SeoTitle = "memory-card"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            LanguageId = "vi",
+                            Name = "Thẻ nhớ 10",
+                            ProductId = 10,
+                            SeoAlias = "the-nho",
+                            SeoDescription = "Sản phẩm thẻ nhớ tốt",
+                            SeoTitle = "Sản phẩm thẻ nhớ"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            LanguageId = "en",
+                            Name = "Memory card 10",
+                            ProductId = 10,
+                            SeoAlias = "memory-card",
+                            SeoDescription = "The best memory card",
+                            SeoTitle = "memory-card"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            LanguageId = "vi",
+                            Name = "Thẻ nhớ 11",
+                            ProductId = 11,
+                            SeoAlias = "the-nho",
+                            SeoDescription = "Sản phẩm thẻ nhớ tốt",
+                            SeoTitle = "Sản phẩm thẻ nhớ"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            LanguageId = "en",
+                            Name = "Memory card 11",
+                            ProductId = 11,
+                            SeoAlias = "memory-card",
+                            SeoDescription = "The best memory card",
+                            SeoTitle = "memory-card"
                         });
                 });
 
@@ -989,9 +1472,7 @@ namespace EshopAspCore.Data.Migrations
                 {
                     b.HasOne("EshopAspCore.Data.Entity.AppUser", "AppUser")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("AppUser");
                 });
@@ -1006,7 +1487,7 @@ namespace EshopAspCore.Data.Migrations
 
                     b.HasOne("EshopAspCore.Data.Entity.Product", "Product")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

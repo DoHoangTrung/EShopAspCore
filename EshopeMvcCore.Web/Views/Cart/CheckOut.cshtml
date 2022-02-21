@@ -8,13 +8,25 @@
 
 <script>
     setTimeout(function () {
-        $('#successMsg').fadeOut('slow');
-        window.location.href = '/@culture/home/index';
-    }, 1000);
+        if ($('#successMsg').length) {
+            $('#successMsg').fadeOut('slow');
+            window.location.href = '/@culture/home/index';
+        }
 
+        if ($('#errMsg').length) {
+            $('#errMsg').fadeOut('slow');
+        }
+    }, 2000);
 </script>
 
 @{
+    if (TempData[SystemConstants.AppSettings.ErrorMessage] != null)
+    {
+        <div id="errMsg" class="alert alert-danger" role="alert">
+            @TempData[SystemConstants.AppSettings.ErrorMessage]
+        </div>
+    }
+
     if (ViewData[SystemConstants.AppSettings.SuccessMessage] != null)
     {
         <div id="successMsg" class="alert alert-success" role="alert">

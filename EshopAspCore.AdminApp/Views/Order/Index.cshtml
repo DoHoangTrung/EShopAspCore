@@ -1,5 +1,6 @@
-﻿@model IEnumerable<EshopAspCore.ViewModels.Sales.OrderViewModel>
+﻿@model OrderPageViewModel
 @using Microsoft.AspNetCore.Http.Extensions
+@using EshopAspCore.Utilities.Constants
 
 
 @{
@@ -9,13 +10,50 @@
 
 @section Scripts{
     <script>
-       
+        $('body').on('click', '.btn-update-status', function () {
+            var currentUrl = $('.currentUrl').val();
+            var id = $(this).data('id');
+            var status = $(this).data('status');
+            $.post(
+                '/order/UpdateStatus',
+                {
+                    id: id,
+                    status: status,
+                    currentUrl: currentUrl
+                }, function (resp) {
+                    window.location.href = currentUrl;
+                });
+        });
+
+        setTimeout(function () {
+            if ($('#successMsg').length) {
+                $('#successMsg').fadeOut('slow');
+            }
+
+            if ($('#errMsg').length) {
+                $('#errMsg').fadeOut('slow');
+            }
+        }, 2000);
     </script>
 }
 
+@if (TempData[SystemConstants.AppSettings.ErrorMessage] != null)
+    {
+<div id="errMsg" class="alert alert-danger" role="alert">
+    @TempData[SystemConstants.AppSettings.ErrorMessage]
+</div>
+    }
+
+@if (TempData[SystemConstants.AppSettings.SuccessMessage] != null)
+    {
+<div id="successMsg" class="alert alert-success" role="alert">
+    @TempData[SystemConstants.AppSettings.SuccessMessage]
+</div>
+    }
+
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">List users</h1>
+    <h1 class="mt-4">List orders</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item active">Orders</li>
@@ -47,21 +85,19 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Id)
+                                @Html.DisplayNameFor(model => model.Orders[0].Id)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.OrderDate)
-                            </th>
-
-                            <th>
-                                @Html.DisplayNameFor(model => model.ShipName)
+                                @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ShipAddress)
+                                @Html.DisplayNameFor(model => model.Orders[0].ShipName)
                             </th>
-
                             <th>
-                                @Html.DisplayNameFor(model => model.ShipPhoneNumber)
+                                @Html.DisplayNameFor(model => model.Orders[0].ShipAddress)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Orders[0].ShipPhoneNumber)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Status)
@@ -70,35 +106,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Orders)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderDate)
-                                </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ShipName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ShipEmail)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
-                                    <a href="/order/print?orderId=@item.Id">Print</a>
-                                </td>
-                            </tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                <input type="hidden" class="currentUrl" value="@Context.Request.GetDisplayUrl()" />
+                                @foreach (var state in Model.listState)
+                                    {
+                                <button class="btn-update-status @state.classBoostrap" data-id="@item.Id" data-status="@state.Status">@state.Status</button>
+                                    }
+                                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
+                                @Html.ActionLink("Delete", "Delete", new { id=item.Id}) |
+                                <a href="/order/print?orderId=@item.Id">Print</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

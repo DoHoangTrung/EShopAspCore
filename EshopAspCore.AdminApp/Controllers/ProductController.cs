@@ -65,8 +65,8 @@ namespace EshopAspCore.AdminApp.Controllers
             if (result.IsSuccessed)
             {
                 var pageResult = result.ResultObject;
-                var products = pageResult.Items;
-                return View(products);
+                
+                return View(pageResult);
             }
             else
             {
@@ -87,6 +87,11 @@ namespace EshopAspCore.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
+
+            if(string.IsNullOrEmpty(newProduct.LanguageId))
+            {
+                newProduct.LanguageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+            }
 
             var isSuccess = await _productApiClient.Create(newProduct);
             if (isSuccess)
@@ -133,6 +138,8 @@ namespace EshopAspCore.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductUpdateRequest request)
         {
+            request.LanguageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
             //update categories of this product
             var isCategoryUpdateSuccess = await _categoryApiClient.Update(request.Id, request.CategoryIds);
 

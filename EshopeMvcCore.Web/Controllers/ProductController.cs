@@ -1,13 +1,15 @@
 ﻿using EshopAspCore.ApiIntegration;
+using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;
 using EshopeMvcCore.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using EshopAspCore.Utilities.Constants;
-using Microsoft.AspNetCore.Authorization;
 
 namespace EshopeMvcCore.Web.Controllers
 {
@@ -22,12 +24,7 @@ namespace EshopeMvcCore.Web.Controllers
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+              
         [HttpGet]
         public async Task<IActionResult> Details(string culture, int id)
         {
@@ -42,7 +39,7 @@ namespace EshopeMvcCore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Category(string selectionSortOrder,string culture, int id, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Category(string selectionSortOrder,string culture, int id, int pageIndex = 1, int pageSize = 5)
         {
             var selection = new List<string>()
             {
@@ -76,6 +73,53 @@ namespace EshopeMvcCore.Web.Controllers
             {
                 Category = category.ResultObject,
                 ProductPages = products.ResultObject,
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string keys, string selectionSortOrder, int pageIndex = 1, int pageSize = 10)
+        {
+            ViewBag.Keys = keys;
+
+            var selection = new List<string>()
+            {
+                SystemConstants.SelectionSortOrder.PriceLowestFirst,
+                SystemConstants.SelectionSortOrder.ProductNameAZ,
+                SystemConstants.SelectionSortOrder.ProductNameZA,
+                SystemConstants.SelectionSortOrder.ProductStocke,
+            };
+
+            var selectList = selection.Select(x => new SelectListItem()
+            {
+                Text = x.ToString(),
+                Value = x.ToString(),
+                Selected = x.ToString() == selectionSortOrder,
+            });
+
+            ViewBag.selectionSortOrder = selectList;
+
+
+            var apiResult = await _productApiClient.GetAll(new GetManageProductPagingRequest()
+            {
+                LanguageId = CultureInfo.CurrentCulture.Name,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                SelectionSortOrder = selectionSortOrder,
+                Keyword = keys
+            });
+
+            if (apiResult == null)
+            {
+                ModelState.AddModelError("", "Get all product is null.");
+                return View(ModelState);
+            }
+
+            var product = apiResult.ResultObject;
+            if (product.Items.Count <= 0)
+                ViewData["MsgNoResult"] = $"No result with: {keys}";
+            return View(new ProductSearchViewModel()
+            {
+                ProductPages = product,
             });
         }
     }

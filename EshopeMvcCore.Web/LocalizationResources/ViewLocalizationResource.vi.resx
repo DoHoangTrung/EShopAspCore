@@ -125,6 +125,10 @@
     <value>Thêm vào</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Add to cart" xml:space="preserve">
+    <value>Thêm vào giỏ</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
   <data name="CategoryUrl" xml:space="preserve">
     <value>danh-muc</value>
     <comment>/Shared/_Layout</comment>
@@ -165,6 +169,10 @@
     <value>Dang-nhap</value>
     <comment>/Shared/_Layout</comment>
   </data>
+  <data name="page" xml:space="preserve">
+    <value>trang</value>
+    <comment>common</comment>
+  </data>
   <data name="Price lowest first" xml:space="preserve">
     <value>Giá từ thấp nhất tới cao nhất</value>
     <comment>/Product/Category</comment>
@@ -189,6 +197,14 @@
     <value>san-pham</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
+  <data name="SearchUrl" xml:space="preserve">
+    <value>tim-kiem</value>
+    <comment>/Shared/_Layout</comment>
+  </data>
   <data name="Sort By" xml:space="preserve">
     <value>Sắp xếp theo</value>
     <comment>/Product/Category</comment>
@@ -200,5 +216,9 @@
   <data name="VIEW" xml:space="preserve">
     <value>Xem</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="YOUR SHOPPING CART" xml:space="preserve">
+    <value>Giỏ hàng của bạn</value>
+    <comment>/Cart/Index</comment>
   </data>
 </root>

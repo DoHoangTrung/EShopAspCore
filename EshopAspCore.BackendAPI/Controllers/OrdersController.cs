@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.Application.Sales;
+using EshopAspCore.Data.Enum;
 using EshopAspCore.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace EshopAspCore.BackendAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] OrderGetRequest request)
         {
-            var orders =await _orderService.GetAll(request);
+            var orders = await _orderService.GetAll(request);
             return Ok(orders);
         }
 
@@ -46,6 +47,25 @@ namespace EshopAspCore.BackendAPI.Controllers
         {
             var orders = await _orderService.GetById(id, languageId);
             return Ok(orders);
+        }
+
+        //PUT: api/oders/1/status
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] OrderStatus newStatus)
+        {
+            int rowAffected = await _orderService.UpdateStatus(id, newStatus);
+            return Ok(rowAffected);
+        }
+
+        //DELETE: api/orders/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool isSuccess = await _orderService.Delete(id);
+            if (isSuccess) 
+                return Ok(isSuccess);
+            else 
+                return BadRequest(isSuccess);
         }
     }
 }

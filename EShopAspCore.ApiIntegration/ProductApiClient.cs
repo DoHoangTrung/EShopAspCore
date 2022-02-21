@@ -66,6 +66,11 @@ namespace EshopAspCore.ApiIntegration
                 url += $"&SelectionSortOrder={request.SelectionSortOrder}";
             }
 
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                url += $"&keyWord={request.Keyword}";
+            }
+
             var apiResponse = await GetAsync<ApiResult<PageResult<ProductViewModel>>>(url);
             return apiResponse;
         }
@@ -126,6 +131,13 @@ namespace EshopAspCore.ApiIntegration
         {
             var isSuccess = await DeleteAsync<bool>($"/api/products/{id}");
             return isSuccess;
+        }
+
+
+        public async Task<int> GetStock(int id)
+        {
+            var stock = await GetAsync<int>($"/api/products/{id}/stock");
+            return stock;
         }
     }
 }

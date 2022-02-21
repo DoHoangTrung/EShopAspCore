@@ -3,24 +3,39 @@
 
 // Write your JavaScript code.
 
-$('body').on('click', '.btn-add-cart', function (e) {
-    e.preventDefault();
-    const id = $(this).data('id');
-    var culture = $("#hidCulture").val();
+$(document).ready(function () {
+    $('body').on('click', '.btn-add-cart', function (e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        var culture = $("#hidCulture").val();
+        var quantity = parseInt($('#quantity' + id).val());
+
+        if (isNaN(quantity)) {
+            alert('Số lượng không hợp lệ');
+            return;
+        }
+        else if (quantity < 0) {
+            alert('Số lượng không thể nhỏ hơn 1');
+            return;
+        }
+        
 
     var data = {
-        "id": id,
-    };
+                "id": id,
+                "quantity": quantity,
+            };
 
-    $.ajax({
-        type: "POST",
-        url: `/${culture}/cart/addToCart`,
-        data: data,
-    }).done(function (res) {
-        $.get(`/${culture}/cart/countCartItem`, function (data) {
-            $('.labelCartItemCount').text(`[${data}]`);
-        })
-    }).fail(function (err) {
-        console.log(err)
-    });
-})
+        $.ajax({
+            type: "POST",
+            url: `/${culture}/cart/addToCart`,
+            data: data,
+        }).done(function (res) {
+            $.get(`/${culture}/cart/countCartItem`, function (data) {
+                $('.labelCartItemCount').text(`[${data}]`);
+            })
+            alert('Thêm vào giỏ hàng thành công');
+        }).fail(function (err) {
+            console.log(err)
+        });
+    })
+});

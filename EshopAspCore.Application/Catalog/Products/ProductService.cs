@@ -4,6 +4,7 @@ using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.Utilities.Constants;
 using EshopAspCore.Utilities.Exceptions;
+using EshopAspCore.Utilities.ExtensionMethods;
 using EshopAspCore.ViewModels.Catalog.ProductImages;
 using EshopAspCore.ViewModels.Catalog.Products;
 using EshopAspCore.ViewModels.Catalog.Products.Manage;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -72,7 +74,7 @@ namespace EshopAspCore.Application.Catalog.Products
 
             foreach (var lang in languages)
             {
-                if(lang.Id == request.LanguageId)
+                if (lang.Id == request.LanguageId)
                 {
                     trans.Add(new ProductTranslation()
                     {
@@ -81,6 +83,7 @@ namespace EshopAspCore.Application.Catalog.Products
                         Details = request.Details,
                         SeoDescription = request.SeoDescription,
                         SeoAlias = request.SeoAlias,
+                        SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId,
                     });
                 }
@@ -94,7 +97,7 @@ namespace EshopAspCore.Application.Catalog.Products
                     });
                 }
             }
-                
+
             var product = new Product()
             {
                 Price = request.Price,
@@ -149,12 +152,22 @@ namespace EshopAspCore.Application.Catalog.Products
                         from c in _context.Categories.Where(c => pic.CategoryId == c.Id).DefaultIfEmpty()
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
-                        where pt.LanguageId == request.LanguageId
+                        where pt.LanguageId == request.LanguageId && p.Stock > 0
+                        orderby p.DateCreated descending
                         select new { p, pic, pt, c, l };
 
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.pt.Name.Contains(request.Keyword));
+            {
+                var keywords = request.Keyword.ToSearchFormat();
+
+                /*linq-where-ignore-accentuation-and-case*/
+                query = from q in query
+                           where EF.Functions.Like(EF.Functions.Collate(q.pt.Name, "Latin1_General_CI_AI"), $"%{keywords}%")
+                           select q;
+
+                //query = query.Where(x => compareInfo.IndexOf(x.pt.Name, keywords, options) > -1);
+            }
 
             if (request.CategoryId.HasValue)
             {
@@ -182,6 +195,8 @@ namespace EshopAspCore.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     Language = x.l.Name,
+                    CategoryId = x.pic != null ? x.pic.CategoryId : null,
+
                 })
                 .ToListAsync();
 
@@ -207,18 +222,18 @@ namespace EshopAspCore.Application.Catalog.Products
             }
 
             //each product: category string (ao, quan) , images product
-            foreach (var p in data)
+            foreach (var product in data)
             {
                 var categories = await (from pic in _context.ProductInCategories
                                         join ct in _context.CategoryTranslations on pic.CategoryId equals ct.CategoryId
-                                        where pic.ProductId == p.Id && ct.LanguageId == request.LanguageId
+                                        where pic.ProductId == product.Id && ct.LanguageId == request.LanguageId
                                         select ct.Name).ToListAsync();
 
                 var cateString = string.Join(",", categories);
-                p.CategoriesString = cateString;
+                product.CategoriesString = cateString;
 
                 //get images
-                var images = await _context.ProductImages.Where(x => x.ProductId == p.Id)
+                var images = await _context.ProductImages.Where(x => x.IsDefault == true && x.ProductId == product.Id)
                .Select(x => new ProductImageViewModel()
                {
                    Id = x.Id,
@@ -230,11 +245,20 @@ namespace EshopAspCore.Application.Catalog.Products
                    IsDefault = x.IsDefault,
                    SortOrder = x.SortOrder,
                }).ToListAsync();
-                
-                if(images.Count > 0)
+
+                if (images.Count > 0)
                 {
-                    p.Images = images;
-                    p.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+                    product.Images = images;
+
+                    var thumnail = images.FirstOrDefault(x => x.IsDefault);
+                    if (thumnail == null)
+                    {
+                        product.ThumbnailImage = string.Empty;
+                    }
+                    else
+                    {
+                        product.ThumbnailImage = thumnail.FileUrl;
+                    }
                 }
             }
 
@@ -284,9 +308,22 @@ namespace EshopAspCore.Application.Catalog.Products
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
                 ViewCount = product.ViewCount,
-                Images = (images.Count >0 ? images:null),
-                ThumbnailImage = (images.Count > 0? images.FirstOrDefault(x => x.IsDefault).FileUrl : ""),
             };
+
+            if (images.Count > 0)
+            {
+                result.Images = images;
+
+                var thumnail = images.FirstOrDefault(x => x.IsDefault);
+                if (thumnail == null)
+                {
+                    result.ThumbnailImage = string.Empty;
+                }
+                else
+                {
+                    result.ThumbnailImage = thumnail.FileUrl;
+                }
+            }
 
             var currentCategories = await _categoryService.GetByProductId(productId, languageId);
             var allCategory = await _categoryService.GetAll(languageId);
@@ -370,10 +407,13 @@ namespace EshopAspCore.Application.Catalog.Products
             //update image
             if (request.ThumbNailImage != null)
             {
-                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.ProductId == request.Id);
+                var thumbnailImage = await _context.ProductImages.FirstOrDefaultAsync(x=>x.IsDefault == true && x.ProductId == request.Id);
 
                 if (thumbnailImage != null)
                 {
+                    //remove exist image
+                    await _storageService.DeleteFileAsync(thumbnailImage.ImagePath);
+
                     thumbnailImage.FileSize = request.ThumbNailImage.Length;
                     thumbnailImage.ImagePath = await SaveFile(request.ThumbNailImage);
                     _context.ProductImages.Update(thumbnailImage);
@@ -437,7 +477,7 @@ namespace EshopAspCore.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
-                        where pt.LanguageId == languageId
+                        where pt.LanguageId == languageId && p.Stock > 0
                         select new { p, pt, pic };
 
             //2.filter
@@ -486,8 +526,8 @@ namespace EshopAspCore.Application.Catalog.Products
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
-                        where pt.LanguageId == languageId && p.IsFeatured == true
-                        select new { p, l, pt};
+                        where pt.LanguageId == languageId && p.IsFeatured == true && p.Stock > 0
+                        select new { p, l, pt };
 
 
             var data = await query.OrderByDescending(x => x.p.DateCreated)
@@ -510,11 +550,11 @@ namespace EshopAspCore.Application.Catalog.Products
                     Language = x.l.Name,
                 }).ToListAsync();
 
-            
+
 
             foreach (var product in data)
             {
-                var images = await _context.ProductImages.Where(x=>x.ProductId == product.Id)
+                var images = await _context.ProductImages.Where(x => x.ProductId == product.Id)
                .Select(x => new ProductImageViewModel()
                {
                    Id = x.Id,
@@ -527,10 +567,19 @@ namespace EshopAspCore.Application.Catalog.Products
                    SortOrder = x.SortOrder,
                }).ToListAsync();
 
-                if(images.Count > 0)
+                if (images.Count > 0)
                 {
                     product.Images = images;
-                    product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
+
+                    var thumnail = images.FirstOrDefault(x => x.IsDefault);
+                    if (thumnail == null)
+                    {
+                        product.ThumbnailImage = string.Empty;
+                    }
+                    else
+                    {
+                        product.ThumbnailImage = thumnail.FileUrl;
+                    }
                 }
             }
 
@@ -543,8 +592,8 @@ namespace EshopAspCore.Application.Catalog.Products
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
-                        where pt.LanguageId == languageId
-                        select new { p,  pt, l };
+                        where pt.LanguageId == languageId && p.Stock > 0
+                        select new { p, pt, l };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated)
                 .Take(takeNum)
@@ -564,7 +613,7 @@ namespace EshopAspCore.Application.Catalog.Products
                     Stock = x.p.Stock,
                     ViewCount = x.p.ViewCount,
                     Language = x.l.Name,
-                    }).ToListAsync();
+                }).ToListAsync();
 
             foreach (var product in data)
             {
@@ -581,13 +630,29 @@ namespace EshopAspCore.Application.Catalog.Products
                    SortOrder = x.SortOrder,
                }).ToListAsync();
 
-                if (images.Count > 0) {
+                if (images.Count > 0)
+                {
                     product.Images = images;
-                    product.ThumbnailImage = images.FirstOrDefault(x => x.IsDefault).FileUrl;
-                }    
+
+                    var thumnail = images.FirstOrDefault();
+                    if (thumnail == null)
+                    {
+                        product.ThumbnailImage = string.Empty;
+                    }
+                    else
+                    {
+                        product.ThumbnailImage = thumnail.FileUrl;
+                    }
+                }
             }
 
             return data;
+        }
+
+
+        public async Task<int> GetStockById(int id)
+        {
+            return await _context.Products.Where(x => x.Id == id).Select(x => x.Stock).FirstOrDefaultAsync();
         }
     }
 }

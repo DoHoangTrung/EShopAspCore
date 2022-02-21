@@ -15,11 +15,13 @@ namespace EshopAspCore.Application.Common
         private readonly string _userContentFolder;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
         protected readonly IConfiguration _configuration;
-
+        private IWebHostEnvironment _webHostEnvironment;
         public FileStorageService(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
 
+            //create folder if not exist
             _userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
             if (!Directory.Exists(_userContentFolder))
             {
@@ -29,7 +31,8 @@ namespace EshopAspCore.Application.Common
 
         public string GetFileUrl(string fileName)
         {
-            return $"{_configuration[SystemConstants.BaseApiUrlString]}/{USER_CONTENT_FOLDER_NAME}/{fileName}";
+            var location = $"{_configuration[SystemConstants.BaseApiUrlString]}/{USER_CONTENT_FOLDER_NAME}/{fileName}";
+            return location;
         }
 
         public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)

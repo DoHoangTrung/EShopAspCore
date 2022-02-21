@@ -202,5 +202,13 @@ namespace EshopAspCore.BackendAPI.Controllers
             var sussessResponse = new ApiSuccessResult<List<ProductViewModel>>(products);
             return Ok(sussessResponse);
         }
+
+        //GET: api/products/1/quantity
+        [HttpGet("{id}/stock")]
+        public async Task<IActionResult> GetStock(int id)
+        {
+            var stock = await _productService.GetStockById(id);
+            return Ok(stock);
+        }
     }
 }

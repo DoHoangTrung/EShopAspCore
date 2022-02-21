@@ -39,5 +39,15 @@ namespace EshopAspCore.AdminApp.Controllers
 
             return Redirect(model.CurrentUrl);
         }
+
+        //GET: /home/language
+        [HttpGet]
+        public IActionResult Language()
+        {
+            var currentLanguage = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+            return Ok(currentLanguage);
+        }
+
+        
     }
 }
