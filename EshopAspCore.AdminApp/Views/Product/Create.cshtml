@@ -52,7 +52,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
+                                <input class="form-check-input" asp-for="IsFeatured"/> @Html.DisplayNameFor(model => model.IsFeatured)
                             </label>
                         </div>
                         <div class="form-group">
@@ -105,7 +105,7 @@
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsDefault" /> @Html.DisplayNameFor(model => model.IsDefault)
+                                <input type="checkbox" class="form-check-input" name="IsDefault" id="IsDefault" value="true" checked/> @Html.DisplayNameFor(model => model.IsDefault)
                             </label>
                         </div>
                         <div class="form-group">

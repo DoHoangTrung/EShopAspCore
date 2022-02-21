@@ -1,4 +1,6 @@
 ﻿var CartController = function () {
+    var culture = $("#hidCulture").val();
+
     this.initialize = function () {
         loadData();
         registerEvents();
@@ -8,10 +10,10 @@
         btnPlusQuantityClick();
         btnMinusQuantityClick();
         btnRemoveQuantityClick();
+        UpdateCartSession();
     };
 
     function loadData() {
-        var culture = $("#hidCulture").val();
 
         $.ajax({
             type: "GET",
@@ -130,4 +132,56 @@
             $('.labelCartItemCount').text(`[${data}]`);
         })
     };
+
+    function UpdateCartSession() {
+        $('#btn-next').click(function (e) {
+            e.preventDefault();
+
+            var listProd = [];
+            var stWrong = false;
+            $('#cart-table tr').each(function () {
+                var id = $(this).data('id');
+                if (typeof id !== 'undefined') {
+                    var quantity = parseInt($('#quantityProduct' + id).val());
+
+                    //check int convert
+                    if (isNaN(quantity)) {
+                        alert('Số lượng không hợp lệ');
+                        stWrong = true;
+                        return;
+                    }
+
+                    if (quantity <= 0) {
+                        alert('Số lượng không thể nhỏ hơn 1');
+                        stWrong = true;
+                        return;
+                    }
+
+                    listProd.push({
+                        "Id": id,
+                        "Quantity": quantity
+                    })
+                }
+            });
+
+            if (stWrong) return;
+
+            $.ajax({
+                type: 'POST',
+                url: `/${culture}/cart/updateCartSession`,
+                data: {
+                    "request": {
+                        "Items": listProd
+                    }
+                },
+                success: function (data, textStatus, xhr) {
+                    //console.log(xhr.status);
+                    window.location.href = `/${culture}/cart/checkout`;
+                },
+                error: function (jqXHR, error, errorThrown) {
+                    alert(jqXHR.responseText)
+                }
+            })
+        })
+    }
 }

@@ -16,11 +16,11 @@
 <input type="hidden" id="hidCulture" value="@culture" />
 
 <ul class="breadcrumb">
-    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li><a href="index.html" localize-content>Home</a> <span class="divider">/</span></li>
     <li class="active"> SHOPPING CART</li>
 </ul>
 <h3>
-    SHOPPING CART  <span class="labelCartItemCount"></span>
+    <localize>YOUR SHOPPING CART  </localize><span class="labelCartItemCount"></span>
 </h3>
 <hr class="soft" />
 
@@ -28,7 +28,7 @@
 </div>
 
 <script id="template" type="x-tmpl-mustache">
-<table class="table table-bordered">
+<table class="table table-bordered" id="cart-table">
     <thead>
         <tr>
             <th>Product</th>
@@ -41,7 +41,7 @@
     </thead>
     <tbody>
         {{#items}}
-        <tr>
+        <tr data-id={{id}}>
             <td> <img width="60" src={{image}} alt="IMG" /></td>
             <td>{{name}}</td>
             <td>
@@ -80,7 +80,5 @@
 
 </script>
 
-
-
-<a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-<a href="/@culture/cart/checkOut" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+<a href="/@culture/home/index" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+<a href="/@culture/cart/checkOut" class="btn btn-large pull-right" id="btn-next">Next <i class="icon-arrow-right"></i></a>

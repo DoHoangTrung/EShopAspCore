@@ -54,14 +54,13 @@ namespace EshopeMvcCore.Web.Controllers
 
         //POST: vi/cart/AddToCart
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int id, string culture)
+        public async Task<IActionResult> AddToCart(int id, string culture, int quantity= 1)
         {
             var apiResult = await _productApiClient.GetById(id, culture);
             var product = apiResult.ResultObject;
 
             var cart = GetCartSession();
 
-            int quantity = 1;
             if (cart.Items.Any(x => x.Id == id))
             {
                 var item = cart.Items.First(x => x.Id == id);
@@ -79,6 +78,7 @@ namespace EshopeMvcCore.Web.Controllers
                     Quantity = quantity,
                     Price = product.Price,
                     TotalPrice = quantity * product.Price,
+                    Stock = product.Stock
                 };
                 cart.Items.Add(item);
             }
@@ -144,10 +144,18 @@ namespace EshopeMvcCore.Web.Controllers
 
             foreach (var item in cart.cartItems)
             {
+                //check stock
+                var stock = await _productApiClient.GetStock(item.Id);
+                if (stock < item.Quantity)
+                {
+                    TempData[SystemConstants.AppSettings.ErrorMessage] = $"Mặt hàng {item.Name} không đủ số lượng trong kho";
+                    return RedirectToAction(nameof(CheckOut));
+                }
+
                 request.cartItems.Add(new OrderItemViewModel()
                 {
                     ProductId = item.Id,
-                    Price =  item.Price,
+                    Price = item.Price,
                     Quantity = item.Quantity
                 });
             };
@@ -155,13 +163,14 @@ namespace EshopeMvcCore.Web.Controllers
             var isSuccess = await _orderApiClient.CheckOut(request);
             if (isSuccess)
             {
+                //send email
                 ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success";
 
                 var textCart = "<p>Thank you for chosing our <strong>Eshop</strong><br/>You have checking out success:<br/>";
                 for (int i = 0; i < cart.cartItems.Count; i++)
                 {
                     var item = cart.cartItems[i];
-                    textCart += $"{i+1}_{item.Name}, quantity: {item.Quantity}, price: {item.Price}<br/>";
+                    textCart += $"{i + 1}_{item.Name}, quantity: {item.Quantity}, price: {item.Price}<br/>";
                 }
                 textCart += "Your orders will be ship soon</p>";
 
@@ -170,7 +179,7 @@ namespace EshopeMvcCore.Web.Controllers
                     To = request.Email,
                     Body = textCart,
                     Subject = "checkout succesed",
-                }) ;
+                });
             }
 
             return View();
@@ -199,6 +208,36 @@ namespace EshopeMvcCore.Web.Controllers
                 cartItems = cart.Items,
                 TotalCartPrice = cart.TotalCartPrice
             };
+        }
+
+
+        [HttpPost]
+        //GET: vi/cart/updateCartSession
+        public async Task<IActionResult> UpdateCartSession(CartUpdateRequest request)
+        {
+            if (request != null)
+            {
+                var cart = GetCartSession();
+
+                foreach (var item in request.Items)
+                {
+                    //check stock
+                    var stock = await _productApiClient.GetStock(item.Id);
+                    if (stock < item.Quantity)
+                        return BadRequest($"Sản phẩm {item.Id} chỉ còn {stock} sản phẩm");
+
+                    var prod = cart.Items.Find(x => x.Id == item.Id);
+                    if (prod != null)
+                    {
+                        var oldQuantity = prod.Quantity;
+                        prod.Quantity = item.Quantity;
+                        prod.TotalPrice += (item.Quantity - oldQuantity) * prod.Price;
+                    }
+                }
+
+                HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(cart));
+            }
+            return Ok();
         }
     }
 }

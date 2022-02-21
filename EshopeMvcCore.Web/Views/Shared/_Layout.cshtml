@@ -82,8 +82,8 @@
                 <div class="navbar-inner">
                     <a class="brand" href="/@culture/home/index"><img src="/themes/images/logo.png" alt="Bootsshop" /></a>
                     <form class="form-inline navbar-search" method="get" action=@($"/{@culture}/{_loc["SearchUrl"]}")>
-                        <input id="keys" name="keys" class="searchTxt" type="text" value="@ViewBag.Keys"/>
-                        <button type="submit" id="submitButton" class="btn btn-primary" ><localize>Search</localize></button>
+                        <input id="keys" name="keys" class="searchTxt" type="text" value="@ViewBag.Keys" />
+                        <button type="submit" id="submitButton" class="btn btn-primary"><localize>Search</localize></button>
                     </form>
                     <ul id="topMenu" class="nav pull-right">
                         <li class="">
@@ -201,7 +201,6 @@
 
     <script src="/themes/js/bootshop.js"></script>
     <script src="/themes/js/jquery.lightbox-0.5.js"></script>
-    <script src="~/js/site.js"></script>
     <!-- Themes switcher section ============================================================================================= -->
     <div id="secectionBox">
         <link rel="stylesheet" href="/themes/switch/themeswitch.css" type="text/css" media="screen" />
@@ -259,12 +258,13 @@
     <span id="/themesBtn"></span>
 
     @RenderSection("Scripts", false)
-
+    <script src="~/js/site.js"></script>
     <script>
         var culture = $('#hiddenCulture').val();
         $.get(`/${culture}/cart/countCartItem`, function (data) {
             $('.labelCartItemCount').text(`[${data}]`);
         })
     </script>
+
 </body>
 </html>

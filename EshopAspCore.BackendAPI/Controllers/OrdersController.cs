@@ -57,5 +57,15 @@ namespace EshopAspCore.BackendAPI.Controllers
             return Ok(rowAffected);
         }
 
+        //DELETE: api/orders/1
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool isSuccess = await _orderService.Delete(id);
+            if (isSuccess) 
+                return Ok(isSuccess);
+            else 
+                return BadRequest(isSuccess);
+        }
     }
 }

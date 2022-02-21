@@ -53,27 +53,14 @@
             <div class="control-group">
                 <label class="control-label"><span>@Model.Product.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</span></label>
                 <div class="controls">
-                    <input type="number" class="span1" placeholder="Qty." />
-                    <button type="submit" class="btn btn-large btn-primary pull-right btn-add-cart" data-id=@Model.Product.Id><localize>Add to cart</localize> <i class=" icon-shopping-cart"></i></button>
+                    <input type="number" class="span1" id="@("quantity"+Model.Product.Id)" />
+                    <button type="button" class="btn btn-large btn-primary pull-right btn-add-cart" data-id=@Model.Product.Id><localize>Add to cart</localize> <i class=" icon-shopping-cart"></i></button>
                 </div>
             </div>
         </form>
 
         <hr class="soft" />
         <h4>@Model.Product.Stock items in stock</h4>
-        <form class="form-horizontal qtyFrm pull-right">
-            <div class="control-group">
-                <label class="control-label"><span>Color</span></label>
-                <div class="controls">
-                    <select class="span2">
-                        <option>Black</option>
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Brown</option>
-                    </select>
-                </div>
-            </div>
-        </form>
         <hr class="soft clr" />
         <p>@Model.Product.Description</p>
         <a class="btn btn-small pull-right" href="#detail">More Details</a>

@@ -169,6 +169,10 @@
     <value>Login</value>
     <comment>/Shared/_Layout</comment>
   </data>
+  <data name="page" xml:space="preserve">
+    <value>page</value>
+    <comment>common</comment>
+  </data>
   <data name="Price lowest first" xml:space="preserve">
     <value>Price lowest first</value>
     <comment>/Product/Category</comment>
@@ -212,5 +216,9 @@
   <data name="VIEW" xml:space="preserve">
     <value>VIEW</value>
     <comment>/Home/Index</comment>
+  </data>
+  <data name="YOUR SHOPPING CART" xml:space="preserve">
+    <value>YOUR SHOPPING CART</value>
+    <comment>/Cart/Index</comment>
   </data>
 </root>

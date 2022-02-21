@@ -46,7 +46,7 @@ namespace EshopeMvcCore.Web.Controllers
             var slides = slidesResult.ResultObject;
 
             //get feature products
-            var featuredProductApiResult = await _productApiClient.GetFeaturedProduct(culture, SystemConstants.ProductSettings.NumberOfFeaturedProducts);
+            var featuredProductApiResult = await _productApiClient.GetFeaturedProduct(culture, SystemConstants.NumberOfFeaturedProducts);
             if (featuredProductApiResult.IsSuccessed == false)
             {
                 ModelState.AddModelError("", "Api product feature return failed.");
@@ -54,7 +54,7 @@ namespace EshopeMvcCore.Web.Controllers
             var featuredProducts = featuredProductApiResult.ResultObject;
 
             //get latest products
-            var latestProductApiResult = await _productApiClient.GetLatestProduct(culture, SystemConstants.ProductSettings.NumberOfLatestProducts);
+            var latestProductApiResult = await _productApiClient.GetLatestProduct(culture, SystemConstants.NumberOfLatestProducts);
             if (latestProductApiResult.IsSuccessed == false)
             {
                 ModelState.AddModelError("", "Api latest products return failed.");

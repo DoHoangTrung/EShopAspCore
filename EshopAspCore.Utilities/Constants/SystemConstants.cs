@@ -12,20 +12,17 @@ namespace EshopAspCore.Utilities.Constants
         public const string BaseApiUrlString = "BaseApiUrl";
         public const string NA = "N/A";
         public const string CartSession = "CartSession";
-        
+
+        public const int NumberOfFeaturedProducts = 4;
+        public const int NumberOfLatestProducts = 6;
+
         public class AppSettings
         {
             public const string DefaultLanguageId = "DefaultLanguageId";
             public const string SuccessMessage = "SuccessMsg";
+            public const string ErrorMessage = "ErrorMsg";
             public const string HttpClientWithSSLUntrusted = "HttpClientWithSSLUntrusted";
 
-        }
-
-        public class ProductSettings
-        {
-            public const int NumberOfFeaturedProducts = 4;
-
-            public const int NumberOfLatestProducts = 6;
         }
 
         public static class SelectionSortOrder

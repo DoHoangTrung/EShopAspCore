@@ -110,7 +110,7 @@ namespace EshopeMvcCore.Web
 
             //razor runtime compilation
             var builder = services.AddControllersWithViews();
-            if (Env.IsDevelopment() || Env.IsProduction())
+            if (Env.IsDevelopment())
             {
                 builder.AddRazorRuntimeCompilation();
             }

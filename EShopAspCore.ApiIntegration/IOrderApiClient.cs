@@ -18,5 +18,6 @@ namespace EshopAspCore.ApiIntegration
 
         Task<bool> SendEmail(MailContent mailContent);
         Task<int> UpdateStatus(int id, OrderStatus status);
+        Task<bool> Delete(int id);
     }
 }

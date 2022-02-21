@@ -3,7 +3,7 @@
 
 @{
     var category = Model.Category;
-    string title  = "Eshop";
+    string title = "Eshop";
     if (category != null)
     {
         title = Model.Category.Name + "-" + "page " + Model.ProductPages.PageIndex;
@@ -93,7 +93,7 @@
                             </p>
                             <h4 style="text-align:center">
                                 <a class="btn" href=@url> <i class="icon-zoom-in"></i></a>
-                                <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
+                                <a class="btn btn-add-cart" data-id=@item.Id href="#"><localize>Add to </localize><i class="icon-shopping-cart"></i></a>
                                 <a class="btn btn-primary" href="#">@item.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</a>
                             </h4>
                         </div>
@@ -103,8 +103,9 @@
         </ul>
         <hr class="soft" />
     </div>
-    @*@await Component.InvokeAsync("Pager", Model.ProductPages)*@
 </div>
 
-<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
+@*<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>*@
 <br class="clr" />
+
+@await Component.InvokeAsync("Pager", Model.ProductPages);

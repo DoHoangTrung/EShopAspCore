@@ -254,3 +254,9 @@ error: https://stackoverflow.com/questions/59026301/sslhandshakeexception-an-err
 -razor page: layout = null  
 -email == username 
 -razor runtime compilation didnt work in production environment
+open graph 
+--binding checkbox : id + name
+
+##Deloy note
+Error 503: delete - republish project
+Connection string: see database connection info
