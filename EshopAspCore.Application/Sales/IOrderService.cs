@@ -10,7 +10,7 @@ namespace EshopAspCore.Application.Sales
 {
     public interface IOrderService
     {
-        Task<bool> CheckOutOrders(CheckOutRequest request);
+        Task<int> CheckOutOrders(CheckOutRequest request);
         Task<List<OrderViewModel>> GetAll(OrderGetRequest request);
         Task<OrderViewModel> GetById(int id, string languageId);
         Task<int> UpdateStatus(int id, OrderStatus newStatus);

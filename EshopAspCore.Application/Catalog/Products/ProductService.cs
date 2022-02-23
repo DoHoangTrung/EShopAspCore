@@ -152,7 +152,7 @@ namespace EshopAspCore.Application.Catalog.Products
                         from c in _context.Categories.Where(c => pic.CategoryId == c.Id).DefaultIfEmpty()
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join l in _context.Languages on pt.LanguageId equals l.Id
-                        where pt.LanguageId == request.LanguageId && p.Stock > 0
+                        where pt.LanguageId == request.LanguageId
                         orderby p.DateCreated descending
                         select new { p, pic, pt, c, l };
 

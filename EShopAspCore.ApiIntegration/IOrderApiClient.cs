@@ -11,7 +11,7 @@ namespace EshopAspCore.ApiIntegration
 {
     public interface IOrderApiClient
     {
-        Task<bool> CheckOut(CheckOutRequest request);
+        Task<int> CheckOut(CheckOutRequest request);
 
         Task<List<OrderViewModel>> GetAll(OrderGetRequest request);
         Task<OrderViewModel> GetById (int id, string languageId);

@@ -1,5 +1,6 @@
 ﻿using EshopAspCore.Application.Common;
 using EshopAspCore.ViewModels.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace EshopAspCore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmailsController : Controller
+    [AllowAnonymous]
+    public class EmailsController : ControllerBase
     {
         private readonly IEmailService _emailService;
 

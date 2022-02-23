@@ -260,3 +260,10 @@ open graph
 ##Deloy note
 Error 503: delete - republish project
 Connection string: see database connection info
+
+error 405 when delete put api
+https://tedu.com.vn/kb/aspnet-core/loi-khong-delete-hay-put-duoc-tren-api-server-2.html
+
+Email server:
+create email account in plesk
+See in for host, port... in http://webmail.galaptrinh.com

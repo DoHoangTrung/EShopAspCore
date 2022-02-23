@@ -1,0 +1,47 @@
+﻿@using EshopAspCore.Utilities.Constants
+@{
+    ViewData["Title"] = "ConfirmOrder";
+    Layout = null;
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order</title>
+    <style>
+        body {
+            background-color: #FADCDC;
+        }
+
+        .div-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .item {
+            margin-top: 20vh;
+            background-color: white;
+            min-width: 30%;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="div-row">
+        <div class="item">
+            @{
+                if (ViewData[SystemConstants.AppSettings.ErrorMessage] != null)
+                {
+                    <p style="color:red">@ViewData[SystemConstants.AppSettings.ErrorMessage]</p>
+                }
+                else if (ViewData[SystemConstants.AppSettings.SuccessMessage] != null)
+                {
+                    <p>@ViewData[SystemConstants.AppSettings.SuccessMessage]</p>
+                }
+            }
+        </div>
+    </div>
+</body>
+</html>
+

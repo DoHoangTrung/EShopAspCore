@@ -20,7 +20,7 @@ namespace EshopAspCore.Application.Sales
             _context = context;
         }
 
-        public async Task<bool> CheckOutOrders(CheckOutRequest request)
+        public async Task<int> CheckOutOrders(CheckOutRequest request)
         {
             try
             {
@@ -41,9 +41,9 @@ namespace EshopAspCore.Application.Sales
                     //check stock
                     var prod = await _context.Products.FindAsync(item.ProductId);
 
-                    if (prod == null) return false;
+                    if (prod == null) return -1;
 
-                    if (item.Quantity > prod.Stock) return false;
+                    if (item.Quantity > prod.Stock) return -1;
 
                     order.OrderDetails.Add(new OrderDetail()
                     {
@@ -59,8 +59,9 @@ namespace EshopAspCore.Application.Sales
 
                 await _context.Orders.AddAsync(order);
 
-                int recordsAffected = _context.SaveChanges();
-                return recordsAffected > 0;
+                await _context.SaveChangesAsync();
+
+                return order.Id;
             }
             catch (Exception e)
             {

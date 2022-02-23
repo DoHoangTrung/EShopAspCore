@@ -1,5 +1,6 @@
 ﻿using EshopAspCore.Utilities.Constants;
 using EshopAspCore.ViewModels.Common;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -42,9 +43,9 @@ namespace EshopAspCore.Application.Common
             builder.HtmlBody = mailContent.Body;
             email.Body = builder.ToMessageBody();
 
-
             // dùng SmtpClient của MailKit
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            using var smtp = new SmtpClient();
 
             try
             {

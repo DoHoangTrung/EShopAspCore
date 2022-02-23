@@ -166,6 +166,8 @@
 
             if (stWrong) return;
 
+            if (listProd.length == 0) return;
+
             $.ajax({
                 type: 'POST',
                 url: `/${culture}/cart/updateCartSession`,

@@ -12,6 +12,7 @@ namespace EshopAspCore.Utilities.Constants
         public const string BaseApiUrlString = "BaseApiUrl";
         public const string NA = "N/A";
         public const string CartSession = "CartSession";
+        public const string OrderKey = "OrderKey";
 
         public const int NumberOfFeaturedProducts = 4;
         public const int NumberOfLatestProducts = 6;
