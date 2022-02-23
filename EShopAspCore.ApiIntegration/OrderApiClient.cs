@@ -25,10 +25,10 @@ namespace EshopAspCore.ApiIntegration
             return apiResult;
         }
 
-        public async Task<bool> CheckOut(CheckOutRequest request)
+        public async Task<int> CheckOut(CheckOutRequest request)
         {
             string url = $"api/orders";
-            var apiResult = await PostAsync<bool, CheckOutRequest>(url, request);
+            var apiResult = await PostAsync<int, CheckOutRequest>(url, request);
             return apiResult;
         }
 

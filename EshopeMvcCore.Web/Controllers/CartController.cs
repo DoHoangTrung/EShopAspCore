@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EshopAspCore.ViewModels.Common;
+using Microsoft.Extensions.Configuration;
+using EshopAspCore.Application.Utilities.Confirm;
+using EshopAspCore.Data.Enum;
 
 namespace EshopeMvcCore.Web.Controllers
 {
@@ -19,11 +22,13 @@ namespace EshopeMvcCore.Web.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IOrderApiClient _orderApiClient;
+        private readonly IConfiguration _config;
 
-        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IConfiguration config)
         {
             _productApiClient = productApiClient;
             _orderApiClient = orderApiClient;
+            _config = config;
         }
 
         public IActionResult Index()
@@ -64,7 +69,7 @@ namespace EshopeMvcCore.Web.Controllers
             if (cart.Items.Any(x => x.Id == id))
             {
                 var item = cart.Items.First(x => x.Id == id);
-                item.Quantity += 1;
+                item.Quantity += quantity;
                 item.TotalPrice = item.Quantity * item.Price;
             }
             else
@@ -131,6 +136,15 @@ namespace EshopeMvcCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckOut(CheckOutViewModel model)
         {
+            
+
+            if (!ModelState.IsValid)
+            {
+                var cartSs = GetCheckOutCart();
+
+                return View(cartSs);
+            }
+
             var cart = GetCheckOutCart();
 
             var request = new CheckOutRequest()
@@ -160,11 +174,28 @@ namespace EshopeMvcCore.Web.Controllers
                 });
             };
 
-            var isSuccess = await _orderApiClient.CheckOut(request);
-            if (isSuccess)
+            var orderId = await _orderApiClient.CheckOut(request);
+
+            if (orderId <= 0)
             {
-                //send email
-                ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success";
+                return View();
+            }
+
+            ClearSessionCart();
+
+            //send email
+            try
+            {
+                //create confirm link 
+                string key = _config["Tokens:Key"];
+                string state = Enum.GetName(typeof(OrderStatus), OrderStatus.Confirmed);
+                var token = AesOperation.EncryptString(key, state);
+
+                string confirmLink = Url.Action("ConfirmOrder", "Cart" , new
+                {
+                    id = orderId,
+                    token = token
+                }, protocol: HttpContext.Request.Scheme);
 
                 var textCart = "<p>Thank you for chosing our <strong>Eshop</strong><br/>You have checking out success:<br/>";
                 for (int i = 0; i < cart.cartItems.Count; i++)
@@ -172,17 +203,32 @@ namespace EshopeMvcCore.Web.Controllers
                     var item = cart.cartItems[i];
                     textCart += $"{i + 1}_{item.Name}, quantity: {item.Quantity}, price: {item.Price}<br/>";
                 }
-                textCart += "Your orders will be ship soon</p>";
 
-                var isSuccessed = await _orderApiClient.SendEmail(new MailContent()
+                textCart += $"<p>Please confirm your order:</p> </br>" + confirmLink;
+
+                var sendMailSuccess = await _orderApiClient.SendEmail(new MailContent()
                 {
                     To = request.Email,
                     Body = textCart,
-                    Subject = "checkout succesed",
+                    Subject = "Checkout succesed",
                 });
-            }
 
-            return View();
+                if (!sendMailSuccess)
+                {
+                    ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success, we will contact to you by your phone soon.";
+                    return View();
+                }
+                else
+                {
+                    ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success, please check your email";
+                    return View();
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewData[SystemConstants.AppSettings.SuccessMessage] = "Checkout success, we will contact to you by your phone soon.";
+                return View();
+            }
         }
 
         //GET: vi/cart/countCartItem
@@ -210,9 +256,13 @@ namespace EshopeMvcCore.Web.Controllers
             };
         }
 
+        private void ClearSessionCart()
+        {
+            HttpContext.Session.Remove(SystemConstants.CartSession); 
+        }
 
-        [HttpPost]
         //GET: vi/cart/updateCartSession
+        [HttpPost]
         public async Task<IActionResult> UpdateCartSession(CartUpdateRequest request)
         {
             if (request != null)
@@ -235,9 +285,47 @@ namespace EshopeMvcCore.Web.Controllers
                     }
                 }
 
+                cart.TotalCartPrice = cart.Items.Sum(x => x.TotalPrice);
+
                 HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(cart));
             }
             return Ok();
+        }
+
+        //GET: cart/ConfirmOrder
+        [HttpGet] 
+        public async Task<IActionResult> ConfirmOrder (int id,string token)
+        {
+            string errorMsg = "Your order can't confirm. Please contact us to solve this problem.";
+
+            string key = _config["Tokens:Key"];
+
+            string value = AesOperation.DecryptString(key,token);
+
+            //if this is comfirmed state, confirmed this order
+            OrderStatus state;
+            if (!Enum.TryParse(value, out state))
+            {
+                ViewData[SystemConstants.AppSettings.ErrorMessage] = errorMsg;
+                return View();
+            }
+
+            if (state != OrderStatus.Confirmed)
+            {
+                ViewData[SystemConstants.AppSettings.ErrorMessage] = errorMsg;
+                return View();
+            }
+
+            //state = confirmed
+            var rowAffected =await _orderApiClient.UpdateStatus(id, state);
+            if (rowAffected == 0)
+            {
+                ViewData[SystemConstants.AppSettings.ErrorMessage] = errorMsg;
+                return View();
+            }
+
+            ViewData[SystemConstants.AppSettings.SuccessMessage]= "This order confirm succeed.";
+            return View();
         }
     }
 }

@@ -53,8 +53,8 @@
             <div class="control-group">
                 <label class="control-label"><span>@Model.Product.Price.ToString("C", CultureInfo.CreateSpecificCulture("vi-VN"))</span></label>
                 <div class="controls">
-                    <input type="number" class="span1" id="@("quantity"+Model.Product.Id)" />
-                    <button type="button" class="btn btn-large btn-primary pull-right btn-add-cart" data-id=@Model.Product.Id><localize>Add to cart</localize> <i class=" icon-shopping-cart"></i></button>
+                    <input type="number" class="span1" id="@("quantity"+Model.Product.Id)" value="1"/>
+                    <button type="button" class="btn btn-large btn-primary pull-right btn-add-cart-quantity" data-id=@Model.Product.Id><localize>Add to cart</localize> <i class=" icon-shopping-cart"></i></button>
                 </div>
             </div>
         </form>

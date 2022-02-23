@@ -26,11 +26,11 @@ namespace EshopAspCore.BackendAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveOrders(CheckOutRequest request)
         {
-            var result = await _orderService.CheckOutOrders(request);
-            if (result == true)
-                return Ok(result);
+            var orderId = await _orderService.CheckOutOrders(request);
+            if (orderId > 0)
+                return Ok(orderId);
 
-            return BadRequest(result);
+            return BadRequest(-1);
         }
 
         //GET: api/orders
