@@ -1,6 +1,7 @@
 ﻿using EshopAspCore.Data.EF;
 using EshopAspCore.Data.Entity;
 using EshopAspCore.Data.Enum;
+using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.Sales;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -71,7 +72,7 @@ namespace EshopAspCore.Application.Sales
             }
         }
 
-        public async Task<List<OrderViewModel>> GetAll(OrderGetRequest request)
+        public async Task<PageResult<OrderViewModel>> GetAll(OrderGetRequest request)
         {
             var query = _context.Orders.Select(x => x);
 
@@ -79,17 +80,28 @@ namespace EshopAspCore.Application.Sales
             {
                 query = query.Where(x => x.Status == request.status);
             }
+            var totalRecords = await query.CountAsync();
 
-            return await query.Select(x => new OrderViewModel()
+            var orders =  await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new OrderViewModel()
+                {
+                    Id = x.Id,
+                    OrderDate = x.OrderDate,
+                    ShipAddress = x.ShipAddress,
+                    ShipEmail = x.ShipEmail,
+                    ShipName = x.ShipName,
+                    ShipPhoneNumber = x.ShipPhoneNumber,
+                    Status = x.Status
+                }).ToListAsync();
+
+            return new PageResult<OrderViewModel>()
             {
-                Id = x.Id,
-                OrderDate = x.OrderDate,
-                ShipAddress = x.ShipAddress,
-                ShipEmail = x.ShipEmail,
-                ShipName = x.ShipName,
-                ShipPhoneNumber = x.ShipPhoneNumber,
-                Status = x.Status
-            }).ToListAsync();
+                Items = orders,
+                TotalRecord = totalRecords,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize
+            };
         }
 
         public async Task<OrderViewModel> GetById(int id, string languageId)
@@ -138,7 +150,7 @@ namespace EshopAspCore.Application.Sales
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete (int id)
+        public async Task<bool> Delete(int id)
         {
             var order = await _context.Orders.FindAsync(id);
             if (order == null) return false;

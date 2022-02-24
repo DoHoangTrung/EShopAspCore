@@ -267,3 +267,4 @@ https://tedu.com.vn/kb/aspnet-core/loi-khong-delete-hay-put-duoc-tren-api-server
 Email server:
 create email account in plesk
 See in for host, port... in http://webmail.galaptrinh.com
+change SecureSocketOptions.StartTls --> None

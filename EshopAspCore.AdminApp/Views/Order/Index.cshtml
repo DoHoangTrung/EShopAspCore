@@ -38,18 +38,18 @@
 }
 
 @if (TempData[SystemConstants.AppSettings.ErrorMessage] != null)
-    {
-<div id="errMsg" class="alert alert-danger" role="alert">
-    @TempData[SystemConstants.AppSettings.ErrorMessage]
-</div>
-    }
+{
+    <div id="errMsg" class="alert alert-danger" role="alert">
+        @TempData[SystemConstants.AppSettings.ErrorMessage]
+    </div>
+}
 
 @if (TempData[SystemConstants.AppSettings.SuccessMessage] != null)
-    {
-<div id="successMsg" class="alert alert-success" role="alert">
-    @TempData[SystemConstants.AppSettings.SuccessMessage]
-</div>
-    }
+{
+    <div id="successMsg" class="alert alert-success" role="alert">
+        @TempData[SystemConstants.AppSettings.SuccessMessage]
+    </div>
+}
 
 
 <div class="container-fluid px-4">
@@ -80,34 +80,35 @@
                     </form>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Orders[0].Id)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Orders[0].ShipName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Orders[0].ShipAddress)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Orders[0].ShipPhoneNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Status)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Orders)
-                        {
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders.Items[0].Id)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders.Items[0].OrderDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders.Items[0].ShipName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders.Items[0].ShipAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders.Items[0].ShipPhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Orders.Items)
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Id)
@@ -131,18 +132,18 @@
                             <td>
                                 <input type="hidden" class="currentUrl" value="@Context.Request.GetDisplayUrl()" />
                                 @foreach (var state in Model.listState)
-                                    {
-                                <button class="btn-update-status @state.classBoostrap" data-id="@item.Id" data-status="@state.Status">@state.Status</button>
-                                    }
-                                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
-                                @Html.ActionLink("Delete", "Delete", new { id=item.Id}) |
+                                {
+                                    <button class="btn-update-status @state.classBoostrap" data-id="@item.Id" data-status="@state.Status">@state.Status</button>
+                                }
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
                                 <a href="/order/print?orderId=@item.Id">Print</a>
                             </td>
                         </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
+            @await Component.InvokeAsync("Pager", Model.Orders)
         </div>
     </div>
 </div>

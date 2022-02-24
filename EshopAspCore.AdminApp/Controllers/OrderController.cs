@@ -2,6 +2,7 @@
 using EshopAspCore.ApiIntegration;
 using EshopAspCore.Data.Enum;
 using EshopAspCore.Utilities.Constants;
+using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,12 +24,14 @@ namespace EshopAspCore.AdminApp.Controllers
             _orderApiClient = orderApiClient;
         }
 
-        public async Task<IActionResult> Index(OrderStatus status)
+        public async Task<IActionResult> Index(OrderStatus status, int pageIndex = 1, int pageSize = 10)
         {
             //find enum by string
             var orders = await _orderApiClient.GetAll(new OrderGetRequest()
             {
                 status = status,
+                PageIndex = pageIndex,
+                PageSize = pageSize
             });
 
             return View(new OrderPageViewModel()
@@ -36,7 +39,7 @@ namespace EshopAspCore.AdminApp.Controllers
                 Orders = orders,
                 Status = status,
                 listState = new ManageOrderStatus(status).GetManageOrderState()
-            });
+            }) ;
         }
 
         //GET: order/print?orderId=1

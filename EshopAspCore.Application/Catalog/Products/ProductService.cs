@@ -648,8 +648,6 @@ namespace EshopAspCore.Application.Catalog.Products
 
             return data;
         }
-
-
         public async Task<int> GetStockById(int id)
         {
             return await _context.Products.Where(x => x.Id == id).Select(x => x.Stock).FirstOrDefaultAsync();

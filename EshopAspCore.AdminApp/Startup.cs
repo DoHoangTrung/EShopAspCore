@@ -75,7 +75,7 @@ namespace EshopAspCore.AdminApp
 
             // debug runtime compile
             var builder = services.AddRazorPages();
-            if (Env.IsDevelopment())
+            if (Env.IsDevelopment() || Env.IsProduction())
             {
                 builder.AddRazorRuntimeCompilation();
             }

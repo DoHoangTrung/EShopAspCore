@@ -104,5 +104,6 @@ namespace EshopAspCore.Application.Catalog.Categories
             else
                 return false;
         }
+
     }
 }

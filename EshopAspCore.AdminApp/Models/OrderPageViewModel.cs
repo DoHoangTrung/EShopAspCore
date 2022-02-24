@@ -1,4 +1,5 @@
 ﻿using EshopAspCore.Data.Enum;
+using EshopAspCore.ViewModels.Common;
 using EshopAspCore.ViewModels.Sales;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace EshopAspCore.AdminApp.Models
 {
     public class OrderPageViewModel
     {
-        public List<OrderViewModel> Orders { get; set; }
+        public PageResult<OrderViewModel> Orders { get; set; }
         public OrderStatus Status { get; set; }
 
         public List<OrderStatusModel> listState { get; set; }

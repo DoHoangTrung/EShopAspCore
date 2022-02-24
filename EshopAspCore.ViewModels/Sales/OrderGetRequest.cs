@@ -10,5 +10,8 @@ namespace EshopAspCore.ViewModels.Sales
     public class OrderGetRequest
     {
         public OrderStatus? status { get; set; }
+
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
     }
 }
