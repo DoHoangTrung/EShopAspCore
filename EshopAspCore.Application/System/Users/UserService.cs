@@ -46,13 +46,13 @@ namespace EshopAspCore.Application.System.Users
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Role,string.Join(";",roles)),
-                new Claim(ClaimTypes.Name,user.UserName),
-            };
+            var claims = new List<Claim>();
+
+            if (user.Email != null) claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            if (user.FirstName != null) claims.Add(new Claim(ClaimTypes.GivenName, user.FirstName));
+            claims.Add(new Claim(ClaimTypes.Role,string.Join(";",roles)));
+            if (user.UserName != null) claims.Add(new Claim(ClaimTypes.Name,user.UserName));
+            if (user.PhoneNumber != null) claims.Add(new Claim(ClaimTypes.MobilePhone,user.PhoneNumber));
 
             //symmetric security 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));

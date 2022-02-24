@@ -14,6 +14,7 @@ using EshopAspCore.ViewModels.Common;
 using Microsoft.Extensions.Configuration;
 using EshopAspCore.Application.Utilities.Confirm;
 using EshopAspCore.Data.Enum;
+using System.Security.Claims;
 
 namespace EshopeMvcCore.Web.Controllers
 {
@@ -23,12 +24,14 @@ namespace EshopeMvcCore.Web.Controllers
         private readonly IProductApiClient _productApiClient;
         private readonly IOrderApiClient _orderApiClient;
         private readonly IConfiguration _config;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IConfiguration config)
+        public CartController(IProductApiClient productApiClient, IOrderApiClient orderApiClient, IConfiguration config, IHttpContextAccessor httpContextAccessor)
         {
             _productApiClient = productApiClient;
             _orderApiClient = orderApiClient;
             _config = config;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -129,6 +132,21 @@ namespace EshopeMvcCore.Web.Controllers
         {
             var cart = GetCheckOutCart();
 
+            var user = _httpContextAccessor.HttpContext.User;
+            if (!user.Identity.IsAuthenticated)
+            {
+                return View(cart);
+            }
+
+            if(user.FindFirst(ClaimTypes.GivenName) != null) 
+                cart.Name = user.FindFirst(ClaimTypes.GivenName).Value;
+
+            if(user.FindFirst(ClaimTypes.Email) != null)
+                cart.Email = user.FindFirst(ClaimTypes.Email).Value;
+
+            if(user.FindFirst(ClaimTypes.MobilePhone) != null)
+                cart.Phone = user.FindFirst(ClaimTypes.MobilePhone).Value;
+           
             return View(cart);
         }
 
@@ -136,8 +154,6 @@ namespace EshopeMvcCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckOut(CheckOutViewModel model)
         {
-            
-
             if (!ModelState.IsValid)
             {
                 var cartSs = GetCheckOutCart();

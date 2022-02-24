@@ -256,6 +256,7 @@ error: https://stackoverflow.com/questions/59026301/sslhandshakeexception-an-err
 -razor runtime compilation didnt work in production environment
 open graph 
 --binding checkbox : id + name
+-- feature remember password 
 
 ##Deloy note
 Error 503: delete - republish project
