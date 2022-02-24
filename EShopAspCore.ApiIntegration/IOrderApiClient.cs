@@ -13,7 +13,7 @@ namespace EshopAspCore.ApiIntegration
     {
         Task<int> CheckOut(CheckOutRequest request);
 
-        Task<List<OrderViewModel>> GetAll(OrderGetRequest request);
+        Task<PageResult<OrderViewModel>> GetAll(OrderGetRequest request);
         Task<OrderViewModel> GetById (int id, string languageId);
 
         Task<bool> SendEmail(MailContent mailContent);

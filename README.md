@@ -256,6 +256,7 @@ error: https://stackoverflow.com/questions/59026301/sslhandshakeexception-an-err
 -razor runtime compilation didnt work in production environment
 open graph 
 --binding checkbox : id + name
+-- feature remember password 
 
 ##Deloy note
 Error 503: delete - republish project
@@ -267,3 +268,4 @@ https://tedu.com.vn/kb/aspnet-core/loi-khong-delete-hay-put-duoc-tren-api-server
 Email server:
 create email account in plesk
 See in for host, port... in http://webmail.galaptrinh.com
+change SecureSocketOptions.StartTls --> None

@@ -32,14 +32,14 @@ namespace EshopAspCore.ApiIntegration
             return apiResult;
         }
 
-        public async Task<List<OrderViewModel>> GetAll(OrderGetRequest request)
+        public async Task<PageResult<OrderViewModel>> GetAll(OrderGetRequest request)
         {
-            string url = "/api/orders";
+            string url = $"/api/orders?pageIndex={request.PageIndex}&pageSize={request.PageSize}";
             if (request.status != null)
             {
-                url += $"?status={request.status}";
+                url += $"&status={request.status}";
             }
-            var apiResult = await GetAsync<List<OrderViewModel>>(url);
+            var apiResult = await GetAsync<PageResult<OrderViewModel>>(url);
             return apiResult;
         }
 

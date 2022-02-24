@@ -5,22 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Edit User</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Users</li>
-    </ol>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <p>
-                <a asp-action="Index" asp-controller="User" class="btn btn-success">List</a>
-            </p>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
+<div class="container-fluid px-4 ">
+    <div class="d-flex justify-content-around">
+        <h1 class="mt-4">Edit User</h1>
+    </div>
+    <div class="d-flex justify-content-around">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+            <li class="breadcrumb-item active">Users</li>
+        </ol>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <p>
+                        <a asp-action="Index" asp-controller="User" class="btn btn-success">List</a>
+                    </p>
+                </div>
+                <div class="card-body">
                     <form asp-action="Edit" asp-controller="User" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
@@ -51,18 +54,20 @@
                             <input asp-for="PhoneNumber" class="form-control" />
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-center">
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>
                     </form>
+
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+
                 </div>
             </div>
-
-            <div>
-                <a asp-action="Index">Back to List</a>
-            </div>
-
         </div>
     </div>
 </div>
+
+
 

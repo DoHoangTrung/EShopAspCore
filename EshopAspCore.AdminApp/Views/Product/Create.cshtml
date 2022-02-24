@@ -20,39 +20,43 @@
             });
 
         function readURL(input) {
+            var thumbnail = $('#productThumbnail');
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#productThumbnail').attr('src', e.target.result).width(150).height(150);
+                    thumbnail.show();
+                    thumbnail.attr('src', e.target.result).width(150).height(150);
                 };
 
                 reader.readAsDataURL(input.files[0]);
             }
+            else {
+                thumbnail.hide();
+            }
         };
     </script>
 }
+<div class="row d-flex justify-content-center" >
+    <div class="col-md-10">
+        <div class="container-fluid px-4">
+            <h2 class="mt-4">Create Product</h2>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home/index">Home</a></li>
+                <li class="breadcrumb-item active">Products</li>
+            </ol>
 
-<div class="container-fluid px-4">
-    <h2 class="mt-4">Create Product</h2>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Products</li>
-    </ol>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <p>
-                <a asp-action="Index" asp-controller="Product" class="btn btn-success">Back to list</a>
-            </p>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <p>
+                        <a asp-action="Index" asp-controller="Product" class="btn btn-success">Back to list</a>
+                    </p>
+                </div>
+                <div class="card-body">
                     <form asp-action="Create" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsFeatured"/> @Html.DisplayNameFor(model => model.IsFeatured)
+                                <input class="form-check-input" asp-for="IsFeatured" /> @Html.DisplayNameFor(model => model.IsFeatured)
                             </label>
                         </div>
                         <div class="form-group">
@@ -105,7 +109,7 @@
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="IsDefault" id="IsDefault" value="true" checked/> @Html.DisplayNameFor(model => model.IsDefault)
+                                <input type="checkbox" class="form-check-input" name="IsDefault" id="IsDefault" value="true" checked /> @Html.DisplayNameFor(model => model.IsDefault)
                             </label>
                         </div>
                         <div class="form-group">
@@ -114,15 +118,15 @@
                             <span asp-validation-for="ThumbNailImage" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <img id="productThumbnail" src="#" alt="IMG" />
+                            <img id="productThumbnail" src="#" alt="IMG" style="display: none;" />
                         </div>
                         <div class="form-group d-flex justify-content-center">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
                     </form>
+
                 </div>
             </div>
-
         </div>
     </div>
 </div>
