@@ -37,15 +37,21 @@ namespace EshopAspCore.ApiIntegration
                 requestContent.Add(bytes, "ThumbNailImage", request.ThumbNailImage.FileName);
             }
 
+            string description = request.Description != null ? request.Description.ToString() : "";
+            string details = request.Details != null ? request.Details.ToString() : "";
+            string seoDescription = request.SeoDescription != null ? request.SeoDescription.ToString() : "";
+            string seoTitle = request.SeoTitle != null ? request.SeoTitle.ToString() : "";
+            string seoAlias = request.SeoAlias != null ? request.SeoAlias.ToString() : "";
+
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.OriginalPrice.ToString()), "originalPrice");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
             requestContent.Add(new StringContent(request.Name.ToString()), "name");
-            requestContent.Add(new StringContent(request.Description.ToString()), "description");
-            requestContent.Add(new StringContent(request.Details.ToString()), "details");
-            requestContent.Add(new StringContent(request.SeoDescription.ToString()), "seoDescription");
-            requestContent.Add(new StringContent(request.SeoTitle.ToString()), "seoTitle");
-            requestContent.Add(new StringContent(request.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(description), "description");
+            requestContent.Add(new StringContent(details), "details");
+            requestContent.Add(new StringContent(seoDescription), "seoDescription");
+            requestContent.Add(new StringContent(seoTitle), "seoTitle");
+            requestContent.Add(new StringContent(seoAlias), "seoAlias");
             requestContent.Add(new StringContent(request.LanguageId.ToString()), "languageId");
 
             var apiResponse = await client.PostAsync("/api/products", requestContent);
@@ -114,13 +120,19 @@ namespace EshopAspCore.ApiIntegration
                 requestContent.Add(bytes, "ThumbNailImage", request.ThumbNailImage.FileName);
             }
 
+            string description = request.Description != null ? request.Description.ToString() : "";
+            string details = request.Details != null ? request.Details.ToString() : "";
+            string seoDescription = request.SeoDescription != null ? request.SeoDescription.ToString() : "";
+            string seoTitle = request.SeoTitle != null ? request.SeoTitle.ToString() : "";
+            string seoAlias = request.SeoAlias != null ? request.SeoAlias.ToString() : "";
+
             requestContent.Add(new StringContent(request.Id.ToString()), "id");
             requestContent.Add(new StringContent(request.Name), "name");
-            requestContent.Add(new StringContent(request.Description), "Description");
-            requestContent.Add(new StringContent(request.Details), "Details");
-            requestContent.Add(new StringContent(request.SeoAlias), "SeoAlias");
-            requestContent.Add(new StringContent(request.SeoDescription) , "SeoDescription");
-            requestContent.Add(new StringContent(request.SeoTitle), "SeoTitle");
+            requestContent.Add(new StringContent(description), "Description");
+            requestContent.Add(new StringContent(details), "Details");
+            requestContent.Add(new StringContent(seoAlias), "SeoAlias");
+            requestContent.Add(new StringContent(seoDescription) , "SeoDescription");
+            requestContent.Add(new StringContent(seoTitle), "SeoTitle");
             requestContent.Add(new StringContent(request.LanguageId), "LanguageId");
 
             var response = await client.PutAsync($"/api/products/{id}", requestContent);
