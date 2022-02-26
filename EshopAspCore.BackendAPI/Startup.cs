@@ -129,7 +129,7 @@ namespace EshopAspCore.BackendAPI
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = issuer,
                     ValidAudience = issuer,
-                    ClockSkew = System.TimeSpan.Zero,
+                    ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)) //Configuration["JwtToken:SecretKey"]  
                 };
             });
@@ -171,7 +171,7 @@ namespace EshopAspCore.BackendAPI
 
                 endpoints.MapGet("/testMail", async context =>
                 {
-                    // L?y d?ch v? sendmailservice
+                    // Lay dich vu sendmailservice
                     var sendmailservice = context.RequestServices.GetService<IEmailService>();
 
                     MailContent content = new MailContent
